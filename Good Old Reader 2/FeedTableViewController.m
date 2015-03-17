@@ -131,11 +131,18 @@ NSDictionary *jsonFeed;
     cell.detailTextLabel.numberOfLines = 2;
     cell.textLabel.text = [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
     
+    // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
     NSString *fullSummary = [[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
+    fullSummary = [self stripTags:fullSummary];
+    fullSummary = [fullSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    // To avoid exception when summary is shorter than 200 characters
     NSString *shortSummary;
-    // To avoid exception when summary is shorter than 100 characters
-    if ([fullSummary length] > 100) {
-        shortSummary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
+    if ([fullSummary length] > 200) {
+        shortSummary = [fullSummary substringToIndex:200];
+    }
+    else {
+        shortSummary = fullSummary;
     }
     cell.detailTextLabel.text = shortSummary;
     
@@ -173,6 +180,31 @@ NSDictionary *jsonFeed;
     }
 }
 
+- (NSString *)stripTags:(NSString *)stringToStrip
+{
+    NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
+    
+    NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
+    scanner.charactersToBeSkipped = nil;
+    NSString *tempText = nil;
+    
+    while (![scanner isAtEnd])
+    {
+        [scanner scanUpToString:@"<" intoString:&tempText];
+        
+        if (tempText != nil)
+            [html appendString:tempText];
+        
+        [scanner scanUpToString:@">" intoString:nil];
+        
+        if (![scanner isAtEnd])
+            [scanner setScanLocation:[scanner scanLocation] + 1];
+
+        tempText = nil;
+    }
+    
+    return html;
+}
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
