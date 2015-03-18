@@ -133,17 +133,16 @@ NSDictionary *jsonFeed;
     
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
     NSString *fullSummary = [[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
-    fullSummary = [self stripTags:fullSummary];
-    fullSummary = [fullSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString *shortSummary = [self stripTags:fullSummary];
+    shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     // To avoid exception when summary is shorter than 200 characters
-    NSString *shortSummary;
-    if ([fullSummary length] > 200) {
-        shortSummary = [fullSummary substringToIndex:200];
+
+    if ([shortSummary length] > 200) {
+        shortSummary = [shortSummary substringToIndex:200];
     }
-    else {
-        shortSummary = fullSummary;
-    }
+
     cell.detailTextLabel.text = shortSummary;
     
     // Parsing the images from the summaries
@@ -170,13 +169,8 @@ NSDictionary *jsonFeed;
         DetailViewController *detailViewController = segue.destinationViewController;
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
-        
         // Pass the text and title of the article in a dictionary
-        NSDictionary *tappedArticle = @{
-                                        @"Title":    [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"],
-                                        @"Content":  [[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"]
-                                        };
-        detailViewController.articleContainer = tappedArticle;
+        detailViewController.articleContainer = [[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
     }
 }
 
