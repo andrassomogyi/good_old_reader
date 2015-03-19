@@ -28,6 +28,16 @@ NSDictionary *jsonFeed;
     [super viewDidLoad];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    @try {
+        // Remove observer when the feedview disappear, to avoid crash.
+        [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
+        [stream removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
+    }
+    @catch (NSException *exception) {
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"token"] == nil) {
         // No user credentials found
