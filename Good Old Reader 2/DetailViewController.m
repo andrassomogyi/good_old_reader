@@ -7,9 +7,13 @@
 //
 
 #import "DetailViewController.h"
+#import "Http.h"
 
 @interface DetailViewController ()
 @end
+
+Http *markAsRead;
+static void *MARKASREADContext = &MARKASREADContext;
 
 @implementation DetailViewController
 
@@ -78,6 +82,22 @@
     [preparedArticle appendString:articleSummary];
     
     [self.articleDisplay loadHTMLString:preparedArticle baseURL:nil];
+    [self markArticleRead];
+}
+
+-(void) markArticleRead {
+    markAsRead = [[Http alloc] initWithUrlPost:@"https://theoldreader.com/reader/api/0/edit-tag"
+                                      postData:[NSString stringWithFormat:@"i=%@&a=user/-/state/com.google/read",[self.articleContainer objectForKey:@"id"]]];
+    [markAsRead addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MARKASREADContext];
+}
+
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == MARKASREADContext && [keyPath isEqualToString:@"dataReady"]) {
+        @try {
+            [markAsRead removeObserver:self forKeyPath:@"dataReady"];
+        }
+        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
+    }
 }
 
 - (void)didReceiveMemoryWarning {
