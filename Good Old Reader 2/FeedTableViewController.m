@@ -11,21 +11,27 @@
 #import "DetailViewController.h"
 
 @interface FeedTableViewController ()
-
 @end
 
 #pragma mark - Context identifiers for KVO on HTTP communication
 static void *STREAMContext = &STREAMContext;
 static void *UNREADCOUNTContext = &UNREADCOUNTContext;
-
 Http *stream;
 Http *unread;
 NSDictionary *jsonFeed;
+UIRefreshControl *refreshControl;
 
 @implementation FeedTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:refreshControl];
+    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable {
+    [self.tableView reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -132,6 +138,8 @@ NSDictionary *jsonFeed;
         }
         @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
         [self.tableView reloadData];
+        // The following is tried to stop refreshing process if refreshing started manually
+        [refreshControl endRefreshing];
     }
 }
 

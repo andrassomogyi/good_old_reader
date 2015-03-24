@@ -96,7 +96,16 @@ static void *MARKASREADContext = &MARKASREADContext;
         @try {
             [markAsRead removeObserver:self forKeyPath:@"dataReady"];
         }
-        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
+        @catch (NSException *exception) {
+        }
+    }
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    @try {
+        [markAsRead removeObserver:self forKeyPath:@"dataReady"];
+    }
+    @catch (NSException *exception) {
     }
 }
 
