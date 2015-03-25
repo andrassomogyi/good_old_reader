@@ -16,8 +16,10 @@
 #pragma mark - Context identifiers for KVO on HTTP communication
 static void *STREAMContext = &STREAMContext;
 static void *UNREADCOUNTContext = &UNREADCOUNTContext;
+static void *MANUALREFRESHContext = &MANUALREFRESHContext;
 Http *stream;
 Http *unread;
+Http *manualRefresh;
 NSDictionary *jsonFeed;
 UIRefreshControl *refreshControl;
 
@@ -31,7 +33,12 @@ UIRefreshControl *refreshControl;
 }
 
 - (void)refreshTable {
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
+//    dispatch_async(dispatch_get_main_queue(),^{
+//        [refreshControl endRefreshing];
+//
+//    });
+    [self manualFetchStream];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -39,6 +46,7 @@ UIRefreshControl *refreshControl;
         // Remove observer when the feedview disappear, to avoid crash.
         [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
         [stream removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
+        [manualRefresh removeObserver:self forKeyPath:@"dataReady" context:MANUALREFRESHContext];
     }
     @catch (NSException *exception) {
     }
@@ -70,6 +78,15 @@ UIRefreshControl *refreshControl;
     [stream addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:STREAMContext];
     // TODO: Detect and handle network erros
     //    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
+}
+
+- (void) manualFetchStream {
+    // Reading list only fresh, max 1000 item
+    manualRefresh = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"];
+    [manualRefresh addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MANUALREFRESHContext];
+    // TODO: Detect and handle network erros
+    //    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,6 +152,35 @@ UIRefreshControl *refreshControl;
         
         @try {
             [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
+        }
+        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
+        [self.tableView reloadData];
+        // The following is tried to stop refreshing process if refreshing started manually
+        [refreshControl endRefreshing];
+    }
+    // Observing data when acquiring stream manually
+    if (context == MANUALREFRESHContext && [keyPath isEqualToString:@"dataReady"]) {
+        NSError *error = nil;
+        jsonFeed = [NSJSONSerialization JSONObjectWithData: [manualRefresh receivedData] options: NSJSONReadingMutableContainers error: &error];
+        if (!jsonFeed) {
+            NSLog(@"Error parsing JSON: %@", error);}
+        /* FOR DEBUG PURPOSES ONLY
+         else {
+         for(NSDictionary *item in jsonFeed) {
+         NSLog(@"Item: %@", item);
+         }
+         
+         NSString *items = jsonFeed[@"items"];
+         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
+         NSString *author = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"author"];
+         NSString *summary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
+         NSLog(@"%@",title);
+         NSLog(@"%@",author);
+         NSLog(@"%@",summary);
+         */
+        
+        @try {
+            [manualRefresh removeObserver:self forKeyPath:@"dataReady" context:MANUALREFRESHContext];
         }
         @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
         [self.tableView reloadData];
