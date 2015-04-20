@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "Http.h"
+#import "AFNetworking.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;
@@ -35,12 +36,20 @@ static void *NETWORKERRORContext = &NETWORKERRORContext;
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
-    
-    loginConnection = [[Http alloc] initWithUrlPost:@"https://theoldreader.com/accounts/ClientLogin"
-                                           postData:[NSString stringWithFormat:@"client=YourAppName&accountType=HOSTED_OR_GOOGLE&service=reader&Email=%@&Passwd=%@",self.loginEmailTextField.text,self.loginPassTextField.text]];
-    [loginConnection addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:LOGINContext];
-    [loginConnection addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
-    
+    AFHTTPRequestOperationManager *loginManager = [AFHTTPRequestOperationManager manager];
+    [loginManager POST:@"https://theoldreader.com/accounts/ClientLogin"
+       parameters:@{@"client": @"YourAppName",
+                    @"accountType": @"HOSTED_OR_GOOGLE",
+                    @"service": @"reader",
+                    @"Email": self.loginEmailTextField.text,
+                    @"Passwd": self.loginPassTextField.text,
+                    @"output": @"json"}
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [self succesfullLogin];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self failedLogin];
+          }];
     
     [self loadingInProgress];
 }
