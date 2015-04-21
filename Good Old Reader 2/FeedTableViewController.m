@@ -5,49 +5,36 @@
 //  Created by András Somogyi on 2015. 01. 25..
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
+//
+//         Get specific entities like the following:
+//
+//         NSString *items = jsonFeed[@"items"];
+//         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
+//         NSString *author = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"author"];
+//         NSString *summary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
+//
+//
 
 #import "FeedTableViewController.h"
-#import "Http.h"
 #import "DetailViewController.h"
+#import "AFNetworking.h"
 
 @interface FeedTableViewController ()
 @end
 
-#pragma mark - Context identifiers for KVO on HTTP communication
-static void *STREAMContext = &STREAMContext;
-static void *UNREADCOUNTContext = &UNREADCOUNTContext;
-static void *MANUALREFRESHContext = &MANUALREFRESHContext;
-Http *stream;
-Http *unread;
-Http *manualRefresh;
-NSDictionary *jsonFeed;
-UIRefreshControl *refreshControl;
+@implementation FeedTableViewController {
+    NSDictionary *jsonFeed;
+    UIRefreshControl *refreshControl;
+}
 
-@implementation FeedTableViewController
-
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView addSubview:refreshControl];
-    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
 }
 
-- (void)refreshTable {
-    [self manualFetchStream];
-}
-
-- (void) viewWillDisappear:(BOOL)animated {
-    @try {
-        // Remove observer when the feedview disappear, to avoid crash.
-        [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
-        [stream removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
-        [manualRefresh removeObserver:self forKeyPath:@"dataReady" context:MANUALREFRESHContext];
-    }
-    @catch (NSException *exception) {
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"token"] == nil) {
         // No user credentials found
         [self.tableView setHidden:YES];
@@ -59,32 +46,46 @@ UIRefreshControl *refreshControl;
     }
 }
 
-- (void)fetchUnreadCount {
-    unread = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/api/0/unread-count?output=json"];
-    [unread addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:UNREADCOUNTContext];
-    // TODO: Detect and handle network erros
-    //    [unread addObserver:self forKeyPath:@"NetworkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
-    
+- (NSInteger) fetchUnreadCount {
+    NSInteger unreadCount = 0;
+    AFHTTPRequestOperationManager *unreadCountManager = [AFHTTPRequestOperationManager manager];
+    [unreadCountManager GET:@"https://theoldreader.com/reader/api/0/unread-count?output=json"
+                 parameters:nil
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        // TODO
+                    }];
+    return unreadCount;
 }
 
-- (void)fetchStream {
-    // Reading list only fresh, max 1000 item
-    stream = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"];
-    [stream addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:STREAMContext];
-    // TODO: Detect and handle network erros
-    //    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
+- (void) fetchStream {
+    // Reading list: only fresh, max 1000 item
+    AFHTTPRequestOperationManager *streamManager = [AFHTTPRequestOperationManager manager];
+    [streamManager GET:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"
+            parameters:nil
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   jsonFeed = responseObject;
+                   [self fetchUnreadCount];
+                   [self.tableView reloadData];
+                   [refreshControl endRefreshing];
+               }
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   // TODO
+               }];
 }
 
-- (void) manualFetchStream {
-    // Reading list only fresh, max 1000 item
-    manualRefresh = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"];
-    [manualRefresh addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MANUALREFRESHContext];
-    // TODO: Detect and handle network erros
-    //    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
-    
-}
+//- (void) manualFetchStream {
+// Reading list only fresh, max 1000 item
+//    manualRefresh = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"];
+//    [manualRefresh addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MANUALREFRESHContext];
+// TODO: Detect and handle network erros
+//    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
 
-- (void)didReceiveMemoryWarning {
+//}
+
+- (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // TODO: remove me
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
@@ -99,89 +100,7 @@ UIRefreshControl *refreshControl;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[jsonFeed objectForKey:@"items"] count];}
-
-#pragma mark - HTTP communication observer
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-#pragma mark Unread count observer
-    if (context == UNREADCOUNTContext && [keyPath isEqualToString:@"dataReady"]) {
-        NSError *error = nil;
-        NSDictionary *jsonReceivedData = [NSJSONSerialization JSONObjectWithData: [unread receivedData] options: NSJSONReadingMutableContainers error: &error];
-        if (!jsonReceivedData) {
-            NSLog(@"json error: %@",error);
-        }
-        else {
-            NSString *unreadCountString = jsonReceivedData[@"max"];
-            int unreadCountInteger = [unreadCountString intValue];
-            NSString *navigationItemTitle = [NSString stringWithFormat:@"%d unread",unreadCountInteger];
-            self.navigationItem.title = navigationItemTitle;
-        }
-        @try {
-            [unread removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
-        }
-        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);
-        }
-    }
-#pragma mark Stream observer
-    // Observing data when acquiring stream
-    if (context == STREAMContext && [keyPath isEqualToString:@"dataReady"]) {
-        NSError *error = nil;
-        jsonFeed = [NSJSONSerialization JSONObjectWithData: [stream receivedData] options: NSJSONReadingMutableContainers error: &error];
-        if (!jsonFeed) {
-            NSLog(@"Error parsing JSON: %@", error);}
-        /* FOR DEBUG PURPOSES ONLY
-         else {
-         for(NSDictionary *item in jsonFeed) {
-         NSLog(@"Item: %@", item);
-         }
-         
-         NSString *items = jsonFeed[@"items"];
-         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
-         NSString *author = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"author"];
-         NSString *summary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
-         NSLog(@"%@",title);
-         NSLog(@"%@",author);
-         NSLog(@"%@",summary);
-         */
-        
-        @try {
-            [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
-        }
-        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
-        [self.tableView reloadData];
-        // The following is tried to stop refreshing process if refreshing started manually
-        [refreshControl endRefreshing];
-    }
-    // Observing data when acquiring stream manually
-    if (context == MANUALREFRESHContext && [keyPath isEqualToString:@"dataReady"]) {
-        NSError *error = nil;
-        jsonFeed = [NSJSONSerialization JSONObjectWithData: [manualRefresh receivedData] options: NSJSONReadingMutableContainers error: &error];
-        if (!jsonFeed) {
-            NSLog(@"Error parsing JSON: %@", error);}
-        /* FOR DEBUG PURPOSES ONLY
-         else {
-         for(NSDictionary *item in jsonFeed) {
-         NSLog(@"Item: %@", item);
-         }
-         
-         NSString *items = jsonFeed[@"items"];
-         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
-         NSString *author = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"author"];
-         NSString *summary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
-         NSLog(@"%@",title);
-         NSLog(@"%@",author);
-         NSLog(@"%@",summary);
-         */
-        
-        @try {
-            [manualRefresh removeObserver:self forKeyPath:@"dataReady" context:MANUALREFRESHContext];
-        }
-        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
-        [self.tableView reloadData];
-        // The following is tried to stop refreshing process if refreshing started manually
-        [refreshControl endRefreshing];
-    }
+    return [[jsonFeed objectForKey:@"items"] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -189,7 +108,7 @@ UIRefreshControl *refreshControl;
     cell.textLabel.numberOfLines = 2;
     cell.detailTextLabel.numberOfLines = 2;
     cell.textLabel.text = [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
-    
+
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
     NSString *fullSummary = [[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
 
@@ -197,13 +116,12 @@ UIRefreshControl *refreshControl;
     shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     // To avoid exception when summary is shorter than 200 characters
-
     if ([shortSummary length] > 200) {
         shortSummary = [shortSummary substringToIndex:200];
     }
 
     cell.detailTextLabel.text = shortSummary;
-    
+
     // Parsing the images from the summaries
     // Makes the tableview lag, kept for historical reasons only
     //
@@ -223,6 +141,7 @@ UIRefreshControl *refreshControl;
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [self fetchStream];
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
@@ -236,26 +155,26 @@ UIRefreshControl *refreshControl;
 - (NSString *)stripTags:(NSString *)stringToStrip
 {
     NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
-    
+
     NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
     scanner.charactersToBeSkipped = nil;
     NSString *tempText = nil;
-    
+
     while (![scanner isAtEnd])
     {
         [scanner scanUpToString:@"<" intoString:&tempText];
-        
+
         if (tempText != nil)
             [html appendString:tempText];
-        
+
         [scanner scanUpToString:@">" intoString:nil];
-        
+
         if (![scanner isAtEnd])
             [scanner setScanLocation:[scanner scanLocation] + 1];
 
         tempText = nil;
     }
-    
+
     return html;
 }
 /*
