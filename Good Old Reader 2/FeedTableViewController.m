@@ -9,16 +9,16 @@
 #import "FeedTableViewController.h"
 #import "Http.h"
 #import "DetailViewController.h"
+#import "AFNetworking.h"
 
 @interface FeedTableViewController ()
 @end
 
 #pragma mark - Context identifiers for KVO on HTTP communication
 static void *STREAMContext = &STREAMContext;
-static void *UNREADCOUNTContext = &UNREADCOUNTContext;
 static void *MANUALREFRESHContext = &MANUALREFRESHContext;
 Http *stream;
-Http *unread;
+
 Http *manualRefresh;
 NSDictionary *jsonFeed;
 UIRefreshControl *refreshControl;
@@ -40,7 +40,6 @@ UIRefreshControl *refreshControl;
     @try {
         // Remove observer when the feedview disappear, to avoid crash.
         [stream removeObserver:self forKeyPath:@"dataReady" context:STREAMContext];
-        [stream removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
         [manualRefresh removeObserver:self forKeyPath:@"dataReady" context:MANUALREFRESHContext];
     }
     @catch (NSException *exception) {
@@ -60,11 +59,15 @@ UIRefreshControl *refreshControl;
 }
 
 - (void)fetchUnreadCount {
-    unread = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/api/0/unread-count?output=json"];
-    [unread addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:UNREADCOUNTContext];
-    // TODO: Detect and handle network erros
-    //    [unread addObserver:self forKeyPath:@"NetworkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
-    
+    AFHTTPRequestOperationManager *unreadCountManager = [AFHTTPRequestOperationManager manager];
+    [unreadCountManager GET:@"https://theoldreader.com/reader/api/0/unread-count?output=json"
+                 parameters:nil
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        // TODO
+                    }];
 }
 
 - (void)fetchStream {
@@ -103,26 +106,6 @@ UIRefreshControl *refreshControl;
 
 #pragma mark - HTTP communication observer
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-#pragma mark Unread count observer
-    if (context == UNREADCOUNTContext && [keyPath isEqualToString:@"dataReady"]) {
-        NSError *error = nil;
-        NSDictionary *jsonReceivedData = [NSJSONSerialization JSONObjectWithData: [unread receivedData] options: NSJSONReadingMutableContainers error: &error];
-        if (!jsonReceivedData) {
-            NSLog(@"json error: %@",error);
-        }
-        else {
-            NSString *unreadCountString = jsonReceivedData[@"max"];
-            int unreadCountInteger = [unreadCountString intValue];
-            NSString *navigationItemTitle = [NSString stringWithFormat:@"%d unread",unreadCountInteger];
-            self.navigationItem.title = navigationItemTitle;
-        }
-        @try {
-            [unread removeObserver:self forKeyPath:@"dataReady" context:UNREADCOUNTContext];
-        }
-        @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);
-        }
-    }
 #pragma mark Stream observer
     // Observing data when acquiring stream
     if (context == STREAMContext && [keyPath isEqualToString:@"dataReady"]) {
