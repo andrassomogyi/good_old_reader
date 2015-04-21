@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "Http.h"
 #import "AFNetworking.h"
 
 @interface LoginViewController ()
@@ -18,44 +17,36 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatiorSpinner;
 @end
 
-Http *loginConnection;
-static void *LOGINContext = &LOGINContext;
-static void *NETWORKERRORContext = &NETWORKERRORContext;
-
 @implementation LoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.loginActivityIndicatiorSpinner.hidden = YES;
-    // Do any additional setup after loading the view.
+    [self failedLogin];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
     AFHTTPRequestOperationManager *loginManager = [AFHTTPRequestOperationManager manager];
     [loginManager POST:@"https://theoldreader.com/accounts/ClientLogin"
-       parameters:@{@"client": @"YourAppName",
-                    @"accountType": @"HOSTED_OR_GOOGLE",
-                    @"service": @"reader",
-                    @"Email": self.loginEmailTextField.text,
-                    @"Passwd": self.loginPassTextField.text,
-                    @"output": @"json"}
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [self succesfullLogin];
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self failedLogin];
-          }];
-    
+            parameters:@{@"client": @"YourAppName",
+                         @"accountType": @"HOSTED_OR_GOOGLE",
+                         @"service": @"reader",
+                         @"Email": self.loginEmailTextField.text,
+                         @"Passwd": self.loginPassTextField.text,
+                         @"output": @"json"}
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   [self succesfullLogin];
+               }
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   [self loginError];
+               }];
     [self loadingInProgress];
 }
 
 - (void) loadingInProgress {
-    
     self.loginMessageLabel.text = @"Logging in...";
     self.loginButton.hidden = YES;
     self.loginActivityIndicatiorSpinner.hidden = NO;
@@ -66,9 +57,6 @@ static void *NETWORKERRORContext = &NETWORKERRORContext;
     // FIXME: store real token
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"token"];
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    
-    
 }
 
 - (void) failedLogin {
@@ -78,53 +66,17 @@ static void *NETWORKERRORContext = &NETWORKERRORContext;
     [self.loginActivityIndicatiorSpinner stopAnimating];
 }
 
-#pragma mark - HTTP communication observer
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-#pragma mark Network error observer
-    // Observing network errors
-    if (context == NETWORKERRORContext && [keyPath isEqualToString:@"networkError"]) {
-        // Network error while login
-        NSLog(@"Network error");
-    }
-    @try {
-        [loginConnection removeObserver:self forKeyPath:@"networkError"];
-    }
-    @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
-    
-#pragma mark Login data observer
-    // Observing if data is ready when logging in
-    if (context == LOGINContext && [keyPath isEqualToString:@"dataReady"]) {
-        NSString *fetchedString = [[NSString alloc] initWithData:[loginConnection receivedData] encoding:NSASCIIStringEncoding];
-        // Log the authentication token. Debug purposes only!
-        //        NSLog(@"Logindata observer: %@",fetchedString);
-        if ([fetchedString rangeOfString:@"Auth="].location == NSNotFound){ // Check if fetched string contains valid token
-            // Bad credentials
-            @try {
-                [loginConnection removeObserver:self forKeyPath:@"dataReady"];
-            }
-            @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
-            [self failedLogin];
-        }
-        else {
-            // Login succesful
-            @try {
-                [loginConnection removeObserver:self forKeyPath:@"dataReady"];
-            }
-            @catch (NSException *exception) {NSLog(@"Exception handled: %@",exception);}
-            [self succesfullLogin];
-        }
-    }
-    
+- (void) loginError {
+    UIAlertController *loginError = [UIAlertController alertControllerWithTitle:@"Login failed"
+                                                                        message:@"Bad username or password!"
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try again!"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction *action) {
+                                                               [self failedLogin];
+                                                           }];
+    [loginError addAction:tryAgainAction];
+    [self presentViewController:loginError animated:YES completion:nil];
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
