@@ -7,13 +7,10 @@
 //
 
 #import "DetailViewController.h"
-#import "Http.h"
+#import "AFNetworking.h"
 
 @interface DetailViewController ()
 @end
-
-Http *markAsRead;
-static void *MARKASREADContext = &MARKASREADContext;
 
 @implementation DetailViewController
 
@@ -86,27 +83,17 @@ static void *MARKASREADContext = &MARKASREADContext;
 }
 
 -(void) markArticleRead {
-    markAsRead = [[Http alloc] initWithUrlPost:@"https://theoldreader.com/reader/api/0/edit-tag"
-                                      postData:[NSString stringWithFormat:@"i=%@&a=user/-/state/com.google/read",[self.articleContainer objectForKey:@"id"]]];
-    [markAsRead addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MARKASREADContext];
-}
-
--(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == MARKASREADContext && [keyPath isEqualToString:@"dataReady"]) {
-        @try {
-            [markAsRead removeObserver:self forKeyPath:@"dataReady"];
-        }
-        @catch (NSException *exception) {
-        }
-    }
-}
-
--(void) viewWillDisappear:(BOOL)animated {
-    @try {
-        [markAsRead removeObserver:self forKeyPath:@"dataReady"];
-    }
-    @catch (NSException *exception) {
-    }
+    AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
+    [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
+            parameters:@{@"i": [self.articleContainer objectForKey:@"id"],
+                         @"a": @"user/-/state/com.google/read",
+                         @"output": @"json"}
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   // TODO
+               }
+               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   // TODO
+               }];
 }
 
 - (void)didReceiveMemoryWarning {

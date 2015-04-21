@@ -106,17 +106,17 @@
 		81E3357B1A7588A4007AE952 /* Good Old Reader 2 */ = {
 			isa = PBXGroup;
 			children = (
+				8106A21D1AE6ADC0003A9B3F /* Http.m */,
+				8106A21E1AE6ADC0003A9B3F /* Http.h */,
 				81E335861A7588A4007AE952 /* Main.storyboard */,
 				81E335801A7588A4007AE952 /* AppDelegate.h */,
 				81E335811A7588A4007AE952 /* AppDelegate.m */,
 				819AC2891AA65EF300CB29EC /* LoginViewController.h */,
 				819AC28A1AA65EF300CB29EC /* LoginViewController.m */,
-				8181700A1A82C4DD0093BE77 /* DetailViewController.h */,
-				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
-				8106A21D1AE6ADC0003A9B3F /* Http.m */,
-				8106A21E1AE6ADC0003A9B3F /* Http.h */,
 				81E335A21A758903007AE952 /* FeedTableViewController.h */,
 				81E335A31A758903007AE952 /* FeedTableViewController.m */,
+				8181700A1A82C4DD0093BE77 /* DetailViewController.h */,
+				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
 				81E335891A7588A4007AE952 /* Images.xcassets */,
 				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
