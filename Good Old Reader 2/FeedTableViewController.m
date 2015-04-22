@@ -76,15 +76,6 @@
                }];
 }
 
-//- (void) manualFetchStream {
-// Reading list only fresh, max 1000 item
-//    manualRefresh = [[Http alloc] initWithUrlGet:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"];
-//    [manualRefresh addObserver:self forKeyPath:@"dataReady" options:NSKeyValueObservingOptionNew context:MANUALREFRESHContext];
-// TODO: Detect and handle network erros
-//    [stream addObserver:self forKeyPath:@"networkError" options:NSKeyValueObservingOptionNew context:NETWORKERRORContext];
-
-//}
-
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // TODO: remove me
