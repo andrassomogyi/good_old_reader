@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
 //
-//         Get specific entities like the following:
+//         Get specific entities like:
 //
 //         NSString *items = jsonFeed[@"items"];
 //         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
@@ -29,9 +29,17 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+
+    // Enable manual pull down refresh
     refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
+
+    // Enable setup menu button
+    UIBarButtonItem *setupMenuButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(setupMenu)];
+    self.navigationController.topViewController.navigationItem.rightBarButtonItem = setupMenuButton;
+    setupMenuButton.enabled=TRUE;
+    setupMenuButton.style=UIBarButtonSystemItemAction;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -44,6 +52,10 @@
         [self fetchStream];
         [self fetchUnreadCount];
     }
+}
+
+- (void) setupMenu {
+        [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
 }
 
 - (NSInteger) fetchUnreadCount {
