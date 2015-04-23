@@ -42,24 +42,28 @@
     setupMenuButton.style=UIBarButtonSystemItemAction;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+
+}
 - (void) viewDidAppear:(BOOL)animated {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"token"] == nil) {
-        // No user credentials found
-        [self.tableView setHidden:YES];
-        [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
-        [self.tableView setHidden:NO];
-    } else {
-        [self fetchStream];
-        [self fetchUnreadCount];
-    }
+    AFHTTPRequestOperationManager *tokenManager = [AFHTTPRequestOperationManager manager];
+    [tokenManager GET:@"https://theoldreader.com/reader/api/0/token?output=json"
+           parameters:nil
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [self fetchStream];
+                  [self fetchUnreadCount];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
+              }
+     ];
 }
 
 - (void) setupMenu {
-        [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
+    [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
 }
 
-- (NSInteger) fetchUnreadCount {
-    NSInteger unreadCount = 0;
+- (void) fetchUnreadCount {
     AFHTTPRequestOperationManager *unreadCountManager = [AFHTTPRequestOperationManager manager];
     [unreadCountManager GET:@"https://theoldreader.com/reader/api/0/unread-count?output=json"
                  parameters:nil
@@ -67,9 +71,8 @@
                         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
                     }
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        // TODO
-                    }];
-    return unreadCount;
+                    }
+     ];
 }
 
 - (void) fetchStream {
@@ -84,14 +87,12 @@
                    [refreshControl endRefreshing];
                }
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                   // TODO
-               }];
+               }
+     ];
 }
 
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // TODO: remove me
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
     // Dispose of any resources that can be recreated.
 }
 
