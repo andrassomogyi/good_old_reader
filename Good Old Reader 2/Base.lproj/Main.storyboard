@@ -4,6 +4,47 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
+        <!--Setup View Controller-->
+        <scene sceneID="Fxh-kX-nfz">
+            <objects>
+                <viewController id="i9I-zU-YXz" customClass="SetupViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xlx-cG-8RX"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xl5-d9-KLV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kYw-Fr-7xe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrg-8R-72d">
+                                <rect key="frame" x="258" y="289" width="85" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIS-nH-kxw">
+                                <rect key="frame" x="277" y="318" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButton:" destination="i9I-zU-YXz" eventType="touchUpInside" id="yjC-sP-61v"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uIS-nH-kxw" firstAttribute="top" secondItem="Mrg-8R-72d" secondAttribute="bottom" constant="8" id="7xo-Ic-i6G"/>
+                            <constraint firstAttribute="centerX" secondItem="Mrg-8R-72d" secondAttribute="centerX" id="9ky-Kf-hqs"/>
+                            <constraint firstAttribute="centerX" secondItem="uIS-nH-kxw" secondAttribute="centerX" id="L1x-6L-npd"/>
+                            <constraint firstAttribute="centerY" secondItem="Mrg-8R-72d" secondAttribute="centerY" id="WIG-Tq-6EM"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xl9-Kh-Q62" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="670" y="1329"/>
+        </scene>
         <!--Feed Table View Controller-->
         <scene sceneID="l0w-6i-l0a">
             <objects>
@@ -47,6 +88,7 @@
                     <navigationItem key="navigationItem" id="aG3-GJ-Eco"/>
                     <connections>
                         <segue destination="RBR-Wa-BE7" kind="presentation" identifier="LoginModalSegue" id="caO-Qu-mSE"/>
+                        <segue destination="i9I-zU-YXz" kind="show" identifier="SetupShowSegue" id="ZnU-Wu-NTT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuV-Zs-cTB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -175,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9I-3R-ghf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1078" y="1229"/>
+            <point key="canvasLocation" x="1424" y="1329"/>
         </scene>
     </scenes>
 </document>

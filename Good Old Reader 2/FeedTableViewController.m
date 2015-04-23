@@ -6,7 +6,7 @@
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
 //
-//         Get specific entities like the following:
+//         Get specific entities like:
 //
 //         NSString *items = jsonFeed[@"items"];
 //         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
@@ -29,25 +29,41 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+
+    // Enable manual pull down refresh
     refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
+
+    // Enable setup menu button
+    UIBarButtonItem *setupMenuButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(setupMenu)];
+    self.navigationController.topViewController.navigationItem.rightBarButtonItem = setupMenuButton;
+    setupMenuButton.enabled=TRUE;
+    setupMenuButton.style=UIBarButtonSystemItemAction;
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+
+}
 - (void) viewDidAppear:(BOOL)animated {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"token"] == nil) {
-        // No user credentials found
-        [self.tableView setHidden:YES];
-        [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
-        [self.tableView setHidden:NO];
-    } else {
-        [self fetchStream];
-        [self fetchUnreadCount];
-    }
+    AFHTTPRequestOperationManager *tokenManager = [AFHTTPRequestOperationManager manager];
+    [tokenManager GET:@"https://theoldreader.com/reader/api/0/token?output=json"
+           parameters:nil
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [self fetchStream];
+                  [self fetchUnreadCount];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
+              }
+     ];
 }
 
-- (NSInteger) fetchUnreadCount {
-    NSInteger unreadCount = 0;
+- (void) setupMenu {
+    [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
+}
+
+- (void) fetchUnreadCount {
     AFHTTPRequestOperationManager *unreadCountManager = [AFHTTPRequestOperationManager manager];
     [unreadCountManager GET:@"https://theoldreader.com/reader/api/0/unread-count?output=json"
                  parameters:nil
@@ -55,9 +71,8 @@
                         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
                     }
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        // TODO
-                    }];
-    return unreadCount;
+                    }
+     ];
 }
 
 - (void) fetchStream {
@@ -72,14 +87,12 @@
                    [refreshControl endRefreshing];
                }
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                   // TODO
-               }];
+               }
+     ];
 }
 
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // TODO: remove me
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
     // Dispose of any resources that can be recreated.
 }
 

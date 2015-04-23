@@ -54,8 +54,6 @@
 }
 
 - (void) succesfullLogin {
-    // FIXME: store real token
-    [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"token"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
