@@ -45,6 +45,7 @@
 - (void) viewWillAppear:(BOOL)animated {
 
 }
+
 - (void) viewDidAppear:(BOOL)animated {
     AFHTTPRequestOperationManager *tokenManager = [AFHTTPRequestOperationManager manager];
     [tokenManager GET:@"https://theoldreader.com/reader/api/0/token?output=json"
@@ -97,17 +98,17 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [[jsonFeed objectForKey:@"items"] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
     cell.textLabel.numberOfLines = 2;
     cell.detailTextLabel.numberOfLines = 2;
@@ -144,20 +145,31 @@
 }
 
 #pragma mark - Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [self fetchStream];
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
-        // Get the destination view controller of the seque
-        DetailViewController *detailViewController = segue.destinationViewController;
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
+        // Mart article read on server
+        AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
+        [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
+                     parameters:@{@"i": [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
+                                  @"a": @"user/-/state/com.google/read",
+                                  @"output": @"json"}
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            // TODO
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            // TODO
+                        }];
+        // Get the destination view controller of the seque
+        DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary
         detailViewController.articleContainer = [[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
     }
 }
 
-- (NSString *)stripTags:(NSString *)stringToStrip
-{
+- (NSString *) stripTags:(NSString *)stringToStrip {
     NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
 
     NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
