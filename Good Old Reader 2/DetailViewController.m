@@ -79,21 +79,6 @@
     [preparedArticle appendString:articleSummary];
     
     [self.articleDisplay loadHTMLString:preparedArticle baseURL:nil];
-    [self markArticleRead];
-}
-
--(void) markArticleRead {
-    AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
-    [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
-            parameters:@{@"i": [self.articleContainer objectForKey:@"id"],
-                         @"a": @"user/-/state/com.google/read",
-                         @"output": @"json"}
-               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                   // TODO
-               }
-               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                   // TODO
-               }];
 }
 
 - (void)didReceiveMemoryWarning {
