@@ -43,7 +43,8 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-
+    [self fetchStream];
+    [self.tableView reloadData];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -146,7 +147,6 @@
 
 #pragma mark - Navigation
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    [self fetchStream];
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
