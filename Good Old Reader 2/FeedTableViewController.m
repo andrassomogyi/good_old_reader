@@ -25,6 +25,7 @@
 @implementation FeedTableViewController {
     NSDictionary *jsonFeed;
     UIRefreshControl *refreshControl;
+    NSUserDefaults *sharedDefaults;
 }
 
 - (void) viewDidLoad {
@@ -40,6 +41,11 @@
     self.navigationController.topViewController.navigationItem.rightBarButtonItem = setupMenuButton;
     setupMenuButton.enabled=TRUE;
     setupMenuButton.style=UIBarButtonSystemItemAction;
+
+    //
+    sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
+    [sharedDefaults setObject:@"0" forKey:@"unreadCount"];
+    [sharedDefaults synchronize];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -71,6 +77,8 @@
                  parameters:nil
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
+                        [sharedDefaults setObject:responseObject[@"max"] forKey:@"unreadCount"];
+                        [sharedDefaults synchronize];
                     }
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     }
