@@ -45,6 +45,7 @@
     //
     sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
     [sharedDefaults setObject:@"0" forKey:@"unreadCount"];
+    [sharedDefaults setObject:@"No unread article" forKey:@"recentArticle"];
     [sharedDefaults synchronize];
 }
 
@@ -78,6 +79,8 @@
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
                         [sharedDefaults setObject:responseObject[@"max"] forKey:@"unreadCount"];
+                        [sharedDefaults setObject:[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"] forKey:@"recentArticle"];
+                        [sharedDefaults setObject:[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"origin"] objectForKey:@"title"] forKey:@"siteName"];
                         [sharedDefaults synchronize];
                     }
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -11,12 +11,19 @@
 
 @interface InterfaceController()
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *unreadCount;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *titleLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *articleTitle;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *originTitle;
 
 @end
 
 
 @implementation InterfaceController
 @synthesize unreadCount;
+@synthesize titleLabel;
+@synthesize articleTitle;
+@synthesize originTitle;
+
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
@@ -31,7 +38,13 @@
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
     [sharedDefaults synchronize];
     NSString *unreadCountString = [sharedDefaults objectForKey:@"unreadCount"];
+    NSString *recentArticle = [sharedDefaults objectForKey:@"recentArticle"];
+    NSString *siteName = [sharedDefaults objectForKey:@"siteName"];
     [self.unreadCount setText:[NSString stringWithFormat:@"Unread: %@", unreadCountString.description]];
+    [self.titleLabel setText:@"Recent article"];
+    [self.articleTitle setText:recentArticle];
+    [self.originTitle setText:[NSString stringWithFormat:@"By %@",siteName]];
+//    [self.recentArticleLabel setText:[NSString stringWithFormat:@"Recent article:\n\n%@ by\n\n%@",recentArticle, siteName]];
 }
 
 - (void)didDeactivate {
