@@ -17,6 +17,7 @@
 
 #import "FeedTableViewController.h"
 #import "DetailViewController.h"
+#import "QRreaderViewController.h"
 #import "AFNetworking.h"
 
 @interface FeedTableViewController ()
@@ -26,6 +27,7 @@
     NSDictionary *jsonFeed;
     UIRefreshControl *refreshControl;
     NSUserDefaults *sharedDefaults;
+    NSMutableDictionary *articleUrlDict;
 }
 
 - (void) viewDidLoad {
@@ -42,11 +44,21 @@
     setupMenuButton.enabled=TRUE;
     setupMenuButton.style=UIBarButtonSystemItemAction;
 
-    //
+    // App group setting for Watch
     sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
     [sharedDefaults setObject:@"0" forKey:@"unreadCount"];
     [sharedDefaults setObject:@"No unread article" forKey:@"recentArticle"];
     [sharedDefaults synchronize];
+
+    // Adding a button to access QR reader view after artcile ids and urls collected
+    UIBarButtonItem *qrViewButton = [[UIBarButtonItem alloc] initWithTitle:@"QR" style:UIBarButtonItemStylePlain target:self action:@selector(showQRview)];
+    self.navigationController.topViewController.navigationItem.leftBarButtonItem = qrViewButton;
+    qrViewButton.enabled = FALSE;
+    qrViewButton.style = UIBarButtonSystemItemEdit;
+}
+
+- (void) showQRview {
+    [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -78,6 +90,7 @@
                  parameters:nil
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
+                        // Data for Apple Watch
                         [sharedDefaults setObject:responseObject[@"max"] forKey:@"unreadCount"];
                         [sharedDefaults setObject:[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"] forKey:@"recentArticle"];
                         [sharedDefaults setObject:[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"origin"] objectForKey:@"title"] forKey:@"siteName"];
@@ -97,12 +110,26 @@
                    jsonFeed = responseObject;
                    [self fetchUnreadCount];
                    [self.tableView reloadData];
+                   [self fetchArticleUrls];
                    [refreshControl endRefreshing];
                }
                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                }
      ];
 }
+
+- (void) fetchArticleUrls {
+    articleUrlDict = [[NSMutableDictionary alloc] init];
+
+    for (id item in jsonFeed[@"items"]) {
+        NSString *href = [[item[@"canonical"] objectAtIndex:0] objectForKey:@"href"];
+        NSString *articleId = item[@"id"];
+        [articleUrlDict setValue:articleId forKey:href];
+    }
+    self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
+}
+
+
 
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -177,6 +204,10 @@
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary
         detailViewController.articleContainer = [[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
+    }
+    if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
+        QRreaderViewController *qrViewController = segue.destinationViewController;
+        qrViewController.articleUrlDict = articleUrlDict;
     }
 }
 
