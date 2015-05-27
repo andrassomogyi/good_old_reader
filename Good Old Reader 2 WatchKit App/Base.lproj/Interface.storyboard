@@ -10,13 +10,27 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController">
                     <items>
-                        <label alignment="left" text="Hello!" id="Mwr-g6-b1s"/>
+                        <label alignment="left" text="Unread count" id="Mwr-g6-b1s">
+                            <color key="textColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
+                        <separator alignment="left" id="6Zg-z1-vIm"/>
+                        <label alignment="left" text="Title" id="yP3-lR-k9g">
+                            <color key="textColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
+                        <label width="136" height="73" alignment="left" text="ArticleTitle" textAlignment="left" numberOfLines="0" id="Obt-2g-eIp"/>
+                        <label alignment="left" text="Origin" id="cQ6-UA-3FT">
+                            <color key="textColor" red="0.80000001192092896" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
                     </items>
                     <connections>
+                        <outlet property="articleTitle" destination="Obt-2g-eIp" id="W9L-n5-83P"/>
+                        <outlet property="originTitle" destination="cQ6-UA-3FT" id="iyH-Mf-7f1"/>
+                        <outlet property="titleLabel" destination="yP3-lR-k9g" id="abt-Wy-OpC"/>
                         <outlet property="unreadCount" destination="Mwr-g6-b1s" id="IA3-95-mjz"/>
                     </connections>
                 </controller>
             </objects>
+            <point key="canvasLocation" x="42" y="611"/>
         </scene>
     </scenes>
 </document>

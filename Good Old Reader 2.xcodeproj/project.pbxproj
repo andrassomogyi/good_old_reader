@@ -17,6 +17,7 @@
 		813273D61AE937A3007297C2 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 813273D51AE937A3007297C2 /* SetupViewController.m */; };
 		8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8181700B1A82C4DD0093BE77 /* DetailViewController.m */; };
 		819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 819AC28A1AA65EF300CB29EC /* LoginViewController.m */; };
+		81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */; };
 		81E3357F1A7588A4007AE952 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E3357E1A7588A4007AE952 /* main.m */; };
 		81E335821A7588A4007AE952 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335811A7588A4007AE952 /* AppDelegate.m */; };
 		81E335881A7588A4007AE952 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81E335861A7588A4007AE952 /* Main.storyboard */; };
@@ -83,6 +84,8 @@
 		8181700B1A82C4DD0093BE77 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		819AC2891AA65EF300CB29EC /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		819AC28A1AA65EF300CB29EC /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRreaderViewController.h; sourceTree = "<group>"; };
+		81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRreaderViewController.m; sourceTree = "<group>"; };
 		81E335791A7588A4007AE952 /* Good Old Reader 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Good Old Reader 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81E3357D1A7588A4007AE952 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81E3357E1A7588A4007AE952 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 			children = (
 				81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */,
 				81E335861A7588A4007AE952 /* Main.storyboard */,
+				81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */,
+				81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */,
 				813273D41AE937A3007297C2 /* SetupViewController.h */,
 				813273D51AE937A3007297C2 /* SetupViewController.m */,
 				81E335801A7588A4007AE952 /* AppDelegate.h */,
@@ -474,6 +479,7 @@
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
+				81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */,
 				813273D61AE937A3007297C2 /* SetupViewController.m in Sources */,
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
 			);
@@ -769,6 +775,7 @@
 				81195F4B1B03E0CA007C22FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81195F4C1B03E0CA007C22FE /* Build configuration list for PBXNativeTarget "Good Old Reader 2 WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -777,6 +784,7 @@
 				81195F4E1B03E0CA007C22FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81E335741A7588A4007AE952 /* Build configuration list for PBXProject "Good Old Reader 2" */ = {
 			isa = XCConfigurationList;
