@@ -209,6 +209,8 @@
 			children = (
 				81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */,
 				81E335861A7588A4007AE952 /* Main.storyboard */,
+				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
+				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
 				81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */,
 				81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */,
 				813273D41AE937A3007297C2 /* SetupViewController.h */,
@@ -224,8 +226,6 @@
 				81E335891A7588A4007AE952 /* Images.xcassets */,
 				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
-				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
-				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
 			);
 			path = "Good Old Reader 2";
 			sourceTree = "<group>";
