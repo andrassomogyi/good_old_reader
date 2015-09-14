@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */; };
+		04D0F9001BA6C5C8006C4E48 /* EndpointResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */; };
 		05D53EC717F24733DD79B4E0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E9D2B962C3D32F65C12D40 /* libPods.a */; };
 		81195F351B03E0CA007C22FE /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81195F341B03E0CA007C22FE /* InterfaceController.m */; };
 		81195F371B03E0CA007C22FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81195F361B03E0CA007C22FE /* Images.xcassets */; };
@@ -66,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EndpointResolver.h; sourceTree = "<group>"; };
+		04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EndpointResolver.m; sourceTree = "<group>"; };
 		4F7B0E788C7EF1106BC831F4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2.entitlements"; sourceTree = "<group>"; };
 		81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Good Old Reader 2 WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,6 +224,8 @@
 				81E335891A7588A4007AE952 /* Images.xcassets */,
 				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
+				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
+				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
 			);
 			path = "Good Old Reader 2";
 			sourceTree = "<group>";
@@ -475,6 +481,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
@@ -489,6 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D0F9001BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
 				81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
