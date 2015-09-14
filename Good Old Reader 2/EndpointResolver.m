@@ -16,7 +16,7 @@ NSString * const UNREAD_URL = @"api/0/unread-count?output=json";
 + (NSURL *)URLForEndpoint:(Endpoint)endpoint {
     
     //1. Create url according to the requested endpoint.
-    NSString *endpointString = nil;
+    // TODO:    NSString *endpointString = nil;
     
     //2. Assemble full url.
     NSURL *fullUrl = nil;

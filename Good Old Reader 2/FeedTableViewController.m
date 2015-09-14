@@ -19,6 +19,7 @@
 #import "DetailViewController.h"
 #import "QRreaderViewController.h"
 #import "AFNetworking.h"
+#import "ApiManager.h"
 
 @interface FeedTableViewController ()
 @end
@@ -32,7 +33,8 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-
+    self.navigationItem.title = @"Loading...";
+    
     // Enable manual pull down refresh
     refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView addSubview:refreshControl];
@@ -67,17 +69,17 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    AFHTTPRequestOperationManager *tokenManager = [AFHTTPRequestOperationManager manager];
-    [tokenManager GET:@"https://theoldreader.com/reader/api/0/token?output=json"
-           parameters:nil
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [self fetchStream];
-                  [self fetchUnreadCount];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
-              }
-     ];
+    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/token?output=json"]
+             withCompletion:^(NSData *data) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self fetchStream];
+                 });
+             } withError:^(NSError *error, NSInteger statusCode) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.navigationItem.title = @"Logged out";
+                     [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
+                 });
+             }];
 }
 
 - (void) setupMenu {
@@ -85,37 +87,37 @@
 }
 
 - (void) fetchUnreadCount {
-    AFHTTPRequestOperationManager *unreadCountManager = [AFHTTPRequestOperationManager manager];
-    [unreadCountManager GET:@"https://theoldreader.com/reader/api/0/unread-count?output=json"
-                 parameters:nil
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",responseObject[@"max"]];
-                        // Data for Apple Watch
-                        [sharedDefaults setObject:responseObject[@"max"] forKey:@"unreadCount"];
-                        [sharedDefaults setObject:[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"] forKey:@"recentArticle"];
-                        [sharedDefaults setObject:[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"origin"] objectForKey:@"title"] forKey:@"siteName"];
-                        [sharedDefaults synchronize];
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    }
-     ];
+    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/unread-count?output=json"]
+             withCompletion:^(NSData *data) {
+                 NSError *jsonError;
+                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",dataDictionary[@"max"]];
+                 });
+             } withError:^(NSError *error, NSInteger statusCode) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.navigationItem.title = [NSString stringWithFormat:@"Error"];
+                 });
+             }];
 }
 
 - (void) fetchStream {
-    // Reading list: only fresh, max 1000 item
-    AFHTTPRequestOperationManager *streamManager = [AFHTTPRequestOperationManager manager];
-    [streamManager GET:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"
-            parameters:nil
-               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                   jsonFeed = responseObject;
-                   [self fetchUnreadCount];
-                   [self.tableView reloadData];
-                   [self fetchArticleUrls];
-                   [refreshControl endRefreshing];
-               }
-               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               }
-     ];
+    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"]
+             withCompletion:^(NSData *data) {
+                 NSError *jsonError;
+                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     jsonFeed = dataDictionary;
+                     [self fetchUnreadCount];
+                     [self.tableView reloadData];
+                     [self fetchArticleUrls];
+                     [refreshControl endRefreshing];
+                 });
+             } withError:^(NSError *error, NSInteger statusCode) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.navigationItem.title = [NSString stringWithFormat:@"Error"];
+                 });
+             }];
 }
 
 - (void) fetchArticleUrls {

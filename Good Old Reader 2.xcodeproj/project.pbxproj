@@ -27,6 +27,7 @@
 		81E3358D1A7588A4007AE952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E3358B1A7588A4007AE952 /* LaunchScreen.xib */; };
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
+		D6B713561BA6CD820055A98B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B713551BA6CD820055A98B /* ApiManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		81E335A31A758903007AE952 /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		92E9D2B962C3D32F65C12D40 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C31EC35BC53176795FD97965 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
+		D6B713551BA6CD820055A98B /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 			children = (
 				81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */,
 				81E335861A7588A4007AE952 /* Main.storyboard */,
+				D6B713541BA6CD820055A98B /* ApiManager.h */,
+				D6B713551BA6CD820055A98B /* ApiManager.m */,
 				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
 				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
 				81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */,
@@ -483,6 +488,7 @@
 			files = (
 				04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
+				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
