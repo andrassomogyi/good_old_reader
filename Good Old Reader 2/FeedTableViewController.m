@@ -22,23 +22,23 @@
 #import "ApiManager.h"
 
 @interface FeedTableViewController ()
+@property (nonatomic, strong) NSDictionary *jsonFeed;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 @end
 
-@implementation FeedTableViewController {
-    NSDictionary *jsonFeed;
-    UIRefreshControl *refreshControl;
-    NSUserDefaults *sharedDefaults;
-    NSMutableDictionary *articleUrlDict;
-}
+@implementation FeedTableViewController
+
+@dynamic refreshControl;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
     
     // Enable manual pull down refresh
-    refreshControl = [[UIRefreshControl alloc] init];
-    [self.tableView addSubview:refreshControl];
-    [refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
 
     // Enable setup menu button
     UIBarButtonItem *setupMenuButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(setupMenu)];
@@ -47,6 +47,7 @@
     setupMenuButton.style=UIBarButtonSystemItemAction;
 
     // App group setting for Watch
+    NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
     sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
     [sharedDefaults setObject:@"0" forKey:@"unreadCount"];
     [sharedDefaults setObject:@"No unread article" forKey:@"recentArticle"];
@@ -107,11 +108,11 @@
                  NSError *jsonError;
                  NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     jsonFeed = dataDictionary;
+                     self.jsonFeed = dataDictionary;
                      [self fetchUnreadCount];
                      [self.tableView reloadData];
                      [self fetchArticleUrls];
-                     [refreshControl endRefreshing];
+                     [self.refreshControl endRefreshing];
                  });
              } withError:^(NSError *error, NSInteger statusCode) {
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,12 +122,12 @@
 }
 
 - (void) fetchArticleUrls {
-    articleUrlDict = [[NSMutableDictionary alloc] init];
+    self.articleUrlDict = [[NSMutableDictionary alloc] init];
 
-    for (id item in jsonFeed[@"items"]) {
+    for (id item in self.jsonFeed[@"items"]) {
         NSString *href = [[item[@"canonical"] objectAtIndex:0] objectForKey:@"href"];
         NSString *articleId = item[@"id"];
-        [articleUrlDict setValue:articleId forKey:href];
+        [self.articleUrlDict setValue:articleId forKey:href];
     }
     self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
 }
@@ -146,17 +147,17 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[jsonFeed objectForKey:@"items"] count];
+    return [[self.jsonFeed objectForKey:@"items"] count];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
     cell.textLabel.numberOfLines = 2;
     cell.detailTextLabel.numberOfLines = 2;
-    cell.textLabel.text = [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.textLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
 
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
-    NSString *fullSummary = [[[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
+    NSString *fullSummary = [[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
 
     NSString *shortSummary = [self stripTags:fullSummary];
     shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -192,7 +193,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         // Mart article read on server
         
-        NSDictionary *postData = @{@"i": [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
+        NSDictionary *postData = @{@"i": [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
                                    @"a": @"user/-/state/com.google/read",
                                    @"output": @"json"};
         
@@ -217,11 +218,11 @@
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary
-        detailViewController.articleContainer = [[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
+        detailViewController.articleContainer = [[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
     }
     if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
         QRreaderViewController *qrViewController = segue.destinationViewController;
-        qrViewController.articleUrlDict = articleUrlDict;
+        qrViewController.articleUrlDict = self.articleUrlDict;
     }
 }
 

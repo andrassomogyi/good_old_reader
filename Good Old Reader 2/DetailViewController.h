@@ -10,5 +10,5 @@
 
 @interface DetailViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *articleDisplay;
-@property NSDictionary *articleContainer;
+@property (nonatomic, copy) NSDictionary *articleContainer;
 @end
