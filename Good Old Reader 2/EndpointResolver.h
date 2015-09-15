@@ -12,6 +12,12 @@
 extern NSString * const BASE_URL;
 /// URL for the unread endpoint.
 extern NSString * const UNREAD_URL;
+/// URL for count of unread articles
+extern NSString * const UNREAD_COUNT_URL;
+/// URL for mark article read
+extern NSString * const MARK_AS_READ_URL;
+/// URL for obtaining token
+extern NSString * const GET_TOKEN_URL;
 
 ///
 /// An enum representing endpoints.
@@ -19,6 +25,9 @@ extern NSString * const UNREAD_URL;
 typedef NS_ENUM(NSInteger, Endpoint)
 {
     UnreadEndpoint,
+    UnreadCountEndpoint,
+    MarkAsReadEndpoint,
+    GetTokenEndpoint
 };
 
 @interface EndpointResolver : NSObject

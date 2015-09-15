@@ -48,11 +48,11 @@
     [request addValue:userAgent forHTTPHeaderField:@"User-Agent"];
     [request addValue:@"en;q=1, fr;q=0.9, de;q=0.8, zh-Hans;q=0.7, zh-Hant;q=0.6, ja;q=0.5" forHTTPHeaderField:@"Accept-Language"];
     
-    NSLog(@"Request: %@", [request allHTTPHeaderFields]);
+//    NSLog(@"Request: %@", [request allHTTPHeaderFields]);
     
     NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Response: %@", response);
-        NSLog(@"Error: %@", error);
+//        NSLog(@"Response: %@", response);
+//        NSLog(@"Error: %@", error);
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger httpStatusCode = [httpResponse statusCode];
         if (error) {

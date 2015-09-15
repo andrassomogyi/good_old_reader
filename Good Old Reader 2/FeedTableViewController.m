@@ -20,6 +20,7 @@
 #import "QRreaderViewController.h"
 #import "AFNetworking.h"
 #import "ApiManager.h"
+#import "EndpointResolver.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSDictionary *jsonFeed;
@@ -67,7 +68,8 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/token?output=json"]
+    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
+    [ApiManager queryApiUrl:url
              withCompletion:^(NSData *data) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self fetchStream];
@@ -85,7 +87,8 @@
 }
 
 - (void) fetchUnreadCount {
-    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/unread-count?output=json"]
+    NSURL *url = [EndpointResolver URLForEndpoint:UnreadCountEndpoint];
+    [ApiManager queryApiUrl:url
              withCompletion:^(NSData *data) {
                  NSError *jsonError;
                  NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
@@ -100,7 +103,8 @@
 }
 
 - (void) fetchStream {
-    [ApiManager queryApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/atom/user/-/state/com.google/reading-list?xt=user/-/state/com.google/read&output=json&n=1000"]
+    NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
+    [ApiManager queryApiUrl:url
              withCompletion:^(NSData *data) {
                  NSError *jsonError;
                  NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
@@ -128,8 +132,6 @@
     }
     self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
 }
-
-
 
 - (void) didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -204,8 +206,8 @@
 //                            // TODO
 //                        }];
 
-
-        [ApiManager postApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/edit-tag"] postData:postData withCompletion:^(NSData *data) {
+        NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
+        [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
             //
         } withError:^(NSError *error, NSInteger statusCode) {
             //
