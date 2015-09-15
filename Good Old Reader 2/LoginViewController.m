@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "AFNetworking.h"
+#import "EndpointResolver.h"
+#import "ApiManager.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;
@@ -29,20 +31,34 @@
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
-    AFHTTPRequestOperationManager *loginManager = [AFHTTPRequestOperationManager manager];
-    [loginManager POST:@"https://theoldreader.com/accounts/ClientLogin"
-            parameters:@{@"client": @"YourAppName",
-                         @"accountType": @"HOSTED_OR_GOOGLE",
-                         @"service": @"reader",
-                         @"Email": self.loginEmailTextField.text,
-                         @"Passwd": self.loginPassTextField.text,
-                         @"output": @"json"}
-               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                   [self succesfullLogin];
-               }
-               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                   [self loginError];
-               }];
+    NSURL *url = [EndpointResolver URLForEndpoint:ClientLoginEndpoint];
+    NSDictionary *postData = @{@"client": @"YourAppName",
+                               @"accountType": @"HOSTED_OR_GOOGLE",
+                               @"service": @"reader",
+                               @"Email": self.loginEmailTextField.text,
+                               @"Passwd": self.loginPassTextField.text,
+                               @"output": @"json"};
+    [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+        [self succesfullLogin];
+    } withError:^(NSError *error, NSInteger statusCode) {
+        [self loginError];
+    }];
+
+//    
+//    AFHTTPRequestOperationManager *loginManager = [AFHTTPRequestOperationManager manager];
+//    [loginManager POST:@"https://theoldreader.com/accounts/ClientLogin"
+//            parameters:@{@"client": @"YourAppName",
+//                         @"accountType": @"HOSTED_OR_GOOGLE",
+//                         @"service": @"reader",
+//                         @"Email": self.loginEmailTextField.text,
+//                         @"Passwd": self.loginPassTextField.text,
+//                         @"output": @"json"}
+//               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                   [self succesfullLogin];
+//               }
+//               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                   [self loginError];
+//               }];
     [self loadingInProgress];
 }
 

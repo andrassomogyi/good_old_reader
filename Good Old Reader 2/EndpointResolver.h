@@ -18,6 +18,9 @@ extern NSString * const UNREAD_COUNT_URL;
 extern NSString * const MARK_AS_READ_URL;
 /// URL for obtaining token
 extern NSString * const GET_TOKEN_URL;
+/// URL for client login
+extern NSString * const CLIENT_LOGIN_URL;
+
 
 ///
 /// An enum representing endpoints.
@@ -27,7 +30,8 @@ typedef NS_ENUM(NSInteger, Endpoint)
     UnreadEndpoint,
     UnreadCountEndpoint,
     MarkAsReadEndpoint,
-    GetTokenEndpoint
+    GetTokenEndpoint,
+    ClientLoginEndpoint
 };
 
 @interface EndpointResolver : NSObject
