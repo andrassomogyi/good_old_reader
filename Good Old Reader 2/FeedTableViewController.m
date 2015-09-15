@@ -191,17 +191,29 @@
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         // Mart article read on server
-        AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
-        [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
-                     parameters:@{@"i": [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
-                                  @"a": @"user/-/state/com.google/read",
-                                  @"output": @"json"}
-                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                            // TODO
-                        }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            // TODO
-                        }];
+        
+        NSDictionary *postData = @{@"i": [[[jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
+                                   @"a": @"user/-/state/com.google/read",
+                                   @"output": @"json"};
+        
+//        AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
+//        [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
+//                     parameters:postData
+//                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                            // TODO
+//                        }
+//                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                            // TODO
+//                        }];
+
+
+        [ApiManager postApiUrl:[NSURL URLWithString:@"https://theoldreader.com/reader/api/0/edit-tag"] postData:postData withCompletion:^(NSData *data) {
+            //
+        } withError:^(NSError *error, NSInteger statusCode) {
+            //
+        }];
+        
+        
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary

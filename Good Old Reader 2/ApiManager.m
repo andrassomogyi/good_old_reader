@@ -26,4 +26,28 @@
     [dataTask resume];
 }
 
++ (void)postApiUrl:(NSURL *)url postData:(NSDictionary *)dataDictionary withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.HTTPAdditionalHeaders = @{@"Content-Type" : @"application/json; charset=utf-8"};
+    NSURLSession *urlSession  = [NSURLSession sessionWithConfiguration:config];
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"POST";
+    NSError *error;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dataDictionary options:kNilOptions error:&error];
+    NSURLSessionUploadTask *uploadTask = [urlSession uploadTaskWithRequest:request fromData:data
+                                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                                                             NSInteger httpStatusCode = [httpResponse statusCode];
+                                                             if (error) {
+                                                                 errorBlock(error,httpStatusCode);
+                                                             }
+                                                             if (httpStatusCode == 200) {
+                                                                 completion(data);
+                                                             }
+                                                         }];
+    [uploadTask resume];
+}
 @end

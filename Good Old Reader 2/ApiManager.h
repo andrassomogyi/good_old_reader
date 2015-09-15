@@ -10,6 +10,7 @@
 
 @interface ApiManager : NSObject
 
-+ (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData * data))completion withError:(void(^)(NSError *error, NSInteger statusCode))errorBlock;
++ (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error, NSInteger statusCode))errorBlock;
++ (void)postApiUrl:(NSURL *)url postData:(NSDictionary *)dataDictionary withCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error, NSInteger statusCode))errorBlock;
 
 @end
