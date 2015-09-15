@@ -33,15 +33,27 @@
     NSURLSession *urlSession  = [NSURLSession sessionWithConfiguration:config];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dataDictionary options:kNilOptions error:&error];
+    
+    NSMutableArray *parts = [[NSMutableArray alloc] init];
+    
+    for (id key in dataDictionary) {
+        id value = dataDictionary[key];
+        
+        NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *encodedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
+        [parts addObject:part];
+    }
+    
+    NSString *bodyString = [parts componentsJoinedByString:@"&"];
+    NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
     
     request.HTTPMethod = @"POST";
-    request.HTTPBody = data;
+    request.HTTPBody = bodyData;
     
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"utf-8" forHTTPHeaderField:@"charset"];
     
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleExecutableKey] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleIdentifierKey], [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
     
