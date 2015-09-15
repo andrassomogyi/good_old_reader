@@ -22,14 +22,11 @@
 #import "ApiManager.h"
 
 @interface FeedTableViewController ()
-@property (nonatomic, strong) NSDictionary *jsonFeed;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, copy) NSDictionary *jsonFeed;
 @property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 @end
 
 @implementation FeedTableViewController
-
-@dynamic refreshControl;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
