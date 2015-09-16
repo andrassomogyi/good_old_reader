@@ -68,17 +68,11 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
-    [ApiManager queryApiUrl:url
-             withCompletion:^(NSData *data) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self fetchStream];
-                 });
-             } withError:^(NSError *error, NSInteger statusCode) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
-                 });
-             }];
+    [ApiManager getTokenWithCompletion:^(NSData *token) {
+        ;
+    } withError:^(NSError *error) {
+        [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
+    }];
 }
 
 - (void) setupMenu {
@@ -86,33 +80,25 @@
 }
 
 - (void) fetchUnreadCount {
-    NSURL *url = [EndpointResolver URLForEndpoint:UnreadCountEndpoint];
-    [ApiManager queryApiUrl:url
-             withCompletion:^(NSData *data) {
-                 NSError *jsonError;
-                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",dataDictionary[@"max"]];
-                 });
-             } withError:^(NSError *error, NSInteger statusCode) {
-             }];
+    [ApiManager fetchUnreadCountWithCompletion:^(NSString *unreadCount) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.title = unreadCount;
+        });
+    } withError:^(NSError *error) {
+    }];
 }
 
 - (void) fetchStream {
-    NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
-    [ApiManager queryApiUrl:url
-             withCompletion:^(NSData *data) {
-                 NSError *jsonError;
-                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.jsonFeed = dataDictionary;
-                     [self fetchUnreadCount];
-                     [self.tableView reloadData];
-                     [self fetchArticleUrls];
-                     [self.refreshControl endRefreshing];
-                 });
-             } withError:^(NSError *error, NSInteger statusCode) {
-             }];
+    [ApiManager fetchStreamWithCompletion:^(NSDictionary *streamData) {
+        self.jsonFeed = streamData;
+        [self fetchUnreadCount];
+        [self fetchArticleUrls];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        });
+    } withError:^(NSError *error) {
+    }];
 }
 
 - (void) fetchArticleUrls {
@@ -182,14 +168,11 @@
                                        handler:^(UIAlertAction *action)
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
-                                           NSDictionary *postData = @{@"i": [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"],
-                                                                      @"a": @"user/-/state/com.google/read",
-                                                                      @"output": @"json"};
-                                           NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
-                                           [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
-                                               //
-                                           } withError:^(NSError *error, NSInteger statusCode) {
-                                               //
+                                           [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"] withCompletion:^(NSData *response) {
+                                                   [self fetchStream];
+                                                   [self.tableView reloadData];
+                                           } withError:^(NSError *error) {
+                                               ;
                                            }];
 
                                        }];;
@@ -212,14 +195,8 @@
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         // Mart article read on server
-        NSDictionary *postData = @{@"i": [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
-                                   @"a": @"user/-/state/com.google/read",
-                                   @"output": @"json"};
-        NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
-        [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
-            //
-        } withError:^(NSError *error, NSInteger statusCode) {
-            //
+        [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"] withCompletion:^(NSData *response) {
+        } withError:^(NSError *error) {
         }];
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;

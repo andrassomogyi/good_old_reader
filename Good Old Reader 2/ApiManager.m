@@ -6,10 +6,56 @@
 //  Copyright (c) 2015 András Somogyi. All rights reserved.
 //
 
-#import "ApiManager.h"
 #import <UIKit/UIKit.h>
+#import "ApiManager.h"
+#import "EndpointResolver.h"
 
 @implementation ApiManager
+
++ (void)fetchStreamWithCompletion:(void(^)(NSDictionary *))completion withError:(void(^)(NSError *))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
+    [self queryApiUrl:url withCompletion:^(NSData *data) {
+        NSError *jsonError;
+        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+        completion(dataDictionary);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+    }];
+}
+
++ (void)fetchUnreadCountWithCompletion:(void(^)(NSString *))completion withError:(void(^)(NSError *))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:UnreadCountEndpoint];
+    [self queryApiUrl:url
+             withCompletion:^(NSData *data) {
+                 NSError *jsonError;
+                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+                 completion([NSString stringWithFormat:@"%@ unread",dataDictionary[@"max"]]);
+             } withError:^(NSError *error, NSInteger statusCode) {
+                 errorBlock(error);
+             }];
+}
+
++ (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
+    NSDictionary *postData = @{@"i": articleId,
+                               @"a": @"user/-/state/com.google/read",
+                               @"output": @"json"};
+    [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+        completion(data);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+        ;
+    }];
+}
+
++ (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
+    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
+        completion(data);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+    }];
+}
 
 + (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
     NSURLSession *urlSession = [NSURLSession sharedSession];
