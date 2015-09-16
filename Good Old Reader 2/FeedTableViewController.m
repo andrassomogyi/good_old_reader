@@ -55,6 +55,7 @@
     self.navigationController.topViewController.navigationItem.leftBarButtonItem = qrViewButton;
     qrViewButton.enabled = FALSE;
     qrViewButton.style = UIBarButtonSystemItemEdit;
+    
 }
 
 - (void) showQRview {
@@ -159,22 +160,47 @@
     }
 
     cell.detailTextLabel.text = shortSummary;
+    
+    // Adding long tap gesture recognizer
+    UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
+    [cell addGestureRecognizer:longTap];
 
-    // Parsing the images from the summaries
-    // Makes the tableview lag, kept for historical reasons only
-    //
-    //    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    //    NSArray *matches = [linkDetector matchesInString:fullSummary options:0 range:NSMakeRange(0, [fullSummary length])];
-    //    for (NSTextCheckingResult *match in matches) {
-    //        NSString *possibleImage = [[match URL] absoluteString];
-    //        if (([possibleImage rangeOfString:@".jpg"].location != NSNotFound) ||
-    //            ([possibleImage rangeOfString:@".gif"].location != NSNotFound) ||
-    //            ([possibleImage rangeOfString:@".png"].location != NSNotFound)) {
-    //                cell.imageView.image  = [UIImage imageWithData:[NSData dataWithContentsOfURL:[match URL]]];
-    //
-    //        }
-    //    }
     return cell;
+}
+
+- (void) cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
+    UITableViewCell *tappedCell = (UITableViewCell *) gestureRecognizer.view;
+    NSString *alertTitle = @"Mark article as read";
+    NSString *alertString = @"Do you want to mark as read?";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertString preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *markAsReadAction = [UIAlertAction
+                                       actionWithTitle:@"Mark as read"
+                                       style:UIAlertActionStyleDestructive
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
+                                           NSDictionary *postData = @{@"i": [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"],
+                                                                      @"a": @"user/-/state/com.google/read",
+                                                                      @"output": @"json"};
+                                           NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
+                                           [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+                                               //
+                                           } withError:^(NSError *error, NSInteger statusCode) {
+                                               //
+                                           }];
+
+                                       }];;
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                    // Doing nothing
+                                   }];;
+    [alertController addAction:markAsReadAction];
+    [alertController addAction:cancelAction];
+
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Navigation
