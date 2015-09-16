@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "AFNetworking.h"
 #import "EndpointResolver.h"
 #import "ApiManager.h"
 
@@ -31,6 +30,7 @@
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
+    self.loginMessageLabel.text = @"Logging in...";
     NSURL *url = [EndpointResolver URLForEndpoint:ClientLoginEndpoint];
     NSDictionary *postData = @{@"client": @"YourAppName",
                                @"accountType": @"HOSTED_OR_GOOGLE",
@@ -43,27 +43,10 @@
     } withError:^(NSError *error, NSInteger statusCode) {
         [self loginError];
     }];
-
-//    
-//    AFHTTPRequestOperationManager *loginManager = [AFHTTPRequestOperationManager manager];
-//    [loginManager POST:@"https://theoldreader.com/accounts/ClientLogin"
-//            parameters:@{@"client": @"YourAppName",
-//                         @"accountType": @"HOSTED_OR_GOOGLE",
-//                         @"service": @"reader",
-//                         @"Email": self.loginEmailTextField.text,
-//                         @"Passwd": self.loginPassTextField.text,
-//                         @"output": @"json"}
-//               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                   [self succesfullLogin];
-//               }
-//               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                   [self loginError];
-//               }];
     [self loadingInProgress];
 }
 
 - (void) loadingInProgress {
-    self.loginMessageLabel.text = @"Logging in...";
     self.loginButton.hidden = YES;
     self.loginActivityIndicatiorSpinner.hidden = NO;
     [self.loginActivityIndicatiorSpinner startAnimating];

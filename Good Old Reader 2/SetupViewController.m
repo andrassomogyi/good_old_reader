@@ -7,7 +7,8 @@
 //
 
 #import "SetupViewController.h"
-#import "AFNetworking.h"
+#import "EndpointResolver.h"
+#import "ApiManager.h"
 
 @interface SetupViewController ()
 - (IBAction)logoutButton:(UIButton *)sender;
@@ -37,14 +38,13 @@
 */
 
 - (IBAction)logoutButton:(UIButton *)sender {
-    AFHTTPRequestOperationManager *logoutManager = [AFHTTPRequestOperationManager manager];
-    [logoutManager GET:@"https://theoldreader.com/users/sign_out?output=json"
-           parameters:nil
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [self.navigationController popToRootViewControllerAnimated:YES];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              }
-     ];
+    NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
+    [ApiManager queryApiUrl:url
+             withCompletion:^(NSData *data) {
+                 [self.navigationController popToRootViewControllerAnimated:YES];
+             } withError:^(NSError *error, NSInteger statusCode) {
+                 //
+                 NSLog(@"Error");
+             }];
 }
 @end

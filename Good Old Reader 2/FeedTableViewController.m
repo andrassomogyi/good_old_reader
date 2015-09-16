@@ -18,7 +18,6 @@
 #import "FeedTableViewController.h"
 #import "DetailViewController.h"
 #import "QRreaderViewController.h"
-#import "AFNetworking.h"
 #import "ApiManager.h"
 #import "EndpointResolver.h"
 
@@ -76,7 +75,6 @@
                  });
              } withError:^(NSError *error, NSInteger statusCode) {
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     self.navigationItem.title = @"Logged out";
                      [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
                  });
              }];
@@ -96,9 +94,6 @@
                      self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",dataDictionary[@"max"]];
                  });
              } withError:^(NSError *error, NSInteger statusCode) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.navigationItem.title = [NSString stringWithFormat:@"Error"];
-                 });
              }];
 }
 
@@ -116,9 +111,6 @@
                      [self.refreshControl endRefreshing];
                  });
              } withError:^(NSError *error, NSInteger statusCode) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.navigationItem.title = [NSString stringWithFormat:@"Error"];
-                 });
              }];
 }
 
@@ -191,29 +183,15 @@
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         // Mart article read on server
-        
         NSDictionary *postData = @{@"i": [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"],
                                    @"a": @"user/-/state/com.google/read",
                                    @"output": @"json"};
-        
-//        AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
-//        [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
-//                     parameters:postData
-//                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                            // TODO
-//                        }
-//                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                            // TODO
-//                        }];
-
         NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
         [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
             //
         } withError:^(NSError *error, NSInteger statusCode) {
             //
         }];
-        
-        
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary

@@ -14,6 +14,7 @@ NSString * const UNREAD_COUNT_URL = @"reader/api/0/unread-count?output=json";
 NSString * const MARK_AS_READ_URL = @"reader/api/0/edit-tag";
 NSString * const GET_TOKEN_URL = @"reader/api/0/token?output=json";
 NSString * const CLIENT_LOGIN_URL = @"accounts/ClientLogin";
+NSString * const CLIENT_LOGOUT_URL = @"users/sign_out?output=json";
 
 @implementation EndpointResolver
 
@@ -40,6 +41,10 @@ NSString * const CLIENT_LOGIN_URL = @"accounts/ClientLogin";
             
         case 4:
             endpointString = CLIENT_LOGIN_URL;
+            break;
+
+        case 5:
+            endpointString = CLIENT_LOGOUT_URL;
             break;
 
         default:

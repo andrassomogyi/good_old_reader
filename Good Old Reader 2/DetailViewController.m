@@ -7,7 +7,6 @@
 //
 
 #import "DetailViewController.h"
-#import "AFNetworking.h"
 
 @interface DetailViewController ()
 @end

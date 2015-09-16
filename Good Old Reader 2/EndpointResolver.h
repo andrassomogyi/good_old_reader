@@ -20,6 +20,8 @@ extern NSString * const MARK_AS_READ_URL;
 extern NSString * const GET_TOKEN_URL;
 /// URL for client login
 extern NSString * const CLIENT_LOGIN_URL;
+/// URL for client logout
+extern NSString * const CLIENT_LOGOUT_URL;
 
 
 ///
@@ -31,7 +33,8 @@ typedef NS_ENUM(NSInteger, Endpoint)
     UnreadCountEndpoint,
     MarkAsReadEndpoint,
     GetTokenEndpoint,
-    ClientLoginEndpoint
+    ClientLoginEndpoint,
+    ClientLogoutEndpoint
 };
 
 @interface EndpointResolver : NSObject

@@ -7,8 +7,9 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
-#import "AFNetworking.h"
 #import "QRreaderViewController.h"
+#import "EndpointResolver.h"
+#import "ApiManager.h"
 
 @interface QRreaderViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 
@@ -23,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Debug
-    NSLog(@"%@",_articleUrlDict);
+    NSLog(@"%@",self.articleUrlDict);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -44,7 +45,7 @@
 }
 
 - (AVCaptureSession *) captureSession {
-        if (!_captureSession)
+        if (!self.captureSession)
         {
             NSError *error = nil;
             AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -63,29 +64,29 @@
             // Input device
             if (deviceInput)
             {
-                _captureSession = [[AVCaptureSession alloc] init];
-                if ([_captureSession canAddInput:deviceInput])
+                self.captureSession = [[AVCaptureSession alloc] init];
+                if ([self.captureSession canAddInput:deviceInput])
                 {
-                    [_captureSession addInput:deviceInput];
+                    [self.captureSession addInput:deviceInput];
                 }
             }
 
             // Output device
             AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
-            if ([_captureSession canAddOutput:metadataOutput])
+            if ([self.captureSession canAddOutput:metadataOutput])
             {
-                [_captureSession addOutput:metadataOutput];
+                [self.captureSession addOutput:metadataOutput];
                 [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
                 [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
             }
 
             // Camera output layer
-            self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+            self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
             self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
             self.previewLayer.frame = self.view.bounds;
             [self.view.layer addSublayer:self.previewLayer];
         }
-    return _captureSession;
+    return self.captureSession;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -109,23 +110,21 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         NSString *scannedUrl = codeObject.stringValue;
 
         // Mark article read on server
-        if ([_articleUrlDict objectForKey:scannedUrl] == nil) {
+        if ([self.articleUrlDict objectForKey:scannedUrl] == nil) {
             NSLog(@"Article not found: %@",scannedUrl);
         }
         else {
-            NSLog(@"Article %@ found with %@ and marked as read.",scannedUrl, [_articleUrlDict objectForKey:scannedUrl]);
+            NSLog(@"Article %@ found with %@ and marked as read.",scannedUrl, [self.articleUrlDict objectForKey:scannedUrl]);
+            NSDictionary *postData = @{@"i":[self.articleUrlDict objectForKey:scannedUrl],
+                                       @"a": @"user/-/state/com.google/read",
+                                       @"output": @"json"};
+            NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
+            [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+                //
+            } withError:^(NSError *error, NSInteger statusCode) {
+                //
+            }];
 
-        AFHTTPRequestOperationManager *markAsReadManager = [AFHTTPRequestOperationManager manager];
-        [markAsReadManager POST:@"https://theoldreader.com/reader/api/0/edit-tag"
-                     parameters:@{@"i":[_articleUrlDict objectForKey:scannedUrl],
-                                  @"a": @"user/-/state/com.google/read",
-                                  @"output": @"json"}
-                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                            //
-                        }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            //
-                        }];
         }
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
