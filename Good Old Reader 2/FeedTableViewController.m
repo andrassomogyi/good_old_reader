@@ -169,6 +169,9 @@
 }
 
 - (void) cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
     UITableViewCell *tappedCell = (UITableViewCell *) gestureRecognizer.view;
     NSString *alertTitle = @"Mark article as read";
     NSString *alertString = @"Do you want to mark as read?";
