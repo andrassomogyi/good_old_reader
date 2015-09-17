@@ -12,12 +12,12 @@
 @end
 
 @implementation DetailViewController
-
+#pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self displayArticle];
 }
-
+#pragma mark - Actions
 - (void)displayArticle {
     NSString *articleUpdateDateString;
     NSString *articleTitle;

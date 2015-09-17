@@ -27,7 +27,7 @@
 @end
 
 @implementation FeedTableViewController
-
+#pragma mark - View lifecycle
 - (void) viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
@@ -58,10 +58,6 @@
     
 }
 
-- (void) showQRview {
-    [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
-}
-
 - (void) viewWillAppear:(BOOL)animated {
     [self fetchStream];
     [self.tableView reloadData];
@@ -75,10 +71,54 @@
     }];
 }
 
+- (void) didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark - Actions
+- (void) showQRview {
+    [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
+}
+
 - (void) setupMenu {
     [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
 }
 
+- (void) cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    UITableViewCell *tappedCell = (UITableViewCell *) gestureRecognizer.view;
+    NSString *alertTitle = @"Mark article as read";
+    NSString *alertString = @"Do you want to mark as read?";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertString preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *markAsReadAction = [UIAlertAction
+                                       actionWithTitle:@"Mark as read"
+                                       style:UIAlertActionStyleDestructive
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
+                                           [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"] withCompletion:^(NSData *response) {
+                                               [self fetchStream];
+                                               [self.tableView reloadData];
+                                           } withError:^(NSError *error) {
+                                               ;
+                                           }];
+                                           
+                                       }];;
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       // Doing nothing
+                                   }];;
+    [alertController addAction:markAsReadAction];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+#pragma mark - Feed handling
 - (void) fetchUnreadCount {
     [ApiManager fetchUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -112,9 +152,29 @@
     self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
 }
 
-- (void) didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSString *) stripTags:(NSString *)stringToStrip {
+    NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
+    
+    NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
+    scanner.charactersToBeSkipped = nil;
+    NSString *tempText = nil;
+    
+    while (![scanner isAtEnd])
+    {
+        [scanner scanUpToString:@"<" intoString:&tempText];
+        
+        if (tempText != nil)
+            [html appendString:tempText];
+        
+        [scanner scanUpToString:@">" intoString:nil];
+        
+        if (![scanner isAtEnd])
+            [scanner setScanLocation:[scanner scanLocation] + 1];
+        
+        tempText = nil;
+    }
+    
+    return html;
 }
 
 #pragma mark - Table view data source
@@ -154,41 +214,6 @@
     return cell;
 }
 
-- (void) cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
-        return;
-    }
-    UITableViewCell *tappedCell = (UITableViewCell *) gestureRecognizer.view;
-    NSString *alertTitle = @"Mark article as read";
-    NSString *alertString = @"Do you want to mark as read?";
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertString preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *markAsReadAction = [UIAlertAction
-                                       actionWithTitle:@"Mark as read"
-                                       style:UIAlertActionStyleDestructive
-                                       handler:^(UIAlertAction *action)
-                                       {
-                                           NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
-                                           [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"] withCompletion:^(NSData *response) {
-                                                   [self fetchStream];
-                                                   [self.tableView reloadData];
-                                           } withError:^(NSError *error) {
-                                               ;
-                                           }];
-
-                                       }];;
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                    // Doing nothing
-                                   }];;
-    [alertController addAction:markAsReadAction];
-    [alertController addAction:cancelAction];
-
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
 #pragma mark - Navigation
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
@@ -208,63 +233,5 @@
         qrViewController.articleUrlDict = self.articleUrlDict;
     }
 }
-
-- (NSString *) stripTags:(NSString *)stringToStrip {
-    NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
-
-    NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
-    scanner.charactersToBeSkipped = nil;
-    NSString *tempText = nil;
-
-    while (![scanner isAtEnd])
-    {
-        [scanner scanUpToString:@"<" intoString:&tempText];
-
-        if (tempText != nil)
-            [html appendString:tempText];
-
-        [scanner scanUpToString:@">" intoString:nil];
-
-        if (![scanner isAtEnd])
-            [scanner setScanLocation:[scanner scanLocation] + 1];
-
-        tempText = nil;
-    }
-
-    return html;
-}
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 @end

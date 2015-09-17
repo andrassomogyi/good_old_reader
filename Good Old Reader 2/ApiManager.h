@@ -17,8 +17,4 @@
 + (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock;
 + (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
 
-
-+ (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error, NSInteger statusCode))errorBlock;
-+ (void)postApiUrl:(NSURL *)url postData:(NSDictionary *)dataDictionary withCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error, NSInteger statusCode))errorBlock;
-
 @end

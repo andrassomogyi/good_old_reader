@@ -19,7 +19,7 @@
 @end
 
 @implementation LoginViewController
-
+#pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self failedLogin];
@@ -28,7 +28,7 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+#pragma mark - Actions
 - (IBAction)loginButtonPressed:(UIButton *)sender {
     [ApiManager loginUser:self.loginEmailTextField.text withPassword:self.loginPassTextField.text completion:^(NSData *data) {
         [self succesfullLogin];

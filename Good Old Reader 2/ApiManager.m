@@ -11,7 +11,8 @@
 #import "EndpointResolver.h"
 
 @implementation ApiManager
-
+#pragma mark - Public fucntions
+#pragma mark GET
 + (void)fetchStreamWithCompletion:(void(^)(NSDictionary *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
     [self queryApiUrl:url withCompletion:^(NSData *data) {
@@ -35,6 +36,16 @@
              }];
 }
 
++ (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
+    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
+        completion(data);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+    }];
+}
+
+#pragma mark POST
 + (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
     NSDictionary *postData = @{@"i": articleId,
@@ -45,15 +56,6 @@
     } withError:^(NSError *error, NSInteger statusCode) {
         errorBlock(error);
         ;
-    }];
-}
-
-+ (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
-    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
-    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
-        completion(data);
-    } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
     }];
 }
 
@@ -82,6 +84,7 @@
 }
 
 
+#pragma mark - Private functions
 + (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
     NSURLSession *urlSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url
@@ -148,4 +151,5 @@
     
     [task resume];
 }
+
 @end
