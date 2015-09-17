@@ -30,17 +30,9 @@
 }
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
-    self.loginMessageLabel.text = @"Logging in...";
-    NSURL *url = [EndpointResolver URLForEndpoint:ClientLoginEndpoint];
-    NSDictionary *postData = @{@"client": @"YourAppName",
-                               @"accountType": @"HOSTED_OR_GOOGLE",
-                               @"service": @"reader",
-                               @"Email": self.loginEmailTextField.text,
-                               @"Passwd": self.loginPassTextField.text,
-                               @"output": @"json"};
-    [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+    [ApiManager loginUser:self.loginEmailTextField.text withPassword:self.loginPassTextField.text completion:^(NSData *data) {
         [self succesfullLogin];
-    } withError:^(NSError *error, NSInteger statusCode) {
+    } error:^(NSError *error) {
         [self loginError];
     }];
     [self loadingInProgress];
@@ -73,7 +65,10 @@
                                                                [self failedLogin];
                                                            }];
     [loginError addAction:tryAgainAction];
-    [self presentViewController:loginError animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:loginError animated:YES completion:nil];
+    });
+    
 }
 
 @end

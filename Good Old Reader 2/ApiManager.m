@@ -57,6 +57,31 @@
     }];
 }
 
++ (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
+    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
+        completion(data);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+    }];
+}
+
++ (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *))completion error:(void(^)(NSError *))errorBlock {
+    NSURL *url = [EndpointResolver URLForEndpoint:ClientLoginEndpoint];
+    NSDictionary *postData = @{@"client": @"YourAppName",
+                               @"accountType": @"HOSTED_OR_GOOGLE",
+                               @"service": @"reader",
+                               @"Email": username,
+                               @"Passwd": password,
+                               @"output": @"json"};
+    [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+        completion(data);
+    } withError:^(NSError *error, NSInteger statusCode) {
+        errorBlock(error);
+    }];
+}
+
+
 + (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
     NSURLSession *urlSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url
@@ -113,7 +138,7 @@
 //        NSLog(@"Error: %@", error);
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger httpStatusCode = [httpResponse statusCode];
-        if (error) {
+        if (error || httpStatusCode != 200) {
             errorBlock(error,httpStatusCode);
         }
         if (httpStatusCode == 200) {

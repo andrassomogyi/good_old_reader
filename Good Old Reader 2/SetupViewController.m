@@ -38,13 +38,9 @@
 */
 
 - (IBAction)logoutButton:(UIButton *)sender {
-    NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
-    [ApiManager queryApiUrl:url
-             withCompletion:^(NSData *data) {
-                 [self.navigationController popToRootViewControllerAnimated:YES];
-             } withError:^(NSError *error, NSInteger statusCode) {
-                 //
-                 NSLog(@"Error");
-             }];
+[ApiManager logoutWithCompletion:^(NSData *data) {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+} withError:^(NSError *error) {
+}];
 }
 @end

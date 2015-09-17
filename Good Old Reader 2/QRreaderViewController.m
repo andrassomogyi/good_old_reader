@@ -115,18 +115,12 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         }
         else {
             NSLog(@"Article %@ found with %@ and marked as read.",scannedUrl, [self.articleUrlDict objectForKey:scannedUrl]);
-            NSDictionary *postData = @{@"i":[self.articleUrlDict objectForKey:scannedUrl],
-                                       @"a": @"user/-/state/com.google/read",
-                                       @"output": @"json"};
-            NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
-            [ApiManager postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+            [ApiManager markArticleRead:[self.articleUrlDict objectForKey:scannedUrl] withCompletion:^(NSData *response) {
                 //
-            } withError:^(NSError *error, NSInteger statusCode) {
+            } withError:^(NSError *error) {
                 //
             }];
-
         }
-        [self.navigationController popToRootViewControllerAnimated:NO];
     }
 }
 

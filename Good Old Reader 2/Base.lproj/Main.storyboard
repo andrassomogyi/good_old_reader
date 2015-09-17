@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="il3-Tj-KcB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Setup View Controller-->
@@ -186,6 +187,11 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HTz-ZZ-1i2"/>
+                                    </mask>
+                                </variation>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nPU-gX-hk6">
                                 <rect key="frame" x="150" y="323" width="300" height="30"/>
@@ -213,6 +219,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="yMu-iC-Zjd" firstAttribute="width" secondItem="mK6-Ry-BMh" secondAttribute="width" multiplier="0.5" id="3Kv-ll-GQb"/>
                             <constraint firstItem="nPU-gX-hk6" firstAttribute="top" secondItem="yMu-iC-Zjd" secondAttribute="bottom" constant="8" symbolic="YES" id="BP4-YV-lyJ"/>
                             <constraint firstItem="D52-cT-Vax" firstAttribute="centerX" secondItem="yMu-iC-Zjd" secondAttribute="centerX" id="EfY-ua-jwa"/>
                             <constraint firstItem="mNs-d2-Hde" firstAttribute="centerX" secondItem="fca-a9-u8J" secondAttribute="centerX" id="G3R-en-dZq"/>
