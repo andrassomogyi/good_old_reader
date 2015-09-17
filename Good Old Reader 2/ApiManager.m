@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ApiManager.h"
 #import "EndpointResolver.h"
+#import "NSString+UrlEncoding.h"
 
 @implementation ApiManager
 #pragma mark - Public fucntions
@@ -107,20 +108,7 @@
     NSURLSession *urlSession  = [NSURLSession sessionWithConfiguration:config];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    
-    NSMutableArray *parts = [[NSMutableArray alloc] init];
-    
-    for (id key in dataDictionary) {
-        id value = dataDictionary[key];
-        
-        NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *encodedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
-        [parts addObject:part];
-    }
-    
-    NSString *bodyString = [parts componentsJoinedByString:@"&"];
+    NSString *bodyString = [NSString encodeUrl:dataDictionary];
     NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
     
     request.HTTPMethod = @"POST";

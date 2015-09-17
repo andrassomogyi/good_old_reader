@@ -27,6 +27,7 @@
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
 		D6B713561BA6CD820055A98B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B713551BA6CD820055A98B /* ApiManager.m */; };
+		D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,8 @@
 		81E335A31A758903007AE952 /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
 		D6B713551BA6CD820055A98B /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
+		D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncoding.h"; sourceTree = "<group>"; };
+		D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +216,8 @@
 				81E335A31A758903007AE952 /* FeedTableViewController.m */,
 				8181700A1A82C4DD0093BE77 /* DetailViewController.h */,
 				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
+				D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */,
+				D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */,
 				81E335891A7588A4007AE952 /* Images.xcassets */,
 				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
@@ -441,6 +446,7 @@
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
+				D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */,
 				81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */,
 				813273D61AE937A3007297C2 /* SetupViewController.m in Sources */,
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
