@@ -34,7 +34,6 @@
     
     // Enable manual pull down refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.tableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
 
     // Enable setup menu button
