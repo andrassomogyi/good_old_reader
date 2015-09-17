@@ -95,7 +95,7 @@
                                                    if (error || httpStatusCode != 200) {
                                                        errorBlock(error,httpStatusCode);
                                                    }
-                                                   if (httpStatusCode == 200) {
+                                                   if (httpStatusCode == 200 || httpStatusCode == 204) {
                                                        completion(data);
                                                    }
                                                }];
