@@ -52,8 +52,10 @@
     qrViewButton.enabled = FALSE;
     qrViewButton.style = UIBarButtonSystemItemEdit;
     
+    id unreadCount = [PersistenceManager load:@"unreadCount" fromGroup:nil];
+    
     // DEMO Logging last sessions unread count
-    NSLog(@"Application closed with %@ unread articles.", [PersistenceManager load:@"unreadCount"]);
+    NSLog(@"Application closed with %@ unread articles.", unreadCount);
     NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
 }
 
