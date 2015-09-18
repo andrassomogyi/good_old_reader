@@ -62,8 +62,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGI-Hc-1en">
-                                            <rect key="frame" x="16" y="16" width="568" height="38"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGI-Hc-1en">
+                                            <rect key="frame" x="16" y="16" width="568" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="kyd-e6-Agu"/>
                                             </constraints>
@@ -76,8 +76,8 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Detail" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRS-iW-kXb">
-                                            <rect key="frame" x="16" y="62" width="568" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Detail" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRS-iW-kXb">
+                                            <rect key="frame" x="16" y="45" width="568" height="38"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -87,17 +87,11 @@
                                         <constraint firstItem="hRS-iW-kXb" firstAttribute="leading" secondItem="akF-7m-Ud0" secondAttribute="leadingMargin" constant="8" id="6iC-SH-YTq"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="hRS-iW-kXb" secondAttribute="bottom" constant="8" id="ADd-fm-efw"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="hRS-iW-kXb" secondAttribute="trailing" constant="8" id="AWu-rJ-QhF"/>
-                                        <constraint firstItem="hRS-iW-kXb" firstAttribute="top" secondItem="yGI-Hc-1en" secondAttribute="bottom" constant="8" id="Mot-5F-PxC"/>
                                         <constraint firstItem="yGI-Hc-1en" firstAttribute="leading" secondItem="akF-7m-Ud0" secondAttribute="leadingMargin" constant="8" id="SlN-Ti-jES"/>
                                         <constraint firstItem="yGI-Hc-1en" firstAttribute="top" secondItem="akF-7m-Ud0" secondAttribute="topMargin" constant="8" id="XVD-vx-9M6"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="yGI-Hc-1en" secondAttribute="trailing" constant="8" id="YRL-1F-MLO"/>
                                         <constraint firstItem="hRS-iW-kXb" firstAttribute="top" secondItem="yGI-Hc-1en" secondAttribute="bottom" constant="8" id="yVU-N9-Rbe"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Mot-5F-PxC"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="cellDetailLabel" destination="hRS-iW-kXb" id="d3r-GI-Z6j"/>
