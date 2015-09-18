@@ -21,6 +21,7 @@
 #import "ApiManager.h"
 #import "EndpointResolver.h"
 #import <PersistenceKit/PersistenceKit.h>
+#import "AutoHeightTableViewCell.h"
 
 
 
@@ -35,6 +36,9 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
+    
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     // Enable manual pull down refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -186,10 +190,11 @@
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
-    cell.textLabel.numberOfLines = 2;
-    cell.detailTextLabel.numberOfLines = 2;
-    cell.textLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    AutoHeightTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
+//    cell.textLabel.numberOfLines = 2;
+//    cell.detailTextLabel.numberOfLines = 2;
+//    cell.textLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.cellTitleLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
 
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
     NSString *fullSummary = [[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
@@ -202,7 +207,12 @@
         shortSummary = [shortSummary substringToIndex:200];
     }
 
-    cell.detailTextLabel.text = shortSummary;
+//    cell.detailTextLabel.text = shortSummary;
+    cell.cellDetailLabel.text = shortSummary;
+    NSInteger titleHeight = cell.cellTitleLabel.frame.size.height;
+    NSInteger detailHeight = cell.cellDetailLabel.frame.size.height;
+    NSLog(@"%lo    %lo",titleHeight, detailHeight);
+    self.tableView.rowHeight = titleHeight + detailHeight;
     
     // Adding long tap gesture recognizer
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
