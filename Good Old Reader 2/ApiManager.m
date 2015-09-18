@@ -10,6 +10,7 @@
 #import "ApiManager.h"
 #import "EndpointResolver.h"
 #import "NSString+UrlEncoding.h"
+#import <PersistenceKit/PersistenceKit.h>
 
 @implementation ApiManager
 #pragma mark - Public fucntions
@@ -31,10 +32,16 @@
              withCompletion:^(NSData *data) {
                  NSError *jsonError;
                  NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                 completion([NSString stringWithFormat:@"%@ unread",dataDictionary[@"max"]]);
+
+                 NSString *unread = [NSString stringWithFormat:@"%@",dataDictionary[@"max"]];
+                 [PersistenceManager save:unread forKey:@"unreadCount"];
+                 [PersistenceManager save:@"group.goodOldReader2" object:unread forKey:@"unreadCount"];
+                  
+                 completion(unread);
              } withError:^(NSError *error, NSInteger statusCode) {
                  errorBlock(error);
              }];
+    
 }
 
 + (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {

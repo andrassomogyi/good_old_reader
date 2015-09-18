@@ -20,6 +20,10 @@
 #import "QRreaderViewController.h"
 #import "ApiManager.h"
 #import "EndpointResolver.h"
+#import <PersistenceKit/PersistenceKit.h>
+
+
+
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSDictionary *jsonFeed;
@@ -42,19 +46,15 @@
     setupMenuButton.enabled=TRUE;
     setupMenuButton.style=UIBarButtonSystemItemAction;
 
-    // App group setting for Watch
-    NSUserDefaults *sharedDefaults = [NSUserDefaults standardUserDefaults];
-    sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.goodOldReader2"];
-    [sharedDefaults setObject:@"0" forKey:@"unreadCount"];
-    [sharedDefaults setObject:@"No unread article" forKey:@"recentArticle"];
-    [sharedDefaults synchronize];
-
     // Adding a button to access QR reader view after artcile ids and urls collected
     UIBarButtonItem *qrViewButton = [[UIBarButtonItem alloc] initWithTitle:@"QR" style:UIBarButtonItemStylePlain target:self action:@selector(showQRview)];
     self.navigationController.topViewController.navigationItem.leftBarButtonItem = qrViewButton;
     qrViewButton.enabled = FALSE;
     qrViewButton.style = UIBarButtonSystemItemEdit;
     
+    // DEMO Logging last sessions unread count
+    NSLog(@"Application closed with %@ unread articles.", [PersistenceManager load:@"unreadCount"]);
+    NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -64,7 +64,6 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [ApiManager getTokenWithCompletion:^(NSData *token) {
-        ;
     } withError:^(NSError *error) {
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
     }];
@@ -175,7 +174,6 @@
     
     return html;
 }
-
 #pragma mark - Table view data source
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -212,7 +210,6 @@
 
     return cell;
 }
-
 #pragma mark - Navigation
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
