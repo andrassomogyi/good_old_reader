@@ -37,6 +37,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
     
+    // Settings for auto-height cells
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
@@ -193,9 +194,6 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AutoHeightTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
-//    cell.textLabel.numberOfLines = 2;
-//    cell.detailTextLabel.numberOfLines = 2;
-//    cell.textLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
     cell.cellTitleLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
 
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
@@ -205,16 +203,12 @@
     shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     // To avoid exception when summary is shorter than 200 characters
-    if ([shortSummary length] > 200) {
-        shortSummary = [shortSummary substringToIndex:200];
+    NSInteger summaryLenght = 300;
+    if ([shortSummary length] > summaryLenght) {
+        shortSummary = [shortSummary substringToIndex:summaryLenght];
     }
-
-//    cell.detailTextLabel.text = shortSummary;
+    
     cell.cellDetailLabel.text = shortSummary;
-    NSInteger titleHeight = cell.cellTitleLabel.frame.size.height;
-    NSInteger detailHeight = cell.cellDetailLabel.frame.size.height;
-    NSLog(@"%lo    %lo",titleHeight, detailHeight);
-    self.tableView.rowHeight = titleHeight + detailHeight;
     
     // Adding long tap gesture recognizer
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
