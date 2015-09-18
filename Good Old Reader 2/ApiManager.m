@@ -34,7 +34,7 @@
                  NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
 
                  NSString *unread = [NSString stringWithFormat:@"%@",dataDictionary[@"max"]];
-                 [PersistenceManager save:unread forKey:@"unreadCount"];
+                 [PersistenceManager save:nil object:unread forKey:@"unreadCount"];
                  [PersistenceManager save:@"group.goodOldReader2" object:unread forKey:@"unreadCount"];
                   
                  completion(unread);

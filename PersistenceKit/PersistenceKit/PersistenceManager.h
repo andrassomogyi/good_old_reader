@@ -10,9 +10,7 @@
 
 @interface PersistenceManager : NSObject
 
-+ (void)save:(id)toSave forKey:(NSString *)key;
 + (void)save:(NSString *)appGroup object:(id)toSave forKey:(NSString *)key;
-+ (id)load:(NSString *)key;
 + (id)load:(NSString *)key fromGroup:(NSString *)appGroup;
 
 @end
