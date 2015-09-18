@@ -13,7 +13,7 @@
 #import <PersistenceKit/PersistenceKit.h>
 
 @implementation ApiManager
-#pragma mark - Public fucntions
+#pragma mark - Public functions
 #pragma mark GET
 + (void)fetchStreamWithCompletion:(void(^)(NSDictionary *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];

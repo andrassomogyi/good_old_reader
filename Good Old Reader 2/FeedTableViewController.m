@@ -127,7 +127,7 @@
 - (void) fetchUnreadCount {
     [ApiManager fetchUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationItem.title = unreadCount;
+            self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
         });
     } withError:^(NSError *error) {
     }];
