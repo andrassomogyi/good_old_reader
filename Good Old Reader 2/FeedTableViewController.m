@@ -22,9 +22,7 @@
 #import "EndpointResolver.h"
 #import <PersistenceKit/PersistenceKit.h>
 #import "AutoHeightTableViewCell.h"
-
-
-
+#import "NSString+ShortSummary.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSDictionary *jsonFeed;
@@ -157,30 +155,6 @@
     self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
 }
 
-- (NSString *) stripTags:(NSString *)stringToStrip {
-    NSMutableString *html = [NSMutableString stringWithCapacity:[stringToStrip length]];
-    
-    NSScanner *scanner = [NSScanner scannerWithString:stringToStrip];
-    scanner.charactersToBeSkipped = nil;
-    NSString *tempText = nil;
-    
-    while (![scanner isAtEnd])
-    {
-        [scanner scanUpToString:@"<" intoString:&tempText];
-        
-        if (tempText != nil)
-            [html appendString:tempText];
-        
-        [scanner scanUpToString:@">" intoString:nil];
-        
-        if (![scanner isAtEnd])
-            [scanner setScanLocation:[scanner scanLocation] + 1];
-        
-        tempText = nil;
-    }
-    
-    return html;
-}
 #pragma mark - Table view data source
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -199,20 +173,9 @@
     // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
     NSString *fullSummary = [[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
 
-    NSString *shortSummary = [self stripTags:fullSummary];
-    shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    // Setting short summary for feed view
+    cell.cellDetailLabel.text = [NSString shortSummaryFromString:fullSummary summaryLength:25];
 
-    // Limit short summary for 25 words
-    NSInteger words = 25;
-    NSArray *summaryWordsArray = [shortSummary componentsSeparatedByString:@" "];
-    if (summaryWordsArray.count >= words) {
-        NSRange summaryRange = NSMakeRange(0, words);
-        summaryWordsArray = [summaryWordsArray subarrayWithRange:summaryRange];
-        shortSummary = [[summaryWordsArray componentsJoinedByString:@" "] stringByAppendingString:@"..."];
-    }
-    
-    cell.cellDetailLabel.text = shortSummary;
-    
     // Adding long tap gesture recognizer
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
     [cell addGestureRecognizer:longTap];

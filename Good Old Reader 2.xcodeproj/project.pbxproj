@@ -26,6 +26,7 @@
 		81E3358D1A7588A4007AE952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E3358B1A7588A4007AE952 /* LaunchScreen.xib */; };
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
+		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; settings = {ASSET_TAGS = (); }; };
 		D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */; };
 		D6B713561BA6CD820055A98B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B713551BA6CD820055A98B /* ApiManager.m */; };
 		D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */; };
@@ -104,6 +105,8 @@
 		81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Good_Old_Reader_2Tests.m; sourceTree = "<group>"; };
 		81E335A21A758903007AE952 /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
 		81E335A31A758903007AE952 /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
+		BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShortSummary.h"; sourceTree = "<group>"; };
+		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
 		D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoHeightTableViewCell.h; sourceTree = "<group>"; };
 		D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTableViewCell.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
 				D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */,
 				D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */,
+				BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */,
+				BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */,
 				81E335891A7588A4007AE952 /* Images.xcassets */,
 				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
@@ -456,6 +461,7 @@
 				81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */,
 				813273D61AE937A3007297C2 /* SetupViewController.m in Sources */,
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
+				BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
