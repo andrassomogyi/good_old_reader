@@ -202,10 +202,13 @@
     NSString *shortSummary = [self stripTags:fullSummary];
     shortSummary = [shortSummary stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    // To avoid exception when summary is shorter than 200 characters
-    NSInteger summaryLenght = 300;
-    if ([shortSummary length] > summaryLenght) {
-        shortSummary = [shortSummary substringToIndex:summaryLenght];
+    // Limit short summary for 25 words
+    NSInteger words = 25;
+    NSArray *summaryWordsArray = [shortSummary componentsSeparatedByString:@" "];
+    if (summaryWordsArray.count >= words) {
+        NSRange summaryRange = NSMakeRange(0, words);
+        summaryWordsArray = [summaryWordsArray subarrayWithRange:summaryRange];
+        shortSummary = [[summaryWordsArray componentsJoinedByString:@" "] stringByAppendingString:@"..."];
     }
     
     cell.cellDetailLabel.text = shortSummary;
