@@ -12,7 +12,7 @@
 		D619C7BB1BABFBD500663896 /* PersistenceKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D619C7BA1BABFBD500663896 /* PersistenceKitTests.m */; };
 		D619C7C61BABFCB400663896 /* PersistenceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D619C7C41BABFCB400663896 /* PersistenceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D619C7C71BABFCB400663896 /* PersistenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D619C7C51BABFCB400663896 /* PersistenceManager.m */; };
-		D69DD7D31BB0501C0097ED48 /* CoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DD7D11BB0501C0097ED48 /* CoreDataStack.h */; };
+		D69DD7D31BB0501C0097ED48 /* CoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DD7D11BB0501C0097ED48 /* CoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D69DD7D41BB0501C0097ED48 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7D21BB0501C0097ED48 /* CoreDataStack.m */; };
 /* End PBXBuildFile section */
 
