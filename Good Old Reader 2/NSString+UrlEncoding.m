@@ -16,8 +16,8 @@
         for (id key in dictionary) {
             id value = dictionary[key];
     
-            NSString *encodedKey = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSString *encodedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *encodedKey = [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            NSString *encodedValue = [value stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
             NSString *part = [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue];
             [parts addObject:part];
