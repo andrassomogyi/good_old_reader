@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <PersistenceKit/CoreDataStack.h>
 
 @interface AppDelegate ()
 

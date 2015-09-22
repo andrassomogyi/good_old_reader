@@ -17,3 +17,4 @@ FOUNDATION_EXPORT const unsigned char PersistenceKitVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <PersistenceKit/PublicHeader.h>
 
 #import <PersistenceKit/PersistenceManager.h>
+#import <PersistenceKit/CoreDataStack.h>
