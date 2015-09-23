@@ -231,12 +231,18 @@
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="RBR-Wa-BE7" id="4Tc-lq-sH1"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nPU-gX-hk6" userLabel="Password field">
                                                 <rect key="frame" x="75" y="237" width="450" height="30"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="RBR-Wa-BE7" id="SUK-08-0HN"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mNs-d2-Hde">
                                                 <rect key="frame" x="281" y="275" width="38" height="30"/>
@@ -296,7 +302,7 @@
                         <outlet property="loginEmailTextField" destination="yMu-iC-Zjd" id="Cqm-Ak-Nqf"/>
                         <outlet property="loginMessageLabel" destination="D52-cT-Vax" id="sFe-Sw-7I6"/>
                         <outlet property="loginPassTextField" destination="nPU-gX-hk6" id="RNO-ly-ZLZ"/>
-                        <outlet property="scrollView" destination="g64-9d-1q3" id="OaT-4H-FaC"/>
+                        <outlet property="scrollView" destination="g64-9d-1q3" id="2aU-k4-tbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9I-3R-ghf" userLabel="First Responder" sceneMemberID="firstResponder"/>
