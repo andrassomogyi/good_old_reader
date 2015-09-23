@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *loginPassTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatiorSpinner;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation LoginViewController
@@ -23,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self failedLogin];
+    [self registerforKeyBoardNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +71,33 @@
         [self presentViewController:loginError animated:YES completion:nil];
     });
     
+    
+    
 }
+- (void)registerforKeyBoardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) keyboardWasShown:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInset;
+    
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= (keyboardSize.height);
+    if (!CGRectContainsPoint(aRect, self.loginButton.frame.origin)) {
+        [self.scrollView scrollRectToVisible:self.loginButton.frame animated:YES];
+    }
+}
+
+- (void) keyboardWillBeHidden:(NSNotification *)notification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
 
 @end
