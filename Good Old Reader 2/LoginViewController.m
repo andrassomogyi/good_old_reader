@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *loginPassTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivityIndicatiorSpinner;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @end
 
 @implementation LoginViewController
@@ -23,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self failedLogin];
+    [self registerforKeyBoardNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,24 +41,24 @@
     [self loadingInProgress];
 }
 
-- (void) loadingInProgress {
+- (void)loadingInProgress {
     self.loginButton.hidden = YES;
     self.loginActivityIndicatiorSpinner.hidden = NO;
     [self.loginActivityIndicatiorSpinner startAnimating];
 }
 
-- (void) succesfullLogin {
+- (void)succesfullLogin {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) failedLogin {
+- (void)failedLogin {
     self.loginMessageLabel.text = @"Login";
     self.loginButton.hidden = NO;
     self.loginActivityIndicatiorSpinner.hidden = YES;
     [self.loginActivityIndicatiorSpinner stopAnimating];
 }
 
-- (void) loginError {
+- (void)loginError {
     UIAlertController *loginError = [UIAlertController alertControllerWithTitle:@"Login failed"
                                                                         message:@"Bad username or password!"
                                                                  preferredStyle:UIAlertControllerStyleAlert];
@@ -69,6 +72,31 @@
         [self presentViewController:loginError animated:YES completion:nil];
     });
     
+}
+
+- (void)registerforKeyBoardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) keyboardWasShown:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInset;
+    
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= (keyboardSize.height);
+    if (!CGRectContainsPoint(aRect, self.loginButton.frame.origin)) {
+        [self.scrollView scrollRectToVisible:self.loginButton.frame animated:YES];
+    }
+}
+
+- (void) keyboardWillBeHidden:(NSNotification *)notification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
