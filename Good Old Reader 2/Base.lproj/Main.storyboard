@@ -74,7 +74,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="kyd-e6-Agu"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -86,7 +86,7 @@
                                             <rect key="frame" x="16" y="45" width="568" height="38"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -296,6 +296,7 @@
                         <outlet property="loginEmailTextField" destination="yMu-iC-Zjd" id="Cqm-Ak-Nqf"/>
                         <outlet property="loginMessageLabel" destination="D52-cT-Vax" id="sFe-Sw-7I6"/>
                         <outlet property="loginPassTextField" destination="nPU-gX-hk6" id="RNO-ly-ZLZ"/>
+                        <outlet property="scrollView" destination="g64-9d-1q3" id="OaT-4H-FaC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9I-3R-ghf" userLabel="First Responder" sceneMemberID="firstResponder"/>
