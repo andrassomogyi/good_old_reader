@@ -80,23 +80,28 @@
 }
 
 - (void) keyboardWasShown:(NSNotification *)notification {
-    NSDictionary *info = [notification userInfo];
-    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    UIEdgeInsets contentInset = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
-    self.scrollView.contentInset = contentInset;
-    
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= (keyboardSize.height);
-    if (!CGRectContainsPoint(aRect, self.loginButton.frame.origin)) {
-        [self.scrollView scrollRectToVisible:self.loginButton.frame animated:YES];
-    }
+    [self adjustInsetForKeyboardShow:YES notification:notification];
 }
 
 - (void) keyboardWillBeHidden:(NSNotification *)notification {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
+    [self adjustInsetForKeyboardShow:NO notification:notification];
+}
+
+- (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
+    
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardHeight = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGFloat adjustmentHeight = CGRectGetHeight(keyboardHeight) * (show ? 1 : -1);
+
+    self.scrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, adjustmentHeight, 0.0);
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, adjustmentHeight, 0.0);
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
