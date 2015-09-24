@@ -31,7 +31,7 @@
 
 @implementation FeedTableViewController
 #pragma mark - View lifecycle
-- (void) viewDidLoad {
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
     
@@ -62,32 +62,32 @@
     NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self fetchStream];
     [self.tableView reloadData];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [ApiManager getTokenWithCompletion:^(NSData *token) {
     } withError:^(NSError *error) {
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
     }];
 }
 
-- (void) didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - Actions
-- (void) showQRview {
+- (void)showQRview {
     [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
 }
 
-- (void) setupMenu {
+- (void)setupMenu {
     [self performSegueWithIdentifier:@"SetupShowSegue" sender:self];
 }
 
-- (void) cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
+- (void)cellActionSheet:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
         return;
     }
@@ -122,7 +122,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 #pragma mark - Feed handling
-- (void) fetchUnreadCount {
+- (void)fetchUnreadCount {
     [ApiManager fetchUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
@@ -131,7 +131,7 @@
     }];
 }
 
-- (void) fetchStream {
+- (void)fetchStream {
     [ApiManager fetchStreamWithCompletion:^(NSDictionary *streamData) {
         self.jsonFeed = streamData;
         [self fetchUnreadCount];
@@ -144,7 +144,7 @@
     }];
 }
 
-- (void) fetchArticleUrls {
+- (void)fetchArticleUrls {
     self.articleUrlDict = [[NSMutableDictionary alloc] init];
 
     for (id item in self.jsonFeed[@"items"]) {
@@ -156,12 +156,12 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [[self.jsonFeed objectForKey:@"items"] count];
 }
@@ -183,7 +183,7 @@
     return cell;
 }
 #pragma mark - Navigation
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];

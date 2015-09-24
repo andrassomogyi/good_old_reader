@@ -10,6 +10,6 @@
 
 @interface NSString (UrlEncoding)
 
-+ (NSString *) encodeUrl:(NSDictionary *)dictionary;
++ (NSString *)encodeUrl:(NSDictionary *)dictionary;
 
 @end

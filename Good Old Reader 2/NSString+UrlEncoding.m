@@ -10,7 +10,7 @@
 
 @implementation NSString (UrlEncoding)
 
-+ (NSString *) encodeUrl:(NSDictionary *)dictionary {
++ (NSString *)encodeUrl:(NSDictionary *)dictionary {
         NSMutableArray *parts = [[NSMutableArray alloc] init];
     
         for (id key in dictionary) {
