@@ -5,15 +5,6 @@
 //  Created by András Somogyi on 2015. 01. 25..
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
-//
-//         Get specific entities like:
-//
-//         NSString *items = jsonFeed[@"items"];
-//         NSString *title = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"title"];
-//         NSString *author = [[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"author"];
-//         NSString *summary = [[[[[jsonFeed objectForKey:@"items"] objectAtIndex:0] objectForKey:@"summary"] objectForKey:@"content"] substringToIndex:100];
-//
-//
 
 #import "FeedTableViewController.h"
 #import "DetailViewController.h"
@@ -138,7 +129,6 @@
     [ApiManager fetchStreamWithCompletion:^(NSArray *articleArray) {
         self.articleArray = articleArray;
         [self fetchUnreadCount];
-        [self fetchArticleUrls];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
@@ -146,18 +136,6 @@
     } withError:^(NSError *error) {
     }];
 }
-
-- (void)fetchArticleUrls {
-    self.articleUrlDict = [[NSMutableDictionary alloc] init];
-
-    for (id item in self.jsonFeed[@"items"]) {
-        NSString *href = [[item[@"canonical"] objectAtIndex:0] objectForKey:@"href"];
-        NSString *articleId = item[@"id"];
-        [self.articleUrlDict setValue:articleId forKey:href];
-    }
-    self.navigationController.topViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
-}
-
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
