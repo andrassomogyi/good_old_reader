@@ -19,50 +19,40 @@
 }
 #pragma mark - Actions
 - (void)displayArticle {
-    NSString *articleUpdateDateString;
-    NSString *articleTitle;
-    NSString *articleAuthor;
-    NSString *articleOrigin;
-    NSString *articleSummary;
+    NSString *articleUpdateDateString = @"";
+    NSString *articleTitle = @"No title";
+    NSString *articleAuthor = @"Anonymus";
+    NSString *articleOrigin = @"No site";
+    NSString *articleSummary = @"";
     
     // Query article title if exists
-    if ([self.articleContainer.title isEqual:[NSNull null]] || [self.articleContainer.title  isEqual: @""]) {
-        articleTitle = @"No title";
+    if (self.articleContainer.title.length > 0) {
+        articleTitle = self.articleContainer.title;
     }
-    else articleTitle = self.articleContainer.title;
-    
     
     // Query article author if exists
-    if ([self.articleContainer.author isEqual:[NSNull null]] || [self.articleContainer.author isEqual: @""]) {
-        articleAuthor = @"Anonymus";
+    if (self.articleContainer.author.length > 0) {
+        articleAuthor = self.articleContainer.author;
     }
-    else articleAuthor = self.articleContainer.author;
-    
     
     // Query article update date if exists
-    if ([self.articleContainer.published isEqual:[NSNull null]]) {
-        articleUpdateDateString = @"";
-    }
-    else {
+    if (self.articleContainer.published) {
         NSDate *articleUpdateDate = [NSDate dateWithTimeIntervalSince1970:[self.articleContainer.published doubleValue]];
         NSDateFormatter *articleUpdateDateFormatter = [[NSDateFormatter alloc] init];
         [articleUpdateDateFormatter setDateStyle:NSDateFormatterShortStyle];
         [articleUpdateDateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        articleUpdateDateString = [articleUpdateDateFormatter stringFromDate:articleUpdateDate];}
-    
+        articleUpdateDateString = [articleUpdateDateFormatter stringFromDate:articleUpdateDate];
+    }
     
     // Query origin site if exists
-    if ([self.articleContainer.origin_title isEqual:[NSNull null]] || [self.articleContainer.origin_title isEqual: @""]) {
-        articleOrigin = @"No site";
-        
+    if (self.articleContainer.origin_title.length > 0) {
+        articleOrigin = self.articleContainer.origin_title;
     }
-    else articleOrigin = self.articleContainer.origin_title;
     
     // Query article text if exists
-    if ([self.articleContainer.summary_content isEqual:[NSNull null]] || [self.articleContainer.summary_content isEqual: @""]) {
-        articleSummary = @"";
+    if (self.articleContainer.summary_content.length > 0) {
+        articleSummary = self.articleContainer.summary_content;
     }
-    else articleSummary = self.articleContainer.summary_content;
     
     NSMutableString *preparedArticle = [NSMutableString stringWithString:@"<style type='text/css'>img { max-width: 100%; width: auto; height: auto;}body{font-family:helvetica; font-size:12px;}</style>"];
     [preparedArticle appendString:@"<h1>"];
