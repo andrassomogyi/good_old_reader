@@ -11,7 +11,7 @@
 
 @implementation Article
 
-- (Article *) initWithDictionary:(NSDictionary *)dictionary {
+- (instancetype) initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
         self.articleId = dictionary[@"articleId"];
@@ -28,19 +28,6 @@
 
 - (NSString *) shortSummary {
     return [NSString shortSummaryFromString:self.summary_content summaryLength:25];
-}
-
-- (Article *) init {
-    NSDictionary *emptyItem = @{
-                                @"articleId" : @"",
-                                @"title" : @"",
-                                @"published": @"",
-                                @"canonical": @"",
-                                @"summary_content" : @"",
-                                @"author" : @"",
-                                @"origin_streamId" : @"",
-                                @"origin_title" : @""};
-    return [self initWithDictionary:emptyItem];
 }
 
 @end
