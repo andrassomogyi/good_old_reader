@@ -26,25 +26,25 @@
     NSString *articleSummary;
     
     // Query article title if exists
-    if ([self.articleContainer objectForKey:@"title"] == [NSNull null] || [[self.articleContainer objectForKey:@"title"]  isEqual: @""]) {
+    if ([self.articleContainer.title isEqual:[NSNull null]] || [self.articleContainer.title  isEqual: @""]) {
         articleTitle = @"No title";
     }
-    else articleTitle = [self.articleContainer objectForKey:@"title"];
+    else articleTitle = self.articleContainer.title;
     
     
     // Query article author if exists
-    if ([self.articleContainer objectForKey:@"author"] == [NSNull null] || [[self.articleContainer objectForKey:@"author"]  isEqual: @""]) {
+    if ([self.articleContainer.author isEqual:[NSNull null]] || [self.articleContainer.author isEqual: @""]) {
         articleAuthor = @"Anonymus";
     }
-    else articleAuthor = [self.articleContainer objectForKey:@"author"];
+    else articleAuthor = self.articleContainer.author;
     
     
     // Query article update date if exists
-    if ([self.articleContainer objectForKey:@"updated"] == [NSNull null]) {
+    if ([self.articleContainer.published isEqual:[NSNull null]]) {
         articleUpdateDateString = @"";
     }
     else {
-        NSDate *articleUpdateDate = [NSDate dateWithTimeIntervalSince1970:[[self.articleContainer objectForKey:@"updated"] doubleValue]];
+        NSDate *articleUpdateDate = [NSDate dateWithTimeIntervalSince1970:[self.articleContainer.published doubleValue]];
         NSDateFormatter *articleUpdateDateFormatter = [[NSDateFormatter alloc] init];
         [articleUpdateDateFormatter setDateStyle:NSDateFormatterShortStyle];
         [articleUpdateDateFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -52,17 +52,17 @@
     
     
     // Query origin site if exists
-    if ([[self.articleContainer objectForKey:@"origin"] objectForKey:@"title"] == nil || [[[self.articleContainer objectForKey:@"origin"] objectForKey:@"title"]  isEqual: @""]) {
+    if ([self.articleContainer.origin_title isEqual:[NSNull null]] || [self.articleContainer.origin_title isEqual: @""]) {
         articleOrigin = @"No site";
         
     }
-    else articleOrigin = [[self.articleContainer objectForKey:@"origin"] objectForKey:@"title"];
+    else articleOrigin = self.articleContainer.origin_title;
     
     // Query article text if exists
-    if ([[self.articleContainer objectForKey:@"summary"] objectForKey:@"content"] == [NSNull null] || [[[self.articleContainer objectForKey:@"summary"] objectForKey:@"content"]  isEqual: @""]) {
+    if ([self.articleContainer.summary_content isEqual:[NSNull null]] || [self.articleContainer.summary_content isEqual: @""]) {
         articleSummary = @"";
     }
-    else articleSummary = [[self.articleContainer objectForKey:@"summary"] objectForKey:@"content"];
+    else articleSummary = self.articleContainer.summary_content;
     
     NSMutableString *preparedArticle = [NSMutableString stringWithString:@"<style type='text/css'>img { max-width: 100%; width: auto; height: auto;}body{font-family:helvetica; font-size:12px;}</style>"];
     [preparedArticle appendString:@"<h1>"];
@@ -84,16 +84,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
 

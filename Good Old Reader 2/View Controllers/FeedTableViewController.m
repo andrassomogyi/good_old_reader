@@ -174,7 +174,7 @@
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary
-        detailViewController.articleContainer = [[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row];
+        detailViewController.articleContainer = article;
     }
     if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
         QRreaderViewController *qrViewController = segue.destinationViewController;

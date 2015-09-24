@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Article.h"
 
 @interface DetailViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIWebView *articleDisplay;
-@property (nonatomic, copy) NSDictionary *articleContainer;
+@property (strong, nonatomic) Article *articleContainer;
 @end
