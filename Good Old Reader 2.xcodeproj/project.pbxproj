@@ -151,14 +151,81 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		044D41DB1BB3E70900662D8A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */,
+				81E335891A7588A4007AE952 /* Images.xcassets */,
+				81E3357D1A7588A4007AE952 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		044D41DC1BB3E72300662D8A /* Storyboards & Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
+				81E335861A7588A4007AE952 /* Main.storyboard */,
+			);
+			path = "Storyboards & Nibs";
+			sourceTree = "<group>";
+		};
+		044D41DD1BB3E76C00662D8A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */,
+				BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */,
+				D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */,
+				D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		044D41DE1BB3E77F00662D8A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D6B713541BA6CD820055A98B /* ApiManager.h */,
+				D6B713551BA6CD820055A98B /* ApiManager.m */,
+				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
+				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		044D41DF1BB3E79100662D8A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8181700A1A82C4DD0093BE77 /* DetailViewController.h */,
+				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
+				81E335A21A758903007AE952 /* FeedTableViewController.h */,
+				81E335A31A758903007AE952 /* FeedTableViewController.m */,
+				819AC2891AA65EF300CB29EC /* LoginViewController.h */,
+				819AC28A1AA65EF300CB29EC /* LoginViewController.m */,
+				81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */,
+				81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */,
+				813273D41AE937A3007297C2 /* SetupViewController.h */,
+				813273D51AE937A3007297C2 /* SetupViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		044D41E01BB3E7C200662D8A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */,
+				D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		81195F301B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				81195F311B03E0CA007C22FE /* Supporting Files */,
 				81195F501B03E8BC007C22FE /* Good Old Reader 2 WatchKit Extension.entitlements */,
+				81195F361B03E0CA007C22FE /* Images.xcassets */,
 				81195F331B03E0CA007C22FE /* InterfaceController.h */,
 				81195F341B03E0CA007C22FE /* InterfaceController.m */,
-				81195F361B03E0CA007C22FE /* Images.xcassets */,
-				81195F311B03E0CA007C22FE /* Supporting Files */,
 			);
 			path = "Good Old Reader 2 WatchKit Extension";
 			sourceTree = "<group>";
@@ -168,15 +235,15 @@
 			children = (
 				81195F321B03E0CA007C22FE /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
-				81195F411B03E0CA007C22FE /* Interface.storyboard */,
-				81195F441B03E0CA007C22FE /* Images.xcassets */,
 				81195F3F1B03E0CA007C22FE /* Supporting Files */,
+				81195F441B03E0CA007C22FE /* Images.xcassets */,
+				81195F411B03E0CA007C22FE /* Interface.storyboard */,
 			);
 			path = "Good Old Reader 2 WatchKit App";
 			sourceTree = "<group>";
@@ -186,18 +253,18 @@
 			children = (
 				81195F401B03E0CA007C22FE /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		81E335701A7588A4007AE952 = {
 			isa = PBXGroup;
 			children = (
-				81E3357B1A7588A4007AE952 /* Good Old Reader 2 */,
-				81E335951A7588A4007AE952 /* Good Old Reader 2Tests */,
-				81195F301B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension */,
-				81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */,
-				81E3357A1A7588A4007AE952 /* Products */,
 				FF9DFCBC598D785ED372776E /* Frameworks */,
+				81E3357B1A7588A4007AE952 /* Good Old Reader 2 */,
+				81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */,
+				81195F301B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension */,
+				81E335951A7588A4007AE952 /* Good Old Reader 2Tests */,
+				81E3357A1A7588A4007AE952 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,33 +282,13 @@
 		81E3357B1A7588A4007AE952 /* Good Old Reader 2 */ = {
 			isa = PBXGroup;
 			children = (
-				81195F2A1B03E09C007C22FE /* Good Old Reader 2.entitlements */,
-				81E335861A7588A4007AE952 /* Main.storyboard */,
-				D6B713541BA6CD820055A98B /* ApiManager.h */,
-				D6B713551BA6CD820055A98B /* ApiManager.m */,
-				04D0F8FD1BA6C5C8006C4E48 /* EndpointResolver.h */,
-				04D0F8FE1BA6C5C8006C4E48 /* EndpointResolver.m */,
-				81E2D9EB1B146B5C0020BC7E /* QRreaderViewController.h */,
-				81E2D9EC1B146B5C0020BC7E /* QRreaderViewController.m */,
-				813273D41AE937A3007297C2 /* SetupViewController.h */,
-				813273D51AE937A3007297C2 /* SetupViewController.m */,
-				81E335801A7588A4007AE952 /* AppDelegate.h */,
-				81E335811A7588A4007AE952 /* AppDelegate.m */,
-				819AC2891AA65EF300CB29EC /* LoginViewController.h */,
-				819AC28A1AA65EF300CB29EC /* LoginViewController.m */,
-				81E335A21A758903007AE952 /* FeedTableViewController.h */,
-				81E335A31A758903007AE952 /* FeedTableViewController.m */,
-				D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */,
-				D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */,
-				8181700A1A82C4DD0093BE77 /* DetailViewController.h */,
-				8181700B1A82C4DD0093BE77 /* DetailViewController.m */,
-				D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */,
-				D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */,
-				BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */,
-				BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */,
-				81E335891A7588A4007AE952 /* Images.xcassets */,
-				81E3358B1A7588A4007AE952 /* LaunchScreen.xib */,
+				044D41DE1BB3E77F00662D8A /* Networking */,
+				044D41DB1BB3E70900662D8A /* Resources */,
+				044D41DC1BB3E72300662D8A /* Storyboards & Nibs */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
+				044D41DD1BB3E76C00662D8A /* Utilities */,
+				044D41DF1BB3E79100662D8A /* View Controllers */,
+				044D41E01BB3E7C200662D8A /* Views */,
 			);
 			path = "Good Old Reader 2";
 			sourceTree = "<group>";
@@ -249,17 +296,18 @@
 		81E3357C1A7588A4007AE952 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				81E3357D1A7588A4007AE952 /* Info.plist */,
+				81E335801A7588A4007AE952 /* AppDelegate.h */,
+				81E335811A7588A4007AE952 /* AppDelegate.m */,
 				81E3357E1A7588A4007AE952 /* main.m */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		81E335951A7588A4007AE952 /* Good Old Reader 2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */,
 				81E335961A7588A4007AE952 /* Supporting Files */,
+				81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */,
 			);
 			path = "Good Old Reader 2Tests";
 			sourceTree = "<group>";
@@ -269,7 +317,7 @@
 			children = (
 				81E335971A7588A4007AE952 /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		FF9DFCBC598D785ED372776E /* Frameworks */ = {
@@ -364,7 +412,7 @@
 				TargetAttributes = {
 					81195F2E1B03E0CA007C22FE = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = GSE39KA5J6;
+						DevelopmentTeam = D7H64P2565;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -373,11 +421,11 @@
 					};
 					81195F391B03E0CA007C22FE = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = GSE39KA5J6;
+						DevelopmentTeam = D7H64P2565;
 					};
 					81E335781A7588A4007AE952 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = GSE39KA5J6;
+						DevelopmentTeam = D7H64P2565;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -512,6 +560,7 @@
 				81195F421B03E0CA007C22FE /* Base */,
 			);
 			name = Interface.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		81E335861A7588A4007AE952 /* Main.storyboard */ = {
@@ -520,6 +569,7 @@
 				81E335871A7588A4007AE952 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		81E3358B1A7588A4007AE952 /* LaunchScreen.xib */ = {
@@ -528,6 +578,7 @@
 				81E3358C1A7588A4007AE952 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -545,7 +596,7 @@
 					"$(inherited)",
 				);
 				IBSC_MODULE = Good_Old_Reader_2_WatchKit_Extension;
-				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Supporting Files/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -564,7 +615,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Good_Old_Reader_2_WatchKit_Extension;
-				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Supporting Files/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -586,7 +637,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp.watchkitextension";
@@ -608,7 +659,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp.watchkitextension";
@@ -707,7 +758,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "Good Old Reader 2/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
@@ -724,7 +775,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "Good Old Reader 2/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
@@ -746,7 +797,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Good Old Reader 2Tests/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2Tests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -762,7 +813,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Good Old Reader 2Tests/Info.plist";
+				INFOPLIST_FILE = "Good Old Reader 2Tests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
