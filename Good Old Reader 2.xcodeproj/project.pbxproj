@@ -25,6 +25,7 @@
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; settings = {ASSET_TAGS = (); }; };
+		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; settings = {ASSET_TAGS = (); }; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D69998421BB1D0E1007352B4 /* Good Old Reader 2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 81195F3A1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App.app */; };
 		D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */; };
@@ -118,6 +119,8 @@
 		81E335A31A758903007AE952 /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
 		BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShortSummary.h"; sourceTree = "<group>"; };
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
+		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoHeightTableViewCell.h; sourceTree = "<group>"; };
 		D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTableViewCell.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				044D41DD1BB3E76C00662D8A /* Utilities */,
 				044D41DF1BB3E79100662D8A /* View Controllers */,
 				044D41E01BB3E7C200662D8A /* Views */,
+				D65C89C11BB3EF9200AD5498 /* Article.h */,
+				D65C89C21BB3EF9200AD5498 /* Article.m */,
 			);
 			path = "Good Old Reader 2";
 			sourceTree = "<group>";
@@ -514,6 +519,7 @@
 				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */,
+				D65C89C31BB3EF9200AD5498 /* Article.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
 				D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */,

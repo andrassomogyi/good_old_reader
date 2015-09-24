@@ -11,16 +11,32 @@
 #import "EndpointResolver.h"
 #import "NSString+UrlEncoding.h"
 #import <PersistenceKit/PersistenceKit.h>
+#import "Article.h"
 
 @implementation ApiManager
 #pragma mark - Public functions
 #pragma mark GET
-+ (void)fetchStreamWithCompletion:(void(^)(NSDictionary *))completion withError:(void(^)(NSError *))errorBlock {
++ (void)fetchStreamWithCompletion:(void(^)(NSArray *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
     [self queryApiUrl:url withCompletion:^(NSData *data) {
         NSError *jsonError;
         NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-        completion(dataDictionary);
+        dataDictionary = dataDictionary[@"items"];
+        NSMutableArray *articles = [[NSMutableArray alloc] init];
+        for (NSDictionary *item in dataDictionary) {
+            NSDictionary *articleItem = @{
+                                          @"articleId" : [item objectForKey:@"id"],
+                                          @"title" : [item objectForKey:@"title"],
+                                          @"published": item[@"published"],
+                                          @"canonical": [[[item objectForKey:@"canonical"] objectAtIndex:0] objectForKey:@"href"],
+                                          @"summary_content" : [[item objectForKey:@"summary"] objectForKey:@"content"],
+                                          @"author" : [item objectForKey:@"author"],
+                                          @"origin_streamId" : [[item objectForKey:@"origin"] objectForKey:@"streamId"],
+                                          @"origin_title" : [[item objectForKey:@"origin"] objectForKey:@"title"]};
+            Article *article = [[Article alloc] initWithDictionary:articleItem];
+            [articles addObject:article];
+        }
+        completion(articles);
     } withError:^(NSError *error, NSInteger statusCode) {
         errorBlock(error);
     }];

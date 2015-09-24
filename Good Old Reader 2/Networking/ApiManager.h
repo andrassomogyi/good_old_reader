@@ -11,7 +11,7 @@
 @interface ApiManager : NSObject
 
 + (void)fetchUnreadCountWithCompletion:(void(^)(NSString *unreadCount))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)fetchStreamWithCompletion:(void(^)(NSDictionary *streamData))completion withError:(void(^)(NSError *error))errorBlock;
++ (void)fetchStreamWithCompletion:(void(^)(NSArray *articleArray))completion withError:(void(^)(NSError *error))errorBlock;
 + (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *response))completion withError:(void(^)(NSError *error))errorBlock;
 + (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock;
 + (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock;

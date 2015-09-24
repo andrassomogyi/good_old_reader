@@ -23,8 +23,10 @@
 #import <PersistenceKit/PersistenceKit.h>
 #import "AutoHeightTableViewCell.h"
 #import "NSString+ShortSummary.h"
+#import "Article.h"
 
 @interface FeedTableViewController ()
+@property (nonatomic, copy) NSArray *articleArray;
 @property (nonatomic, copy) NSDictionary *jsonFeed;
 @property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 @end
@@ -101,7 +103,8 @@
                                        handler:^(UIAlertAction *action)
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
-                                           [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:tappedCellRow] objectForKey:@"id"] withCompletion:^(NSData *response) {
+                                           Article *article = self.articleArray[tappedCellRow];
+                                           [ApiManager markArticleRead:article.articleId withCompletion:^(NSData *response) {
                                                [self fetchStream];
                                                [self.tableView reloadData];
                                            } withError:^(NSError *error) {
@@ -132,8 +135,8 @@
 }
 
 - (void)fetchStream {
-    [ApiManager fetchStreamWithCompletion:^(NSDictionary *streamData) {
-        self.jsonFeed = streamData;
+    [ApiManager fetchStreamWithCompletion:^(NSArray *articleArray) {
+        self.articleArray = articleArray;
         [self fetchUnreadCount];
         [self fetchArticleUrls];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -163,18 +166,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[self.jsonFeed objectForKey:@"items"] count];
+    return [self.articleArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AutoHeightTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
-    cell.cellTitleLabel.text = [[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
-
-    // Fetching article text from JSON, stripping HTML tags, removing leading whitespaces and newlines
-    NSString *fullSummary = [[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"summary"] objectForKey:@"content"];
-
+    Article *article = self.articleArray[indexPath.row];
+    cell.cellTitleLabel.text = article.title;
+    
     // Setting short summary for feed view
-    cell.cellDetailLabel.text = [NSString shortSummaryFromString:fullSummary summaryLength:25];
+    cell.cellDetailLabel.text = [article  shortSummary];
 
     // Adding long tap gesture recognizer
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
@@ -188,7 +189,8 @@
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         // Mart article read on server
-        [ApiManager markArticleRead:[[[self.jsonFeed objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"id"] withCompletion:^(NSData *response) {
+        Article *article = self.articleArray[indexPath.row];
+        [ApiManager markArticleRead:article.articleId withCompletion:^(NSData *response) {
         } withError:^(NSError *error) {
         }];
         // Get the destination view controller of the seque
