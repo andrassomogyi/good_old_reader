@@ -285,6 +285,7 @@
 		81E3357B1A7588A4007AE952 /* Good Old Reader 2 */ = {
 			isa = PBXGroup;
 			children = (
+				D69039D71BB5255B0092625E /* Models */,
 				044D41DE1BB3E77F00662D8A /* Networking */,
 				044D41DB1BB3E70900662D8A /* Resources */,
 				044D41DC1BB3E72300662D8A /* Storyboards & Nibs */,
@@ -292,8 +293,6 @@
 				044D41DD1BB3E76C00662D8A /* Utilities */,
 				044D41DF1BB3E79100662D8A /* View Controllers */,
 				044D41E01BB3E7C200662D8A /* Views */,
-				D65C89C11BB3EF9200AD5498 /* Article.h */,
-				D65C89C21BB3EF9200AD5498 /* Article.m */,
 			);
 			path = "Good Old Reader 2";
 			sourceTree = "<group>";
@@ -323,6 +322,15 @@
 				81E335971A7588A4007AE952 /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D69039D71BB5255B0092625E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D65C89C11BB3EF9200AD5498 /* Article.h */,
+				D65C89C21BB3EF9200AD5498 /* Article.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		FF9DFCBC598D785ED372776E /* Frameworks */ = {
