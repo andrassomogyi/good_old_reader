@@ -33,9 +33,7 @@
 
 - (void)markAsReadOnServer {
     // Mart article read on server
-    [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:^(NSData *response) {
-    } withError:^(NSError *error) {
-    }];
+    [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:nil withError:nil];
 }
 
 - (void)didReceiveMemoryWarning {
