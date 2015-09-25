@@ -26,6 +26,7 @@
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; settings = {ASSET_TAGS = (); }; };
 		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; settings = {ASSET_TAGS = (); }; };
+		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; settings = {ASSET_TAGS = (); }; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D69998421BB1D0E1007352B4 /* Good Old Reader 2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 81195F3A1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App.app */; };
 		D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */; };
@@ -122,6 +123,8 @@
 		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
 		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
+		D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+HTMLRepresentation.h"; sourceTree = "<group>"; };
+		D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+HTMLRepresentation.m"; sourceTree = "<group>"; };
 		D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoHeightTableViewCell.h; sourceTree = "<group>"; };
 		D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTableViewCell.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
@@ -331,6 +334,8 @@
 			children = (
 				D65C89C11BB3EF9200AD5498 /* Article.h */,
 				D65C89C21BB3EF9200AD5498 /* Article.m */,
+				D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */,
+				D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -529,6 +534,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */,
 				04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
 				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
@@ -736,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -772,7 +778,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

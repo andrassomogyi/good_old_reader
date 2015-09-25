@@ -13,7 +13,7 @@
 @property (copy, nonatomic) NSString *articleId;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *published;
-@property (strong, nonatomic) NSURL *canonical;
+@property (strong, nonatomic) NSString *canonical;
 @property (strong, nonatomic) NSString *summary_content;
 @property (strong, nonatomic) NSString *author;
 @property (strong, nonatomic) NSString *origin_streamId;
