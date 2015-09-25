@@ -156,7 +156,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="a8p-aw-tFI"/>
                     <connections>
-                        <outlet property="articleDisplay" destination="Oax-dV-erK" id="Oef-b9-qVc"/>
+                        <outlet property="articleDisplay" destination="Oax-dV-erK" id="Y1p-Cc-aIZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xz9-9r-u3c" userLabel="First Responder" sceneMemberID="firstResponder"/>

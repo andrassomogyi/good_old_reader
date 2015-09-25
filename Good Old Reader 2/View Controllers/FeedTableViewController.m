@@ -166,11 +166,8 @@
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
         // Get the sender object, aka. tapped cell
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
-        // Mart article read on server
         Article *article = self.articleArray[indexPath.row];
-        [ApiManager markArticleRead:article.articleId withCompletion:^(NSData *response) {
-        } withError:^(NSError *error) {
-        }];
+        
         // Get the destination view controller of the seque
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary

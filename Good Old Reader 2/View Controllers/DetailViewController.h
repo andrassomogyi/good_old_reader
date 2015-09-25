@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Article+HTMLRepresentation.h"
 @import SafariServices;
 
+@class Article;
+
 @interface DetailViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIWebView *articleDisplay;
+
 @property (strong, nonatomic) Article *articleContainer;
+
 @end

@@ -7,19 +7,35 @@
 //
 
 #import "DetailViewController.h"
+#import "ApiManager.h"
+#import "Article+HTMLRepresentation.h"
 
 @interface DetailViewController ()
+@property (weak, nonatomic) IBOutlet UIWebView *articleDisplay;
 @end
 
 @implementation DetailViewController
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self displayArticle];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self markAsReadOnServer];
+}
+
 #pragma mark - Actions
 - (void)displayArticle {
     [self.articleDisplay loadHTMLString:[Article HTMLRepresentation:self.articleContainer] baseURL:nil];
+}
+
+- (void)markAsReadOnServer {
+    // Mart article read on server
+    [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:^(NSData *response) {
+    } withError:^(NSError *error) {
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,4 +44,3 @@
 }
 
 @end
-
