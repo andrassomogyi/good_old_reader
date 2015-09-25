@@ -144,19 +144,45 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRv-xI-Hd6">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="n1Q-tP-ptu"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Leave unread" id="Z6f-wu-pDG"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Adh-B1-ePn"/>
+                                    <barButtonItem title="Share" id="rvk-yS-HA8">
+                                        <connections>
+                                            <action selector="shareAction:" destination="tpJ-62-A53" id="vCA-ua-XSL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="t3w-0t-Y2O"/>
+                                    <barButtonItem title="Open in Safari" id="lBq-VO-NoY">
+                                        <connections>
+                                            <action selector="openInSafariAction:" destination="tpJ-62-A53" id="CqU-8O-noz"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BRv-xI-Hd6" secondAttribute="trailing" id="Mvu-nI-b4P"/>
+                            <constraint firstItem="OAS-My-4Su" firstAttribute="top" secondItem="BRv-xI-Hd6" secondAttribute="bottom" id="NZ2-mb-6Ld"/>
                             <constraint firstItem="Oax-dV-erK" firstAttribute="leading" secondItem="c9f-xN-Nij" secondAttribute="leading" id="SNy-dw-scH"/>
                             <constraint firstAttribute="trailing" secondItem="Oax-dV-erK" secondAttribute="trailing" id="SyO-E4-52J"/>
                             <constraint firstItem="Oax-dV-erK" firstAttribute="top" secondItem="c9f-xN-Nij" secondAttribute="top" id="T1R-ga-Ukw"/>
+                            <constraint firstItem="BRv-xI-Hd6" firstAttribute="leading" secondItem="c9f-xN-Nij" secondAttribute="leading" id="afh-sY-Lz1"/>
                             <constraint firstItem="Oax-dV-erK" firstAttribute="bottom" secondItem="OAS-My-4Su" secondAttribute="top" id="qfd-u1-H1n"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="a8p-aw-tFI"/>
                     <connections>
                         <outlet property="articleDisplay" destination="Oax-dV-erK" id="Y1p-Cc-aIZ"/>
+                        <outlet property="detailViewToolBar" destination="BRv-xI-Hd6" id="ClR-If-yk2"/>
+                        <outlet property="openInSafariBarButton" destination="lBq-VO-NoY" id="WaQ-uj-OPW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xz9-9r-u3c" userLabel="First Responder" sceneMemberID="firstResponder"/>
