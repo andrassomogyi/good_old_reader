@@ -36,9 +36,15 @@
             Article *article = [[Article alloc] initWithDictionary:articleItem];
             [articles addObject:article];
         }
-        completion(articles);
+        
+        if (completion) {
+            completion(articles);
+        }
+        
     } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
 }
 
@@ -53,9 +59,13 @@
                  [PersistenceManager save:nil object:unread forKey:@"unreadCount"];
                  [PersistenceManager save:@"group.goodOldReader2" object:unread forKey:@"unreadCount"];
                   
-                 completion(unread);
+                 if (completion) {
+                     completion(unread);
+                 }
              } withError:^(NSError *error, NSInteger statusCode) {
-                 errorBlock(error);
+                 if (errorBlock) {
+                     errorBlock(error);
+                 }
              }];
     
 }
@@ -63,9 +73,13 @@
 + (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
     [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
-        completion(data);
+        if (completion) {
+            completion(data);
+        }
     } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
 }
 
@@ -76,19 +90,26 @@
                                @"a": @"user/-/state/com.google/read",
                                @"output": @"json"};
     [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
-        completion(data);
+        if (completion) {
+            completion(data);
+        }
     } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
-        ;
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
 }
 
 + (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
     [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
-        completion(data);
+        if (completion) {
+            completion(data);
+        }
     } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
 }
 
@@ -101,27 +122,33 @@
                                @"Passwd": password,
                                @"output": @"json"};
     [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
-        completion(data);
+        if (completion) {
+            completion(data);
+        }
     } withError:^(NSError *error, NSInteger statusCode) {
-        errorBlock(error);
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
 }
 
 
 #pragma mark - Private functions
 + (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
+    
     NSURLSession *urlSession = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url
-                                               completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                                   NSInteger httpStatusCode = [httpResponse statusCode];
-                                                   if (error || httpStatusCode != 200) {
-                                                       errorBlock(error,httpStatusCode);
-                                                   }
-                                                   if (httpStatusCode == 200 || httpStatusCode == 204) {
-                                                       completion(data);
-                                                   }
-                                               }];
+    
+    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+        NSInteger httpStatusCode = [httpResponse statusCode];
+        if (error && errorBlock) {
+            errorBlock(error,httpStatusCode);
+        }
+        else if (completion) {
+            completion(data);
+        }
+    }];
+    
     [dataTask resume];
 }
 
@@ -152,10 +179,10 @@
 //        NSLog(@"Error: %@", error);
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger httpStatusCode = [httpResponse statusCode];
-        if (error || httpStatusCode != 200) {
+        if (error && errorBlock) {
             errorBlock(error,httpStatusCode);
         }
-        if (httpStatusCode == 200) {
+        else if (completion) {
             completion(data);
         }
     }];

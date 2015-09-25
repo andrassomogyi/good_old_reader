@@ -57,12 +57,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self fetchStream];
-    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [ApiManager getTokenWithCompletion:^(NSData *token) {
-    } withError:^(NSError *error) {
+    [ApiManager getTokenWithCompletion:nil withError:^(NSError *error) {
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
     }];
 }
@@ -121,8 +119,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
         });
-    } withError:^(NSError *error) {
-    }];
+    } withError:nil];
 }
 
 - (void)fetchStream {
@@ -133,8 +130,7 @@
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         });
-    } withError:^(NSError *error) {
-    }];
+    } withError:nil];
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

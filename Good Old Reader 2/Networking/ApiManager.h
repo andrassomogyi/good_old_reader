@@ -10,11 +10,15 @@
 
 @interface ApiManager : NSObject
 
-+ (void)fetchUnreadCountWithCompletion:(void(^)(NSString *unreadCount))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)fetchStreamWithCompletion:(void(^)(NSArray *articleArray))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *response))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock;
-+ (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
+NS_ASSUME_NONNULL_BEGIN
+
++ (void)fetchUnreadCountWithCompletion:(nullable void(^)(NSString *unreadCount))completion withError:(nullable void(^)(NSError *error))errorBlock;
++ (void)fetchStreamWithCompletion:(nullable void(^)(NSArray *articleArray))completion withError:(nullable void(^)(NSError *error))errorBlock;
++ (void)markArticleRead:(NSString *)articleId withCompletion:(nullable void(^)(NSData *response))completion withError:(nullable void(^)(NSError *error))errorBlock;
++ (void)getTokenWithCompletion:(nullable void(^)(NSData *token))completion withError:(nullable void(^)(NSError *error))errorBlock;
++ (void)logoutWithCompletion:(nullable void(^)(NSData *data))completion withError:(nullable void(^)(NSError *error))errorBlock;
++ (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(nullable void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
+
+NS_ASSUME_NONNULL_END
 
 @end
