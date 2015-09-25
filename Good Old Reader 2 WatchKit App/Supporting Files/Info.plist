@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>edu.Good-Old-Reader-2</string>
+	<string>edu.andrassomogyi.Good-Old-Reader-2</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
