@@ -121,6 +121,7 @@
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
 		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
 		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
 		D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoHeightTableViewCell.h; sourceTree = "<group>"; };
 		D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTableViewCell.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 		81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
+				D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */,
 				81195F3F1B03E0CA007C22FE /* Supporting Files */,
 				81195F441B03E0CA007C22FE /* Images.xcassets */,
 				81195F411B03E0CA007C22FE /* Interface.storyboard */,
@@ -425,7 +427,7 @@
 				TargetAttributes = {
 					81195F2E1B03E0CA007C22FE = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = D7H64P2565;
+						DevelopmentTeam = GSE39KA5J6;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -434,11 +436,16 @@
 					};
 					81195F391B03E0CA007C22FE = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = D7H64P2565;
+						DevelopmentTeam = GSE39KA5J6;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					81E335781A7588A4007AE952 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = D7H64P2565;
+						DevelopmentTeam = GSE39KA5J6;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -602,7 +609,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2 WatchKit App/Good Old Reader 2 WatchKit App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -611,8 +620,9 @@
 				);
 				IBSC_MODULE = Good_Old_Reader_2_WatchKit_Extension;
 				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Supporting Files/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -624,14 +634,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2 WatchKit App/Good Old Reader 2 WatchKit App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Good_Old_Reader_2_WatchKit_Extension;
 				INFOPLIST_FILE = "Good Old Reader 2 WatchKit App/Supporting Files/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -645,6 +658,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2 WatchKit Extension/Good Old Reader 2 WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -654,7 +668,7 @@
 				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp.watchkitextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -670,13 +684,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2 WatchKit Extension/Good Old Reader 2 WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Good Old Reader 2 WatchKit Extension/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.Good-Old-Reader-2.watchkitapp.watchkitextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
@@ -769,13 +784,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Good Old Reader 2.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Resources/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -786,13 +801,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Good Old Reader 2.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Resources/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.andrassomogyi.Good-Old-Reader-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
