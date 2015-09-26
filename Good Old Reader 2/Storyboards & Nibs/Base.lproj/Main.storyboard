@@ -150,14 +150,17 @@
                                     <constraint firstAttribute="height" constant="44" id="n1Q-tP-ptu"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="Leave unread" id="Z6f-wu-pDG"/>
+                                    <barButtonItem title="Leave unread" id="Z6f-wu-pDG">
+                                        <connections>
+                                            <action selector="markAsReadToggle:" destination="tpJ-62-A53" id="ZvU-qg-dYX"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Adh-B1-ePn"/>
                                     <barButtonItem title="Share" id="rvk-yS-HA8">
                                         <connections>
                                             <action selector="shareAction:" destination="tpJ-62-A53" id="vCA-ua-XSL"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="t3w-0t-Y2O"/>
                                     <barButtonItem title="Open in Safari" id="lBq-VO-NoY">
                                         <connections>
                                             <action selector="openInSafariAction:" destination="tpJ-62-A53" id="CqU-8O-noz"/>
@@ -182,6 +185,7 @@
                     <connections>
                         <outlet property="articleDisplay" destination="Oax-dV-erK" id="Y1p-Cc-aIZ"/>
                         <outlet property="detailViewToolBar" destination="BRv-xI-Hd6" id="ClR-If-yk2"/>
+                        <outlet property="markAsReadButton" destination="Z6f-wu-pDG" id="80d-7d-eHf"/>
                         <outlet property="openInSafariBarButton" destination="lBq-VO-NoY" id="WaQ-uj-OPW"/>
                     </connections>
                 </viewController>

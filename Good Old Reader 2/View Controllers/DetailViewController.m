@@ -12,16 +12,24 @@
 
 
 @interface DetailViewController () <SFSafariViewControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIWebView *articleDisplay;
 @property (weak, nonatomic) IBOutlet UIToolbar *detailViewToolBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *openInSafariBarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *markAsReadButton;
+@property (assign, nonatomic) BOOL markAsRead;
 
 @end
+
+NSString * const MARK_AS_READ_LABEL = @"Mark as read";
+NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
 
 @implementation DetailViewController
 
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
+    self.markAsRead = YES;
+    self.markAsReadButton.title = LEAVE_UNREAD_LABEL;
     [super viewDidLoad];
     [self displayArticle];
 }
@@ -40,9 +48,20 @@
     [self.articleDisplay loadHTMLString:[Article HTMLRepresentation:self.articleContainer] baseURL:nil];
 }
 
+- (IBAction)markAsReadToggle:(id)sender {
+    self.markAsRead = !self.markAsRead;
+    if (self.markAsRead) {
+        self.markAsReadButton.title = LEAVE_UNREAD_LABEL;
+    } else if (!self.markAsRead) {
+        self.markAsReadButton.title = MARK_AS_READ_LABEL;
+    }
+}
+
 - (void)markAsReadOnServer {
     // Mart article read on server
-    [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:nil withError:nil];
+    if (self.markAsRead) {
+        [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:nil withError:nil];
+    }
 }
 
 - (IBAction)shareAction:(id)sender {

@@ -11,6 +11,9 @@
 
 @class Article;
 
+extern NSString * const MARK_AS_READ_LABEL;
+extern NSString * const LEAVE_UNREAD_LABEL;
+
 @interface DetailViewController : UIViewController
 
 @property (strong, nonatomic) Article *articleContainer;
