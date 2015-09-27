@@ -11,7 +11,7 @@
 
 @implementation Article
 
-- (instancetype) initWithDictionary:(NSDictionary *)dictionary {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
         self.articleId = dictionary[@"articleId"];
@@ -26,8 +26,16 @@
     return self;
 }
 
-- (NSString *) shortSummary {
+- (NSString *)shortSummary {
     return [NSString shortSummaryFromString:self.summary_content summaryLength:25];
+}
+
+- (NSString *)datePublished {
+    NSDate *articleUpdateDate = [NSDate dateWithTimeIntervalSince1970:[self.published doubleValue]];
+    NSDateFormatter *articleUpdateDateFormatter = [[NSDateFormatter alloc] init];
+    [articleUpdateDateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [articleUpdateDateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [articleUpdateDateFormatter stringFromDate:articleUpdateDate];
 }
 
 @end

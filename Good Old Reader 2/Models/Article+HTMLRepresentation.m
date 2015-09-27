@@ -30,11 +30,7 @@
     
     // Query article update date if exists
     if (article.published) {
-        NSDate *articleUpdateDate = [NSDate dateWithTimeIntervalSince1970:[article.published doubleValue]];
-        NSDateFormatter *articleUpdateDateFormatter = [[NSDateFormatter alloc] init];
-        [articleUpdateDateFormatter setDateStyle:NSDateFormatterShortStyle];
-        [articleUpdateDateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        articleUpdateDateString = [articleUpdateDateFormatter stringFromDate:articleUpdateDate];
+        articleUpdateDateString = [article datePublished];
     }
     
     // Query origin site if exists

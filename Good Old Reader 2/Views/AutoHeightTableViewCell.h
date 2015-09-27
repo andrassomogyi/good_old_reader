@@ -11,5 +11,7 @@
 @interface AutoHeightTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *cellTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cellDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cellSiteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cellPublishedLabel;
 
 @end

@@ -19,7 +19,8 @@
 @property (strong, nonatomic) NSString *origin_streamId;
 @property (strong, nonatomic) NSString *origin_title;
 
-- (instancetype) initWithDictionary:(NSDictionary *)dictionary;
-- (NSString *) shortSummary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (NSString *)shortSummary;
+- (NSString *)datePublished;
 
 @end

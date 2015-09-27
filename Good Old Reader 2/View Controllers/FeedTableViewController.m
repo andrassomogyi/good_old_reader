@@ -148,8 +148,10 @@
     Article *article = self.articleArray[indexPath.row];
     cell.cellTitleLabel.text = article.title;
     
-    // Setting short summary for feed view
+    // Setting cell content
     cell.cellDetailLabel.text = [article  shortSummary];
+    cell.cellSiteLabel.text = [article origin_title];
+    cell.cellPublishedLabel.text = [article datePublished];
 
     // Adding long tap gesture recognizer
     UILongPressGestureRecognizer *longTap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellActionSheet:)];
@@ -157,6 +159,7 @@
 
     return cell;
 }
+
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"DetailSeque"]) {
