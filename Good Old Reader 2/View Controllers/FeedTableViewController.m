@@ -9,12 +9,12 @@
 #import "FeedTableViewController.h"
 #import "DetailViewController.h"
 #import "QRreaderViewController.h"
-#import "ApiManager.h"
 #import "EndpointResolver.h"
 #import <PersistenceKit/PersistenceKit.h>
 #import "AutoHeightTableViewCell.h"
 #import "NSString+ShortSummary.h"
 #import "Article.h"
+#import "DataController.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSArray *articleArray;
@@ -60,7 +60,10 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [ApiManager getTokenWithCompletion:nil withError:^(NSError *error) {
+    DataController *dataController = [[DataController alloc] init];
+    [dataController getTokenWithCompletion:^(NSData *token) {
+        //
+    } withError:^{
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
     }];
 }
@@ -69,6 +72,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - Actions
 - (void)showQRview {
     [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
@@ -93,13 +97,11 @@
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
                                            Article *article = self.articleArray[tappedCellRow];
-                                           [ApiManager markArticleRead:article.articleId withCompletion:^(NSData *response) {
+                                           DataController *dataController = [[DataController alloc] init];
+                                           [dataController markAsRead:article.articleId withCompletion:^(void) {
                                                [self fetchStream];
                                                [self.tableView reloadData];
-                                           } withError:^(NSError *error) {
-                                               ;
                                            }];
-                                           
                                        }];;
     UIAlertAction *cancelAction = [UIAlertAction
                                    actionWithTitle:@"Cancel"
@@ -113,25 +115,30 @@
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
 #pragma mark - Feed handling
 - (void)fetchUnreadCount {
-    [ApiManager fetchUnreadCountWithCompletion:^(NSString *unreadCount) {
+    DataController *dataController = [[DataController alloc] init];
+    [dataController getUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
+        self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
         });
-    } withError:nil];
+    }];
+    
 }
 
 - (void)fetchStream {
-    [ApiManager fetchStreamWithCompletion:^(NSArray *articleArray) {
-        self.articleArray = articleArray;
+    DataController *dataController = [[DataController alloc] init];
+    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
+        self.articleArray = unreadArticles;
         [self fetchUnreadCount];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         });
-    } withError:nil];
+    }];
 }
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.

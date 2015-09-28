@@ -26,6 +26,7 @@
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; settings = {ASSET_TAGS = (); }; };
 		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; settings = {ASSET_TAGS = (); }; };
+		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; settings = {ASSET_TAGS = (); }; };
 		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; settings = {ASSET_TAGS = (); }; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D69998421BB1D0E1007352B4 /* Good Old Reader 2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 81195F3A1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App.app */; };
@@ -122,6 +123,8 @@
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
 		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
 		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		D6783C3C1BB9342F00ED5823 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		D6783C3D1BB9342F00ED5823 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
 		D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+HTMLRepresentation.h"; sourceTree = "<group>"; };
 		D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+HTMLRepresentation.m"; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 			children = (
 				D69039D71BB5255B0092625E /* Models */,
 				044D41DE1BB3E77F00662D8A /* Networking */,
+				D6783C3B1BB933F500ED5823 /* Controllers */,
 				044D41DB1BB3E70900662D8A /* Resources */,
 				044D41DC1BB3E72300662D8A /* Storyboards & Nibs */,
 				81E3357C1A7588A4007AE952 /* Supporting Files */,
@@ -327,6 +331,15 @@
 				81E335971A7588A4007AE952 /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D6783C3B1BB933F500ED5823 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D6783C3C1BB9342F00ED5823 /* DataController.h */,
+				D6783C3D1BB9342F00ED5823 /* DataController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		D69039D71BB5255B0092625E /* Models */ = {
@@ -542,6 +555,7 @@
 				D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */,
 				D65C89C31BB3EF9200AD5498 /* Article.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
+				D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
 				D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */,
 				81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */,
