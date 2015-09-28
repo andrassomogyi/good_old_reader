@@ -141,7 +141,7 @@
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger httpStatusCode = [httpResponse statusCode];
-        if (error && errorBlock) {
+        if ((error && errorBlock) || httpStatusCode != 200) {
             errorBlock(error,httpStatusCode);
         }
         else if (completion) {
