@@ -12,12 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-+ (void)fetchUnreadCountWithCompletion:(nullable void(^)(NSString *unreadCount))completion withError:(nullable void(^)(NSError *error))errorBlock;
-+ (void)fetchStreamWithCompletion:(nullable void(^)(NSArray *articleArray))completion withError:(nullable void(^)(NSError *error))errorBlock;
-+ (void)markArticleRead:(NSString *)articleId withCompletion:(nullable void(^)(NSData *response))completion withError:(nullable void(^)(NSError *error))errorBlock;
-+ (void)getTokenWithCompletion:(nullable void(^)(NSData *token))completion withError:(nullable void(^)(NSError *error))errorBlock;
-+ (void)logoutWithCompletion:(nullable void(^)(NSData *data))completion withError:(nullable void(^)(NSError *error))errorBlock;
-+ (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(nullable void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
+- (void)fetchUnreadCountWithCompletion:(nullable void(^)(NSString *unreadCount))completion withError:(nullable void(^)(NSError *error))errorBlock;
+- (void)fetchStreamWithCompletion:(nullable void(^)(NSArray *articleArray))completion withError:(nullable void(^)(NSError *error))errorBlock;
+- (void)markArticleRead:(NSString *)articleId withCompletion:(nullable void(^)(NSData *response))completion withError:(nullable void(^)(NSError *error))errorBlock;
+- (void)getTokenWithCompletion:(nullable void(^)(NSData *token))completion withError:(nullable void(^)(NSError *error))errorBlock;
+- (void)logoutWithCompletion:(nullable void(^)(NSData *data))completion withError:(nullable void(^)(NSError *error))errorBlock;
+- (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(nullable void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
 
 NS_ASSUME_NONNULL_END
 

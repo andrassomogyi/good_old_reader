@@ -8,7 +8,7 @@
 
 #import "SetupViewController.h"
 #import "EndpointResolver.h"
-#import "ApiManager.h"
+#import "DataController.h"
 
 @interface SetupViewController ()
 - (IBAction)logoutButton:(UIButton *)sender;
@@ -26,11 +26,10 @@
 }
 #pragma mark - Actions
 - (IBAction)logoutButton:(UIButton *)sender {
-[ApiManager logoutWithCompletion:^(NSData *data) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    });
-} withError:^(NSError *error) {
-}];
+    [[[DataController alloc] init] logoutUserWithCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+    }];
 }
 @end

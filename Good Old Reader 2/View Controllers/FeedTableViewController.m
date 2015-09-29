@@ -60,8 +60,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    DataController *dataController = [[DataController alloc] init];
-    [dataController getTokenWithCompletion:^(NSData *token) {
+    [[[DataController alloc] init] getTokenWithCompletion:^(NSData *token) {
         //
     } withError:^{
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
@@ -118,8 +117,7 @@
 
 #pragma mark - Feed handling
 - (void)fetchUnreadCount {
-    DataController *dataController = [[DataController alloc] init];
-    [dataController getUnreadCountWithCompletion:^(NSString *unreadCount) {
+    [[[DataController alloc] init] getUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
         });
@@ -128,8 +126,7 @@
 }
 
 - (void)fetchStream {
-    DataController *dataController = [[DataController alloc] init];
-    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
+    [[[DataController alloc] init] getUnreadWithCompletion:^(NSArray *unreadArticles) {
         self.articleArray = unreadArticles;
         [self fetchUnreadCount];
         dispatch_async(dispatch_get_main_queue(), ^{

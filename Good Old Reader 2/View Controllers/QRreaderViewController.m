@@ -9,7 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "QRreaderViewController.h"
 #import "EndpointResolver.h"
-#import "ApiManager.h"
+#import "DataController.h"
 
 @interface QRreaderViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 
@@ -115,9 +115,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         }
         else {
             NSLog(@"Article %@ found with %@ and marked as read.",scannedUrl, [self.articleUrlDict objectForKey:scannedUrl]);
-            [ApiManager markArticleRead:[self.articleUrlDict objectForKey:scannedUrl] withCompletion:^(NSData *response) {
-                //
-            } withError:^(NSError *error) {
+            [[[DataController alloc] init] markAsRead:self.articleUrlDict[scannedUrl] withCompletion:^{
                 //
             }];
         }

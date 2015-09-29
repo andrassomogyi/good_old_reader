@@ -16,7 +16,7 @@
 @implementation ApiManager
 #pragma mark - Public functions
 #pragma mark GET
-+ (void)fetchStreamWithCompletion:(void(^)(NSArray *))completion withError:(void(^)(NSError *))errorBlock {
+- (void)fetchStreamWithCompletion:(void(^)(NSArray *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
     [self queryApiUrl:url withCompletion:^(NSData *data) {
         NSError *jsonError;
@@ -48,7 +48,7 @@
     }];
 }
 
-+ (void)fetchUnreadCountWithCompletion:(void(^)(NSString *))completion withError:(void(^)(NSError *))errorBlock {
+- (void)fetchUnreadCountWithCompletion:(void(^)(NSString *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:UnreadCountEndpoint];
     [self queryApiUrl:url
              withCompletion:^(NSData *data) {
@@ -70,9 +70,9 @@
     
 }
 
-+ (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
+- (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
-    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
+    [self queryApiUrl:url withCompletion:^(NSData *data) {
         if (completion) {
             completion(data);
         }
@@ -84,7 +84,7 @@
 }
 
 #pragma mark POST
-+ (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
+- (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
     NSDictionary *postData = @{@"i": articleId,
                                @"a": @"user/-/state/com.google/read",
@@ -100,9 +100,9 @@
     }];
 }
 
-+ (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
+- (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
-    [ApiManager queryApiUrl:url withCompletion:^(NSData *data) {
+    [self queryApiUrl:url withCompletion:^(NSData *data) {
         if (completion) {
             completion(data);
         }
@@ -113,7 +113,7 @@
     }];
 }
 
-+ (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *))completion error:(void(^)(NSError *))errorBlock {
+- (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *))completion error:(void(^)(NSError *))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:ClientLoginEndpoint];
     NSDictionary *postData = @{@"client": @"YourAppName",
                                @"accountType": @"HOSTED_OR_GOOGLE",
@@ -134,25 +134,24 @@
 
 
 #pragma mark - Private functions
-+ (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
+- (void)queryApiUrl:(NSURL *)url withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
     
     NSURLSession *urlSession = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSInteger httpStatusCode = [httpResponse statusCode];
-        if ((error && errorBlock) || httpStatusCode != 200) {
-            errorBlock(error,httpStatusCode);
-        }
-        else if (completion) {
+        if (!error && completion && (httpStatusCode == 200 || httpStatusCode == 204)) {
             completion(data);
+        } else if (errorBlock) {
+            errorBlock(error, httpStatusCode);
         }
     }];
     
     [dataTask resume];
 }
 
-+ (void)postApiUrl:(NSURL *)url postData:(NSDictionary *)dataDictionary withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
+- (void)postApiUrl:(NSURL *)url postData:(NSDictionary *)dataDictionary withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *, NSInteger))errorBlock {
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *urlSession  = [NSURLSession sessionWithConfiguration:config];

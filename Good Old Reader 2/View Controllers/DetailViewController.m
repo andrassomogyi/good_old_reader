@@ -7,7 +7,7 @@
 //
 
 #import "DetailViewController.h"
-#import "ApiManager.h"
+#import "DataController.h"
 #import "Article+HTMLRepresentation.h"
 
 
@@ -60,7 +60,7 @@ NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
 - (void)markAsReadOnServer {
     // Mart article read on server
     if (self.markAsRead) {
-        [ApiManager markArticleRead:self.articleContainer.articleId withCompletion:nil withError:nil];
+        [[[DataController alloc] init] markAsRead:self.articleContainer.articleId withCompletion:^(void){}];
     }
 }
 
