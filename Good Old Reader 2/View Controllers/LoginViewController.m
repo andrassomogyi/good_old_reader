@@ -8,7 +8,6 @@
 
 #import "LoginViewController.h"
 #import "EndpointResolver.h"
-#import "DataController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;
@@ -33,8 +32,7 @@
 }
 #pragma mark - Actions
 - (IBAction)loginButtonPressed:(UIButton *)sender {
-    DataController *dataController = [[DataController alloc] init];
-    [dataController loginUser:self.loginEmailTextField.text password:self.loginPassTextField.text withCompletion:^{
+    [self.dataController loginUser:self.loginEmailTextField.text password:self.loginPassTextField.text withCompletion:^{
         [self succesfullLogin];
     }];
     [self loadingInProgress];

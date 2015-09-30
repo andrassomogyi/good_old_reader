@@ -26,7 +26,7 @@
 }
 #pragma mark - Actions
 - (IBAction)logoutButton:(UIButton *)sender {
-    [[[DataController alloc] init] logoutUserWithCompletion:^{
+    [self.dataController logoutUserWithCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.navigationController popToRootViewControllerAnimated:YES];
         });

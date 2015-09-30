@@ -15,6 +15,8 @@
 #import "NSString+ShortSummary.h"
 #import "Article.h"
 #import "DataController.h"
+#import "SetupViewController.h"
+#import "LoginViewController.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSArray *articleArray;
@@ -178,6 +180,14 @@
     if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
         QRreaderViewController *qrViewController = segue.destinationViewController;
         qrViewController.articleUrlDict = self.articleUrlDict;
+    }
+    if ([segue.identifier isEqualToString:@"SetupShowSegue"]) {
+        SetupViewController *setupViewController = segue.destinationViewController;
+        setupViewController.dataController = self.dataController;
+    }
+    if ([segue.identifier isEqualToString:@"LoginModalSegue"]) {
+        LoginViewController *loginViewController = segue.destinationViewController;
+        loginViewController.dataController = self.dataController;
     }
 }
 

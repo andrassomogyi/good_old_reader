@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DataController;
 
 @interface SetupViewController : UIViewController
+@property (strong, nonatomic) DataController *dataController;
 
 @end
