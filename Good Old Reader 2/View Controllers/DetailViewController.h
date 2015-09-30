@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataController.h"
 @import SafariServices;
 
 @class Article;
@@ -17,5 +18,6 @@ extern NSString * const LEAVE_UNREAD_LABEL;
 @interface DetailViewController : UIViewController
 
 @property (strong, nonatomic) Article *articleContainer;
+@property (strong, nonatomic) DataController *dataController;
 
 @end

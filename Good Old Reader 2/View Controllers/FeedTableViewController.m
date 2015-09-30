@@ -176,6 +176,7 @@
         DetailViewController *detailViewController = segue.destinationViewController;
         // Pass the text and title of the article in a dictionary
         detailViewController.articleContainer = article;
+        detailViewController.dataController = self.dataController;
     }
     if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
         QRreaderViewController *qrViewController = segue.destinationViewController;
