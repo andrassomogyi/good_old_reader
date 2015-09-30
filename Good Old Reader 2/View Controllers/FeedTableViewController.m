@@ -60,7 +60,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [[[DataController alloc] init] getTokenWithCompletion:^(NSData *token) {
+    [self.dataController getTokenWithCompletion:^(NSData *token) {
         //
     } withError:^{
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
@@ -96,8 +96,7 @@
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
                                            Article *article = self.articleArray[tappedCellRow];
-                                           DataController *dataController = [[DataController alloc] init];
-                                           [dataController markAsRead:article.articleId withCompletion:^(void) {
+                                           [self.dataController markAsRead:article.articleId withCompletion:^(void) {
                                                [self fetchStream];
                                                [self.tableView reloadData];
                                            }];
@@ -117,7 +116,7 @@
 
 #pragma mark - Feed handling
 - (void)fetchUnreadCount {
-    [[[DataController alloc] init] getUnreadCountWithCompletion:^(NSString *unreadCount) {
+    [self.dataController getUnreadCountWithCompletion:^(NSString *unreadCount) {
         dispatch_async(dispatch_get_main_queue(), ^{
         self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
         });
@@ -126,7 +125,7 @@
 }
 
 - (void)fetchStream {
-    [[[DataController alloc] init] getUnreadWithCompletion:^(NSArray *unreadArticles) {
+    [self.dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
         self.articleArray = unreadArticles;
         [self fetchUnreadCount];
         dispatch_async(dispatch_get_main_queue(), ^{

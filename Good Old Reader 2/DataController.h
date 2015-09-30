@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class ApiManager;
+
 @interface DataController : NSObject
 
+@property (nonatomic, strong, readonly) ApiManager *apiManager;
+
+- (instancetype)initWithApiManager:(ApiManager *)apiManager;
 - (void)getUnreadWithCompletion:(void(^)(NSArray *unreadArticles))completion;
 - (void)getUnreadCountWithCompletion:(void(^)(NSString *unreadCount))completion;
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(void))errorBlock;

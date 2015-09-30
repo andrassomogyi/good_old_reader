@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "ApiManager.h"
+#import "DataController.h"
+#import "FeedTableViewController.h"
 #import <PersistenceKit/CoreDataStack.h>
 
 @interface AppDelegate ()
@@ -17,7 +20,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Injecting DataController in root viewcontroller
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    FeedTableViewController *rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
+    ApiManager *apiManager = [[ApiManager alloc] init];
+    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
+    rootVC.dataController = dataController;
+
+    navController.viewControllers = @[rootVC];
+    
     return YES;
 }
 

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataController.h"
 
 @interface FeedTableViewController : UITableViewController
+
+@property (strong, nonatomic) DataController *dataController;
 
 @end
