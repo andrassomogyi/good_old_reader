@@ -12,5 +12,8 @@
 @interface FeedTableViewController : UITableViewController
 
 @property (strong, nonatomic) DataController *dataController;
+@property (nonatomic, copy) NSArray *articleArray;
+
+- (void)updateFeedFromBackgroundFetch:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

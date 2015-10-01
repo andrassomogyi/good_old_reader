@@ -14,7 +14,7 @@
 
 @interface AppDelegate ()
 
-
+@property (strong, nonatomic) FeedTableViewController *rootVC;
 
 @end
 
@@ -22,16 +22,30 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSLog(@"Launched in background %d", UIApplicationStateBackground == application.applicationState);
+
     // Injecting DataController in root viewcontroller
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    FeedTableViewController *rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
+    self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
     ApiManager *apiManager = [[ApiManager alloc] init];
     DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
-    rootVC.dataController = dataController;
+    self.rootVC.dataController = dataController;
 
-    navController.viewControllers = @[rootVC];
+    navController.viewControllers = @[self.rootVC];
     
+    // Setting up background fetch
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
     return YES;
+}
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    ApiManager *apiManager = [[ApiManager alloc] init];
+    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
+    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
+        self.rootVC.articleArray = unreadArticles;
+        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];
+    }];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {

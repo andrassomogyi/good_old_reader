@@ -20,7 +20,6 @@
 #import "ApiManager.h"
 
 @interface FeedTableViewController ()
-@property (nonatomic, copy) NSArray *articleArray;
 @property (nonatomic, copy) NSDictionary *jsonFeed;
 @property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 @end
@@ -60,11 +59,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    [self fetchStream];
-    
-    // TODO:
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBackgroundTransfer:) name:@"BackgroundTransferNotification" object:nil];
-    [self.dataController.apiManager queryApiUrlInBackground:[NSURL URLWithString:@"http://download.thinkbroadband.com/5MB.zip"]];
+    [self fetchStream];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -82,9 +77,12 @@
 
 #pragma mark - Actions
 
-- (void)handleBackgroundTransfer:(NSNotification *)notification {
-    // TODO:
-
+-(void)updateFeedFromBackgroundFetch:(void (^)(UIBackgroundFetchResult))completionHandler {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self fetchUnreadCount];
+        [self.tableView reloadData];
+    });
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)showQRview {
