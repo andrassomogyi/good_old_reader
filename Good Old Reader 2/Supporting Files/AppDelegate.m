@@ -14,6 +14,8 @@
 
 @interface AppDelegate ()
 
+
+
 @end
 
 @implementation AppDelegate
@@ -32,10 +34,8 @@
     return YES;
 }
 
--(void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
-    NSDictionary *userInfo = @{@"completionHandler": completionHandler,
-                               @"sessionIdentifier": identifier};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BackgroundTransferNotification" object:nil userInfo:userInfo];
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    self.backgroundSessionCompletionHandler = completionHandler;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
