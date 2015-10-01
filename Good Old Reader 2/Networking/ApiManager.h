@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ApiManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
+@interface ApiManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDownloadDelegate>
 
 NS_ASSUME_NONNULL_BEGIN
 

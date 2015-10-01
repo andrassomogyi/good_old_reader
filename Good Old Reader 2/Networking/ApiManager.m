@@ -12,6 +12,7 @@
 #import "NSString+UrlEncoding.h"
 #import <PersistenceKit/PersistenceKit.h>
 #import "Article.h"
+#import "AppDelegate.h"
 
 @implementation ApiManager
 #pragma mark - Public functions
@@ -192,20 +193,35 @@
 - (void)queryApiUrlInBackground:(NSURL *)url {
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"edu.andrassomogyi.Good-Old-Reader-2"];
     NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
-    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url];
+    NSURLSessionDownloadTask *dataTask = [urlSession downloadTaskWithURL:url];
     [dataTask resume];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    NSLog(@"Received data: %@", data);
-}
-
--(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes {
     
 }
 
--(void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    
+    double progress = (double)totalBytesWritten / (double)totalBytesExpectedToWrite * 100;
+    
+    NSLog(@"%.1f%%", progress);
+}
 
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    NSLog(@"Download finished to location: %@", location);
+}
+
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    
+    void (^completionBlock)() = appDelegate.backgroundSessionCompletionHandler;
+    appDelegate.backgroundSessionCompletionHandler = nil;
+    if (completionBlock) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionBlock();
+        });
+    }
 }
 
 @end
