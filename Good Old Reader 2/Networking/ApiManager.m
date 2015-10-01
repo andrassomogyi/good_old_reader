@@ -189,4 +189,23 @@
     [task resume];
 }
 
+- (void)queryApiUrlInBackground:(NSURL *)url {
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"edu.andrassomogyi.Good-Old-Reader-2"];
+    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL:url];
+    [dataTask resume];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    NSLog(@"Received data: %@", data);
+}
+
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    
+}
+
+-(void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+
+}
+
 @end

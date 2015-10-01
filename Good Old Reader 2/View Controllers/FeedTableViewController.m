@@ -17,6 +17,7 @@
 #import "DataController.h"
 #import "SetupViewController.h"
 #import "LoginViewController.h"
+#import "ApiManager.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSArray *articleArray;
@@ -55,10 +56,15 @@
     // DEMO Logging last sessions unread count
     NSLog(@"Application closed with %@ unread articles.", unreadCount);
     NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self fetchStream];
+//    [self fetchStream];
+    
+    // TODO:
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBackgroundTransfer:) name:@"BackgroundTransferNotification" object:nil];
+    [self.dataController.apiManager queryApiUrlInBackground:[NSURL URLWithString:@"http://download.thinkbroadband.com/5MB.zip"]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,6 +81,12 @@
 }
 
 #pragma mark - Actions
+
+- (void)handleBackgroundTransfer:(NSNotification *)notification {
+    // TODO:
+
+}
+
 - (void)showQRview {
     [self performSegueWithIdentifier:@"showQRviewSegue" sender:self];
 }

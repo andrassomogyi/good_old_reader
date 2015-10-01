@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ApiManager : NSObject
+@interface ApiManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getTokenWithCompletion:(nullable void(^)(NSData *token))completion withError:(nullable void(^)(NSError *error))errorBlock;
 - (void)logoutWithCompletion:(nullable void(^)(NSData *data))completion withError:(nullable void(^)(NSError *error))errorBlock;
 - (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(nullable void(^)(NSData *data))completion error:(void(^)(NSError *error))errorBlock;
+
+- (void)queryApiUrlInBackground:(NSURL *)url;
 
 NS_ASSUME_NONNULL_END
 

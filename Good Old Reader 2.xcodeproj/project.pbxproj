@@ -24,10 +24,12 @@
 		81E3358D1A7588A4007AE952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E3358B1A7588A4007AE952 /* LaunchScreen.xib */; };
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
-		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; settings = {ASSET_TAGS = (); }; };
-		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; settings = {ASSET_TAGS = (); }; };
-		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; settings = {ASSET_TAGS = (); }; };
-		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; settings = {ASSET_TAGS = (); }; };
+		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
+		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; };
+		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; };
+		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; };
+		D69196E51BBD4C36001D49DE /* PersistenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69196E31BBD4C24001D49DE /* PersistenceKit.framework */; };
+		D69196E61BBD4C36001D49DE /* PersistenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D69196E31BBD4C24001D49DE /* PersistenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D69998421BB1D0E1007352B4 /* Good Old Reader 2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 81195F3A1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App.app */; };
 		D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */; };
@@ -60,6 +62,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D69196E71BBD4C36001D49DE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D69196E61BBD4C36001D49DE /* PersistenceKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D69998431BB1D0E1007352B4 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +141,7 @@
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
 		D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+HTMLRepresentation.h"; sourceTree = "<group>"; };
 		D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+HTMLRepresentation.m"; sourceTree = "<group>"; };
+		D69196E31BBD4C24001D49DE /* PersistenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PersistenceKit.framework; path = "Build/Products/Debug-iphoneos/PersistenceKit.framework"; sourceTree = "<group>"; };
 		D69DD7911BAC3B4E0097ED48 /* AutoHeightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoHeightTableViewCell.h; sourceTree = "<group>"; };
 		D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTableViewCell.m; sourceTree = "<group>"; };
 		D6B713541BA6CD820055A98B /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
@@ -148,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D69196E51BBD4C36001D49DE /* PersistenceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +371,7 @@
 		FF9DFCBC598D785ED372776E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D69196E31BBD4C24001D49DE /* PersistenceKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -405,6 +421,7 @@
 				81E335761A7588A4007AE952 /* Frameworks */,
 				81E335771A7588A4007AE952 /* Resources */,
 				D69998441BB1D0E1007352B4 /* Embed Watch Content */,
+				D69196E71BBD4C36001D49DE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -466,6 +483,9 @@
 						DevelopmentTeam = GSE39KA5J6;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 						};
@@ -807,6 +827,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Resources/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Build/Products/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -824,6 +848,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Good Old Reader 2/Resources/Good Old Reader 2.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Build/Products/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "Good Old Reader 2/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
