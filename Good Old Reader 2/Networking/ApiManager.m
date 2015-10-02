@@ -13,75 +13,80 @@
 #import <PersistenceKit/PersistenceKit.h>
 #import "Article.h"
 #import "AppDelegate.h"
+#import "FetchFeedOperation.h"
+#import "FetchUnreadOperation.h"
+#import "FeedTableViewData.h"
+#import "GetTokenOperation.h"
+
+@interface ApiManager ()
+
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+
+@end
 
 @implementation ApiManager
-#pragma mark - Public functions
-#pragma mark GET
-- (void)fetchStreamWithCompletion:(void(^)(NSArray *))completion withError:(void(^)(NSError *))errorBlock {
-    NSURL *url = [EndpointResolver URLForEndpoint:UnreadEndpoint];
-    [self queryApiUrl:url withCompletion:^(NSData *data) {
-        NSError *jsonError;
-        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-        dataDictionary = dataDictionary[@"items"];
-        NSMutableArray *articles = [[NSMutableArray alloc] init];
-        for (NSDictionary *item in dataDictionary) {
-            NSDictionary *articleItem = @{
-                                          @"articleId" : [item objectForKey:@"id"],
-                                          @"title" : [item objectForKey:@"title"],
-                                          @"published": item[@"published"],
-                                          @"canonical": [[[item objectForKey:@"canonical"] objectAtIndex:0] objectForKey:@"href"],
-                                          @"summary_content" : [[item objectForKey:@"summary"] objectForKey:@"content"],
-                                          @"author" : [item objectForKey:@"author"],
-                                          @"origin_streamId" : [[item objectForKey:@"origin"] objectForKey:@"streamId"],
-                                          @"origin_title" : [[item objectForKey:@"origin"] objectForKey:@"title"]};
-            Article *article = [[Article alloc] initWithDictionary:articleItem];
-            [articles addObject:article];
-        }
-        
-        if (completion) {
-            completion(articles);
-        }
-        
-    } withError:^(NSError *error, NSInteger statusCode) {
-        if (errorBlock) {
-            errorBlock(error);
-        }
-    }];
+
+- (NSOperationQueue *)operationQueue {
+    
+    if (!_operationQueue) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;
+    }
+    
+    return _operationQueue;
 }
 
-- (void)fetchUnreadCountWithCompletion:(void(^)(NSString *))completion withError:(void(^)(NSError *))errorBlock {
-    NSURL *url = [EndpointResolver URLForEndpoint:UnreadCountEndpoint];
-    [self queryApiUrl:url
-             withCompletion:^(NSData *data) {
-                 NSError *jsonError;
-                 NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+#pragma mark - Public functions
 
-                 NSString *unread = [NSString stringWithFormat:@"%@",dataDictionary[@"max"]];
-                 [PersistenceManager save:nil object:unread forKey:@"unreadCount"];
-                 [PersistenceManager save:@"group.goodOldReader2" object:unread forKey:@"unreadCount"];
-                  
-                 if (completion) {
-                     completion(unread);
-                 }
-             } withError:^(NSError *error, NSInteger statusCode) {
-                 if (errorBlock) {
-                     errorBlock(error);
-                 }
-             }];
+#pragma mark GET
+
+- (void)fetchStreamWithCompletion:(nullable void(^)(FeedTableViewData *viewData))completion withError:(nullable void(^)(NSError *error))errorBlock {
+    
+    __block NSArray *feedItems = [[NSArray alloc] init];
+    
+    FetchFeedOperation *feedOperation = [[FetchFeedOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadEndpoint] completion:^(NSArray *items) {
+        feedItems = items;
+    } error:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
+    FetchUnreadOperation *countOperation = [[FetchUnreadOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadCountEndpoint] completion:^(NSString *count) {
+        
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:feedItems title:count];
+        if (completion) {
+            completion(viewData);
+        }
+        
+    } error:^(NSError *error, NSInteger statusCode) {
+        
+    }];
+    
+    [countOperation addDependency:feedOperation];
+    
+    self.operationQueue.suspended = YES;
+    
+    [self.operationQueue addOperation:feedOperation];
+    [self.operationQueue addOperation:countOperation];
+    
+    self.operationQueue.suspended = NO;
     
 }
 
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
-    NSURL *url = [EndpointResolver URLForEndpoint:GetTokenEndpoint];
-    [self queryApiUrl:url withCompletion:^(NSData *data) {
+    
+    GetTokenOperation *operation = [[GetTokenOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:GetTokenEndpoint] completion:^(NSData *token) {
         if (completion) {
-            completion(data);
+            completion(token);
         }
-    } withError:^(NSError *error, NSInteger statusCode) {
-        if (errorBlock) {
-            errorBlock(error);
-        }
+    } error:^(NSError *error, NSInteger statusCode) {
+        
     }];
+    
+    self.operationQueue.suspended = YES;
+    
+    [self.operationQueue addOperation:operation];
+    
+    self.operationQueue.suspended = NO;
 }
 
 #pragma mark POST
