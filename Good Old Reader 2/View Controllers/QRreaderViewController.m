@@ -115,7 +115,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         }
         else {
             NSLog(@"Article %@ found with %@ and marked as read.",scannedUrl, [self.articleUrlDict objectForKey:scannedUrl]);
-            [[[DataController alloc] init] markAsRead:self.articleUrlDict[scannedUrl] withCompletion:^{
+            [self.dataController markAsRead:self.articleUrlDict[scannedUrl] withCompletion:^{
                 //
             }];
         }

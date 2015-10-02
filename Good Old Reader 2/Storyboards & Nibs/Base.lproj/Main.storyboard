@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="il3-Tj-KcB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="il3-Tj-KcB">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -146,7 +146,7 @@
                                     <outlet property="cellPublishedLabel" destination="ELc-zZ-ViT" id="GLZ-Lg-Vx2"/>
                                     <outlet property="cellSiteLabel" destination="wt9-DP-PhJ" id="Uc4-bW-eaF"/>
                                     <outlet property="cellTitleLabel" destination="yGI-Hc-1en" id="eCc-XO-OHF"/>
-                                    <segue destination="tpJ-62-A53" kind="show" identifier="DetailSeque" id="TBa-iB-XvP"/>
+                                    <segue destination="tpJ-62-A53" kind="show" identifier="DetailSegue" customClass="InjectorSegue" id="TBa-iB-XvP"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -158,9 +158,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="aG3-GJ-Eco"/>
                     <connections>
-                        <segue destination="RBR-Wa-BE7" kind="presentation" identifier="LoginModalSegue" id="caO-Qu-mSE"/>
-                        <segue destination="i9I-zU-YXz" kind="show" identifier="SetupShowSegue" id="ZnU-Wu-NTT"/>
-                        <segue destination="CH5-Jv-8Hg" kind="show" identifier="showQRviewSegue" id="rTj-ha-0zv"/>
+                        <segue destination="RBR-Wa-BE7" kind="presentation" identifier="LoginModalSegue" customClass="InjectorSegue" id="caO-Qu-mSE"/>
+                        <segue destination="i9I-zU-YXz" kind="show" identifier="SetupShowSegue" customClass="InjectorSegue" id="ZnU-Wu-NTT"/>
+                        <segue destination="CH5-Jv-8Hg" kind="show" identifier="showQRviewSegue" customClass="InjectorSegue" id="rTj-ha-0zv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuV-Zs-cTB" userLabel="First Responder" sceneMemberID="firstResponder"/>

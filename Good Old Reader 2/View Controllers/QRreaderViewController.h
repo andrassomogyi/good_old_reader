@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DataController;
 
 @interface QRreaderViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property NSDictionary *articleUrlDict;
+@property (strong, nonatomic) DataController *dataController;
 @end

@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "DataController.h"
+@class Article;
 
 @interface FeedTableViewController : UITableViewController
 
 @property (strong, nonatomic) DataController *dataController;
 @property (nonatomic, copy) NSArray *articleArray;
+@property (nonatomic, strong) Article *selectedArticle;
+@property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 
 - (void)updateFeedFromBackgroundFetch:(void (^)(UIBackgroundFetchResult))completionHandler;
 

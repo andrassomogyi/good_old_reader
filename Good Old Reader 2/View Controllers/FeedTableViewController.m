@@ -6,22 +6,17 @@
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
 
-#import "FeedTableViewController.h"
-#import "DetailViewController.h"
-#import "QRreaderViewController.h"
-#import "EndpointResolver.h"
 #import <PersistenceKit/PersistenceKit.h>
+#import "FeedTableViewController.h"
+#import "QRreaderViewController.h"
 #import "AutoHeightTableViewCell.h"
-#import "NSString+ShortSummary.h"
 #import "Article.h"
 #import "DataController.h"
 #import "SetupViewController.h"
 #import "LoginViewController.h"
-#import "ApiManager.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSDictionary *jsonFeed;
-@property (nonatomic, strong) NSMutableDictionary *articleUrlDict;
 @end
 
 @implementation FeedTableViewController
@@ -81,8 +76,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self fetchUnreadCount];
         [self.tableView reloadData];
+        completionHandler(UIBackgroundFetchResultNewData);
     });
-    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)showQRview {
@@ -177,28 +172,9 @@
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"DetailSeque"]) {
-        // Get the sender object, aka. tapped cell
+    if ([segue.identifier isEqualToString:@"DetailSegue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
-        Article *article = self.articleArray[indexPath.row];
-        
-        // Get the destination view controller of the seque
-        DetailViewController *detailViewController = segue.destinationViewController;
-        // Pass the text and title of the article in a dictionary
-        detailViewController.articleContainer = article;
-        detailViewController.dataController = self.dataController;
-    }
-    if ([segue.identifier isEqualToString:@"showQRviewSegue"]) {
-        QRreaderViewController *qrViewController = segue.destinationViewController;
-        qrViewController.articleUrlDict = self.articleUrlDict;
-    }
-    if ([segue.identifier isEqualToString:@"SetupShowSegue"]) {
-        SetupViewController *setupViewController = segue.destinationViewController;
-        setupViewController.dataController = self.dataController;
-    }
-    if ([segue.identifier isEqualToString:@"LoginModalSegue"]) {
-        LoginViewController *loginViewController = segue.destinationViewController;
-        loginViewController.dataController = self.dataController;
+        self.selectedArticle = self.articleArray[indexPath.row];
     }
 }
 
