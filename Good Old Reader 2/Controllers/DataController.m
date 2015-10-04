@@ -8,6 +8,7 @@
 
 #import "DataController.h"
 #import "ApiManager.h"
+#import "FeedTableViewData.h"
 
 @interface DataController ()
 
@@ -23,18 +24,8 @@
     return self;
 }
 
-- (void)getUnreadWithCompletion:(void(^)(NSArray *))completion {
-        [self.apiManager fetchStreamWithCompletion:^(NSArray *articleArray) {
-            completion(articleArray);
-        } withError:nil];
-}
-
-- (void)getUnreadCountWithCompletion:(void(^)(NSString *))completion {
-        [self.apiManager fetchUnreadCountWithCompletion:^(NSString * _Nonnull unreadCount) {
-            completion(unreadCount);
-        } withError:^(NSError * _Nonnull error) {
-            //
-        }];
+- (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
+    [self.apiManager fetchStreamWithCompletion:completion withError:nil];
 }
 
 - (void)getTokenWithCompletion:(void(^)(NSData *))completion withError:(void(^)(void))errorBlock {

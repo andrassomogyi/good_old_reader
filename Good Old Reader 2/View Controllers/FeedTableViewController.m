@@ -14,6 +14,7 @@
 #import "DataController.h"
 #import "SetupViewController.h"
 #import "LoginViewController.h"
+#import "FeedTableViewData.h"
 
 @interface FeedTableViewController ()
 @property (nonatomic, copy) NSDictionary *jsonFeed;
@@ -22,6 +23,7 @@
 @implementation FeedTableViewController
 #pragma mark - View lifecycle
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.navigationItem.title = @"Loading...";
     
@@ -31,7 +33,7 @@
     
     // Enable manual pull down refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchStream) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(fetchNewData) forControlEvents:UIControlEventValueChanged];
 
     // Enable setup menu button
     UIBarButtonItem *setupMenuButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(setupMenu)];
@@ -54,28 +56,21 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self fetchStream];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
     [self.dataController getTokenWithCompletion:^(NSData *token) {
-        //
+        [self fetchNewData];
     } withError:^{
         [self performSegueWithIdentifier:@"LoginModalSegue" sender:self];
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Actions
 
 -(void)updateFeedFromBackgroundFetch:(void (^)(UIBackgroundFetchResult))completionHandler {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self fetchUnreadCount];
-        [self.tableView reloadData];
+        [self fetchNewData];
         completionHandler(UIBackgroundFetchResultNewData);
     });
 }
@@ -104,8 +99,7 @@
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
                                            Article *article = self.articleArray[tappedCellRow];
                                            [self.dataController markAsRead:article.articleId withCompletion:^(void) {
-                                               [self fetchStream];
-                                               [self.tableView reloadData];
+                                               [self fetchNewData];
                                            }];
                                        }];;
     UIAlertAction *cancelAction = [UIAlertAction
@@ -122,20 +116,12 @@
 }
 
 #pragma mark - Feed handling
-- (void)fetchUnreadCount {
-    [self.dataController getUnreadCountWithCompletion:^(NSString *unreadCount) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-        self.navigationItem.title = [NSString stringWithFormat:@"%@ unread",unreadCount];
-        });
-    }];
-    
-}
 
-- (void)fetchStream {
-    [self.dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
-        self.articleArray = unreadArticles;
-        [self fetchUnreadCount];
+- (void)fetchNewData {
+    [self.dataController getUnreadWithCompletion:^(FeedTableViewData *data) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.title = [NSString stringWithFormat:@"%@ unread", data.title];
+            self.articleArray = data.articleArray;
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
         });
@@ -143,10 +129,6 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.

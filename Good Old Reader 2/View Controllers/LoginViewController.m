@@ -69,8 +69,6 @@
         [self presentViewController:loginError animated:YES completion:nil];
     });
     
-    
-    
 }
 
 - (void)registerforKeyBoardNotifications {

@@ -42,10 +42,10 @@
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     ApiManager *apiManager = [[ApiManager alloc] init];
     DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
-    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
-        self.rootVC.articleArray = unreadArticles;
-        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];
-    }];
+//    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
+//        self.rootVC.articleArray = unreadArticles;
+//        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];
+//    }];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
