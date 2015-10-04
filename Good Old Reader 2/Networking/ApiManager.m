@@ -79,7 +79,7 @@
             completion(token);
         }
     } error:^(NSError *error, NSInteger statusCode) {
-        
+        errorBlock(error);
     }];
     
     self.operationQueue.suspended = YES;
