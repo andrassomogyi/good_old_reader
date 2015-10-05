@@ -19,6 +19,7 @@
 #import "GetTokenOperation.h"
 #import "MarkAsReadOperation.h"
 #import "LoginOperation.h"
+#import "LogoutOperation.h"
 
 @interface ApiManager ()
 
@@ -118,15 +119,19 @@
 
 - (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
     NSURL *url = [EndpointResolver URLForEndpoint:ClientLogoutEndpoint];
-    [self queryApiUrl:url withCompletion:^(NSData *data) {
+    LogoutOperation *logoutOperation = [[LogoutOperation alloc] initWithSession:nil url:url completion:^(NSData *data) {
         if (completion) {
             completion(data);
         }
-    } withError:^(NSError *error, NSInteger statusCode) {
+    } error:^(NSError *error, NSInteger statusCode) {
         if (errorBlock) {
             errorBlock(error);
         }
     }];
+    
+    self.operationQueue.suspended = YES;
+    [self.operationQueue addOperation:logoutOperation];
+    self.operationQueue.suspended = NO;
 }
 
 - (void)loginUser:(NSString *)username withPassword:(NSString *)password completion:(void(^)(NSData *))completion error:(void(^)(NSError *))errorBlock {

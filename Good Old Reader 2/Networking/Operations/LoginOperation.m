@@ -13,14 +13,14 @@
 @property (nonatomic, strong, readwrite) NSURL *url;
 @property (nonatomic, strong, readwrite) NSURLSession *session;
 @property (nonatomic, strong, readwrite) NSDictionary *postData;
-@property (nonatomic, copy, readwrite) markAsReadCompletionBlock completionHandler;
-@property (nonatomic, copy, readwrite) markAsReadErrorBlock errorHandler;
+@property (nonatomic, copy, readwrite) loginCompletionBlock completionHandler;
+@property (nonatomic, copy, readwrite) loginErrorBlock errorHandler;
 
 @end
 
 @implementation LoginOperation
 
-- (instancetype)initWithSession:(NSURLSession *)session url:(NSURL *)url postData:(NSDictionary *)postData completion:(markAsReadCompletionBlock)completion error:(markAsReadErrorBlock)error
+- (instancetype)initWithSession:(NSURLSession *)session url:(NSURL *)url postData:(NSDictionary *)postData completion:(loginCompletionBlock)completion error:(loginErrorBlock)error
 {
     self = [super init];
     if (self) {
@@ -57,6 +57,8 @@
             self.completionHandler(data);
         }
     }];
+    
+    
     
     [task resume];
 }

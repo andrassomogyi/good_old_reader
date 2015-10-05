@@ -32,6 +32,7 @@
 		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
 		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; };
+		D66C7A401BC2C21100950B85 /* LogoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */; };
 		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; };
 		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; };
 		D69196EE1BBE825D001D49DE /* InjectorSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = D69196ED1BBE825D001D49DE /* InjectorSegue.m */; };
@@ -142,6 +143,8 @@
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
 		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
 		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		D66C7A3E1BC2C21100950B85 /* LogoutOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutOperation.h; sourceTree = "<group>"; };
+		D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutOperation.m; sourceTree = "<group>"; };
 		D6783C3C1BB9342F00ED5823 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		D6783C3D1BB9342F00ED5823 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
@@ -384,6 +387,8 @@
 				D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */,
 				D6FB11C51BC2A8950008BECD /* LoginOperation.h */,
 				D6FB11C61BC2A8950008BECD /* LoginOperation.m */,
+				D66C7A3E1BC2C21100950B85 /* LogoutOperation.h */,
+				D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */,
 				BB5322361BBEFE84006BC5E4 /* Operation.h */,
 				BB5322371BBEFE84006BC5E4 /* Operation.m */,
 			);
@@ -640,6 +645,7 @@
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
 				BB53222D1BBEEA96006BC5E4 /* FeedTableViewData.m in Sources */,
 				BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */,
+				D66C7A401BC2C21100950B85 /* LogoutOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

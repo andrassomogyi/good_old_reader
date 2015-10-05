@@ -9,17 +9,17 @@
 #import "Operation.h"
 #import "NSString+UrlEncoding.h"
 
-typedef void(^markAsReadCompletionBlock)(NSData *data);
-typedef void(^markAsReadErrorBlock)(NSError *error, NSInteger statusCode);
+typedef void(^loginCompletionBlock)(NSData *data);
+typedef void(^loginErrorBlock)(NSError *error, NSInteger statusCode);
 
 @interface LoginOperation : Operation
 
 @property (nonatomic, strong, readonly) NSURL *url;
 @property (nonatomic, strong, readonly) NSURLSession *session;
 @property (nonatomic, strong, readonly) NSDictionary *postData;
-@property (nonatomic, copy, readonly) markAsReadCompletionBlock completionHandler;
-@property (nonatomic, copy, readonly) markAsReadErrorBlock errorHandler;
+@property (nonatomic, copy, readonly) loginCompletionBlock completionHandler;
+@property (nonatomic, copy, readonly) loginErrorBlock errorHandler;
 
-- (instancetype)initWithSession:(NSURLSession *)session url:(NSURL *)url postData:(NSDictionary *)postData completion:(markAsReadCompletionBlock)completion error:(markAsReadErrorBlock)error;
+- (instancetype)initWithSession:(NSURLSession *)session url:(NSURL *)url postData:(NSDictionary *)postData completion:(loginCompletionBlock)completion error:(loginErrorBlock)error;
 
 @end
