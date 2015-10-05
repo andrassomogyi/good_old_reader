@@ -7,6 +7,7 @@
 //
 
 #import "Operation.h"
+#import "AppDelegate.h"
 
 @interface Operation ()
 
@@ -42,6 +43,7 @@
 }
 
 - (void)start {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.pExecuting = YES;
     [self execute];
 }
@@ -51,6 +53,7 @@
 }
 
 - (void)finish {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     self.pExecuting = NO;
     self.pFinished = YES;
 }
