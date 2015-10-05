@@ -24,12 +24,12 @@
 		81E3358D1A7588A4007AE952 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E3358B1A7588A4007AE952 /* LaunchScreen.xib */; };
 		81E335991A7588A4007AE952 /* Good_Old_Reader_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335981A7588A4007AE952 /* Good_Old_Reader_2Tests.m */; };
 		81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E335A31A758903007AE952 /* FeedTableViewController.m */; };
-		BB53222D1BBEEA96006BC5E4 /* FeedTableViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53222C1BBEEA96006BC5E4 /* FeedTableViewData.m */; settings = {ASSET_TAGS = (); }; };
-		BB5322311BBEEF62006BC5E4 /* FetchFeedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322301BBEEF62006BC5E4 /* FetchFeedOperation.m */; settings = {ASSET_TAGS = (); }; };
-		BB5322321BBEF3BC006BC5E4 /* FetchFeedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322301BBEEF62006BC5E4 /* FetchFeedOperation.m */; settings = {ASSET_TAGS = (); }; };
-		BB5322381BBEFE84006BC5E4 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322371BBEFE84006BC5E4 /* Operation.m */; settings = {ASSET_TAGS = (); }; };
-		BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */; settings = {ASSET_TAGS = (); }; };
-		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; settings = {ASSET_TAGS = (); }; };
+		BB53222D1BBEEA96006BC5E4 /* FeedTableViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53222C1BBEEA96006BC5E4 /* FeedTableViewData.m */; };
+		BB5322311BBEEF62006BC5E4 /* FetchFeedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322301BBEEF62006BC5E4 /* FetchFeedOperation.m */; };
+		BB5322321BBEF3BC006BC5E4 /* FetchFeedOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322301BBEEF62006BC5E4 /* FetchFeedOperation.m */; };
+		BB5322381BBEFE84006BC5E4 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322371BBEFE84006BC5E4 /* Operation.m */; };
+		BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */; };
+		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
 		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; };
 		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; };
@@ -40,6 +40,7 @@
 		D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7921BAC3B4E0097ED48 /* AutoHeightTableViewCell.m */; };
 		D6B713561BA6CD820055A98B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B713551BA6CD820055A98B /* ApiManager.m */; };
 		D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */; };
+		D6FB11C41BC280B50008BECD /* MarkAsReadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,8 @@
 		D6B713551BA6CD820055A98B /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
 		D6EFE5791BAAC53800D93494 /* NSString+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncoding.h"; sourceTree = "<group>"; };
 		D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncoding.m"; sourceTree = "<group>"; };
+		D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkAsReadOperation.h; sourceTree = "<group>"; };
+		D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkAsReadOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +377,8 @@
 				BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */,
 				BB53223C1BBF0C51006BC5E4 /* GetTokenOperation.h */,
 				BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */,
+				D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */,
+				D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */,
 				BB5322361BBEFE84006BC5E4 /* Operation.h */,
 				BB5322371BBEFE84006BC5E4 /* Operation.m */,
 			);
@@ -625,6 +630,7 @@
 				D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */,
 				81E2D9ED1B146B5C0020BC7E /* QRreaderViewController.m in Sources */,
 				813273D61AE937A3007297C2 /* SetupViewController.m in Sources */,
+				D6FB11C41BC280B50008BECD /* MarkAsReadOperation.m in Sources */,
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
 				BB53222D1BBEEA96006BC5E4 /* FeedTableViewData.m in Sources */,
 				BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */,

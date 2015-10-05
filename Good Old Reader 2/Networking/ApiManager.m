@@ -17,6 +17,7 @@
 #import "FetchUnreadOperation.h"
 #import "FeedTableViewData.h"
 #import "GetTokenOperation.h"
+#import "MarkAsReadOperation.h"
 
 @interface ApiManager ()
 
@@ -95,15 +96,19 @@
     NSDictionary *postData = @{@"i": articleId,
                                @"a": @"user/-/state/com.google/read",
                                @"output": @"json"};
-    [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+    MarkAsReadOperation *markAsReadOperation = [[MarkAsReadOperation alloc] initWithSession:nil url:url postData:postData completion:^(NSData *data) {
         if (completion) {
             completion(data);
         }
-    } withError:^(NSError *error, NSInteger statusCode) {
+    } error:^(NSError *error, NSInteger statusCode) {
         if (errorBlock) {
             errorBlock(error);
         }
     }];
+    
+    self.operationQueue.suspended = YES;
+    [self.operationQueue addOperation:markAsReadOperation];
+    self.operationQueue.suspended = NO;
 }
 
 - (void)logoutWithCompletion:(void(^)(NSData *data))completion withError:(void(^)(NSError *error))errorBlock {
