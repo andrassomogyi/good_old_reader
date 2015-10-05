@@ -48,7 +48,9 @@
     FetchFeedOperation *feedOperation = [[FetchFeedOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadEndpoint] completion:^(NSArray *items) {
         feedItems = items;
     } error:^(NSError *error, NSInteger statusCode) {
-        
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
     
     FetchUnreadOperation *countOperation = [[FetchUnreadOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadCountEndpoint] completion:^(NSString *count) {
@@ -59,7 +61,9 @@
         }
         
     } error:^(NSError *error, NSInteger statusCode) {
-        
+        if (errorBlock) {
+            errorBlock(error);
+        }
     }];
     
     [countOperation addDependency:feedOperation];
