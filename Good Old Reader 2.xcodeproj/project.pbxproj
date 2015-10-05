@@ -41,6 +41,7 @@
 		D6B713561BA6CD820055A98B /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B713551BA6CD820055A98B /* ApiManager.m */; };
 		D6EFE57B1BAAC53800D93494 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */; };
 		D6FB11C41BC280B50008BECD /* MarkAsReadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */; };
+		D6FB11C71BC2A8950008BECD /* LoginOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB11C61BC2A8950008BECD /* LoginOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +158,8 @@
 		D6EFE57A1BAAC53800D93494 /* NSString+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncoding.m"; sourceTree = "<group>"; };
 		D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkAsReadOperation.h; sourceTree = "<group>"; };
 		D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkAsReadOperation.m; sourceTree = "<group>"; };
+		D6FB11C51BC2A8950008BECD /* LoginOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginOperation.h; sourceTree = "<group>"; };
+		D6FB11C61BC2A8950008BECD /* LoginOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +382,8 @@
 				BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */,
 				D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */,
 				D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */,
+				D6FB11C51BC2A8950008BECD /* LoginOperation.h */,
+				D6FB11C61BC2A8950008BECD /* LoginOperation.m */,
 				BB5322361BBEFE84006BC5E4 /* Operation.h */,
 				BB5322371BBEFE84006BC5E4 /* Operation.m */,
 			);
@@ -618,6 +623,7 @@
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
 				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
+				D6FB11C71BC2A8950008BECD /* LoginOperation.m in Sources */,
 				D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */,
 				D65C89C31BB3EF9200AD5498 /* Article.m in Sources */,
 				BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */,

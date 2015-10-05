@@ -34,6 +34,8 @@
 - (IBAction)loginButtonPressed:(UIButton *)sender {
     [self.dataController loginUser:self.loginEmailTextField.text password:self.loginPassTextField.text withCompletion:^{
         [self succesfullLogin];
+    } withError:^{
+        [self loginError];
     }];
     [self loadingInProgress];
 }

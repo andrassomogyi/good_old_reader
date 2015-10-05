@@ -19,7 +19,7 @@
 - (void)getUnreadWithCompletion:(void(^)(FeedTableViewData *data))completion;
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(void))errorBlock;
 - (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion;
-- (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion;
+- (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion withError:(void(^)(void))errorBlock;
 - (void)logoutUserWithCompletion:(void(^)(void))completion;
 
 @end

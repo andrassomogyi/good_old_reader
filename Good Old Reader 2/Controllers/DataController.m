@@ -44,11 +44,11 @@
         }];
 }
 
-- (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion {
+- (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion withError:(void(^)(void))errorBlock {
         [self.apiManager loginUser:user withPassword:password completion:^(NSData * _Nonnull data) {
             completion();
         } error:^(NSError * _Nonnull error) {
-            
+            errorBlock();
         }];
 }
 

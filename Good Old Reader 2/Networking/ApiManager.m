@@ -18,6 +18,7 @@
 #import "FeedTableViewData.h"
 #import "GetTokenOperation.h"
 #import "MarkAsReadOperation.h"
+#import "LoginOperation.h"
 
 @interface ApiManager ()
 
@@ -136,15 +137,18 @@
                                @"Email": username,
                                @"Passwd": password,
                                @"output": @"json"};
-    [self postApiUrl:url postData:postData withCompletion:^(NSData *data) {
+    LoginOperation *loginOperation = [[LoginOperation alloc] initWithSession:nil url:url postData:postData completion:^(NSData *data) {
         if (completion) {
             completion(data);
         }
-    } withError:^(NSError *error, NSInteger statusCode) {
+    } error:^(NSError *error, NSInteger statusCode) {
         if (errorBlock) {
             errorBlock(error);
         }
     }];
+    self.operationQueue.suspended = YES;
+    [self.operationQueue addOperation:loginOperation];
+    self.operationQueue.suspended = NO;
 }
 
 
