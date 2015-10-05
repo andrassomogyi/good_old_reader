@@ -55,8 +55,8 @@
         if (error && self.errorHandler) {
             self.errorHandler(error, httpStatusCode);
         }
-        else if (self.completionBlock) {
-            self.completionBlock();
+        else if (self.completionHandler) {
+            self.completionHandler(data);
         }
     }];
     
