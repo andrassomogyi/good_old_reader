@@ -1,15 +1,15 @@
 //
-//  Article.m
+//  ASArticle.m
 //  Good Old Reader 2
 //
 //  Created by Somogyi András on 24/09/15.
 //  Copyright © 2015 András Somogyi. All rights reserved.
 //
 
-#import "Article.h"
+#import "ASArticle.h"
 #import "NSString+ShortSummary.h"
 
-@implementation Article
+@implementation ASArticle
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];

@@ -7,7 +7,7 @@
 //
 
 #import "DetailViewController.h"
-#import "Article+HTMLRepresentation.h"
+#import "ASArticle+HTMLRepresentation.h"
 
 
 @interface DetailViewController () <SFSafariViewControllerDelegate>
@@ -44,7 +44,7 @@ NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
 
 #pragma mark - Actions
 - (void)displayArticle {
-    [self.articleDisplay loadHTMLString:[Article HTMLRepresentation:self.articleContainer] baseURL:nil];
+    [self.articleDisplay loadHTMLString:[ASArticle HTMLRepresentation:self.articleContainer] baseURL:nil];
 }
 
 - (IBAction)markAsReadToggle:(id)sender {

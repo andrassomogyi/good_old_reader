@@ -10,14 +10,14 @@
 #import "DataController.h"
 @import SafariServices;
 
-@class Article;
+@class ASArticle;
 
 extern NSString * const MARK_AS_READ_LABEL;
 extern NSString * const LEAVE_UNREAD_LABEL;
 
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) Article *articleContainer;
+@property (strong, nonatomic) ASArticle *articleContainer;
 @property (strong, nonatomic) DataController *dataController;
 
 @end

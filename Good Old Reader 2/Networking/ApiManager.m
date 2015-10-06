@@ -11,7 +11,7 @@
 #import "EndpointResolver.h"
 #import "NSString+UrlEncoding.h"
 #import <PersistenceKit/PersistenceKit.h>
-#import "Article.h"
+#import "ASArticle.h"
 #import "AppDelegate.h"
 #import "FetchFeedOperation.h"
 #import "FetchUnreadOperation.h"
@@ -54,6 +54,7 @@
             errorBlock(error);
         }
     }];
+    feedOperation.managedObjectContext = self.managedObjectContext;
     
     FetchUnreadOperation *countOperation = [[FetchUnreadOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadCountEndpoint] completion:^(NSString *count) {
         

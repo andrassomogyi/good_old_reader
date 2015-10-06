@@ -7,7 +7,11 @@
 //
 
 #import "FetchFeedOperation.h"
+#import "ASArticle.h"
+#import <PersistenceKit/CoreDataStack.h>
 #import "Article.h"
+
+
 
 @interface FetchFeedOperation ()
 
@@ -74,10 +78,11 @@
                                       @"origin_streamId" : [[item objectForKey:@"origin"] objectForKey:@"streamId"],
                                       @"origin_title" : [[item objectForKey:@"origin"] objectForKey:@"title"]};
         
-        Article *article = [[Article alloc] initWithDictionary:articleItem];
+        ASArticle *article = [[ASArticle alloc] initWithDictionary:articleItem];
         
         if (article) {
             [articles addObject:article];
+            [Article insertArticle:article inManagedObjectContext:self.managedObjectContext];
         }
     }
     

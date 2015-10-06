@@ -16,16 +16,36 @@
 
 @implementation DataController
 
-- (instancetype) initWithApiManager:(ApiManager *)apiManager {
+- (instancetype) initWithApiManager:(ApiManager *)apiManager persistenceManager:(PersistenceManager *) persistenceManager
+{
     self = [super init];
     if (self) {
         _apiManager = apiManager;
+        _apiManager.managedObjectContext = _managedObjectContext;
+        _persistenceManager = persistenceManager;
     }
     return self;
 }
 
 - (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
-    [self.apiManager fetchStreamWithCompletion:completion withError:nil];
+    // TODO: persistence manager, fetch
+    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:YES]];;
+    NSFetchedResultsController *articleFetchedResultsController = [self.persistenceManager getFetchedResultsController:@"Article" sortDescriptors:sortDescriptors];
+    NSArray *fetchedArticles = [articleFetchedResultsController fetchedObjects];
+    NSArray *tempArray = [self.managedObjectContext executeFetchRequest:[NSFetchRequest fetchRequestWithEntityName:@"Article"] error:NULL];
+
+    if (tempArray.count == 0) {
+        // ha nil, akkor fetch from server
+        self.apiManager.managedObjectContext = self.managedObjectContext; // TODO
+        [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
+            NSError *saveError = nil;
+            [self.managedObjectContext save:&saveError];
+            completion(viewData);
+        } withError:^(NSError * _Nonnull error) {
+            
+        }];
+        // completionben save moc
+    }
 }
 
 - (void)getTokenWithCompletion:(void(^)(NSData *))completion withError:(void(^)(void))errorBlock {

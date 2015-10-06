@@ -7,6 +7,7 @@
 //
 
 #import "Operation.h"
+#import <PersistenceKit/PersistenceKit.h>
 
 typedef void(^feedCompletionBlock)(NSArray *items);
 typedef void(^feedErrorBlock)(NSError *error, NSInteger statusCode);
@@ -17,6 +18,7 @@ typedef void(^feedErrorBlock)(NSError *error, NSInteger statusCode);
 @property (nonatomic, strong, readonly) NSURLSession *session;
 @property (nonatomic, copy, readonly) feedCompletionBlock completionHandler;
 @property (nonatomic, copy, readonly) feedErrorBlock errorHandler;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (instancetype)initWithSession:(NSURLSession *)session url:(NSURL *)url completion:(feedCompletionBlock)completion error:(feedErrorBlock)error;
 

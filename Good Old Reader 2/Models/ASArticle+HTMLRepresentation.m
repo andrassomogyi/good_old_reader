@@ -6,11 +6,11 @@
 //  Copyright © 2015 András Somogyi. All rights reserved.
 //
 
-#import "Article+HTMLRepresentation.h"
+#import "ASArticle+HTMLRepresentation.h"
 
-@implementation Article (HTMLRepresentation)
+@implementation ASArticle (HTMLRepresentation)
 
-+ (NSString *) HTMLRepresentation:(Article *)article {
++ (NSString *) HTMLRepresentation:(ASArticle *)article {
     
     NSString *articleUpdateDateString = @"";
     NSString *articleTitle = @"No title";

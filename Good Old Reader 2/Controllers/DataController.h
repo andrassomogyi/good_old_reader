@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PersistenceKit/PersistenceManager.h>
 
 @class ApiManager;
 @class FeedTableViewData;
@@ -14,8 +15,10 @@
 @interface DataController : NSObject
 
 @property (nonatomic, strong, readonly) ApiManager *apiManager;
+@property (nonatomic, strong) PersistenceManager *persistenceManager;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (instancetype)initWithApiManager:(ApiManager *)apiManager;
+- (instancetype) initWithApiManager:(ApiManager *)apiManager persistenceManager:(PersistenceManager *) persistenceManager;
 - (void)getUnreadWithCompletion:(void(^)(FeedTableViewData *data))completion;
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(void))errorBlock;
 - (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion;

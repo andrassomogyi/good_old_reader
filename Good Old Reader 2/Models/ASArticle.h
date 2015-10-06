@@ -1,5 +1,5 @@
 //
-//  Article.h
+//  ASArticle.h
 //  Good Old Reader 2
 //
 //  Created by Somogyi András on 24/09/15.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Article : NSObject
+@interface ASArticle : NSObject
 
 @property (copy, nonatomic) NSString *articleId;
 @property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *published;
+@property (strong, nonatomic) NSNumber *published;
 @property (strong, nonatomic) NSString *canonical;
 @property (strong, nonatomic) NSString *summary_content;
 @property (strong, nonatomic) NSString *author;

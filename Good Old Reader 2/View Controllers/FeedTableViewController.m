@@ -10,7 +10,7 @@
 #import "FeedTableViewController.h"
 #import "QRreaderViewController.h"
 #import "AutoHeightTableViewCell.h"
-#import "Article.h"
+#import "ASArticle.h"
 #import "DataController.h"
 #import "SetupViewController.h"
 #import "LoginViewController.h"
@@ -47,11 +47,11 @@
     qrViewButton.enabled = FALSE;
     qrViewButton.style = UIBarButtonSystemItemEdit;
     
-    id unreadCount = [PersistenceManager load:@"unreadCount" fromGroup:nil];
-    
-    // DEMO Logging last sessions unread count
-    NSLog(@"Application closed with %@ unread articles.", unreadCount);
-    NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
+//    id unreadCount = [PersistenceManager load:@"unreadCount" fromGroup:nil];
+//    
+//    // DEMO Logging last sessions unread count
+//    NSLog(@"Application closed with %@ unread articles.", unreadCount);
+//    NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
     
 }
 
@@ -97,7 +97,7 @@
                                        handler:^(UIAlertAction *action)
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
-                                           Article *article = self.articleArray[tappedCellRow];
+                                           ASArticle *article = self.articleArray[tappedCellRow];
                                            [self.dataController markAsRead:article.articleId withCompletion:^(void) {
                                                [self fetchNewData];
                                            }];
@@ -137,7 +137,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AutoHeightTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPrototypeCell" forIndexPath:indexPath];
-    Article *article = self.articleArray[indexPath.row];
+    ASArticle *article = self.articleArray[indexPath.row];
     cell.cellTitleLabel.text = article.title;
     
     // Setting cell content

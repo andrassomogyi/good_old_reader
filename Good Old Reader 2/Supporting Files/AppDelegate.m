@@ -10,7 +10,8 @@
 #import "ApiManager.h"
 #import "DataController.h"
 #import "FeedTableViewController.h"
-#import <PersistenceKit/CoreDataStack.h>
+#import <PersistenceKit/PersistenceKit.h>
+
 
 @interface AppDelegate ()
 
@@ -24,24 +25,40 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"Launched in background %d", UIApplicationStateBackground == application.applicationState);
 
+    // Core Data
+    CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL]];
+    PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
+    ApiManager *apiManager = [[ApiManager alloc] init];
+    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
+    dataController.managedObjectContext = coreDataStack.managedObjectContext;
+    
     // Injecting DataController in root viewcontroller
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
-    ApiManager *apiManager = [[ApiManager alloc] init];
-    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
     self.rootVC.dataController = dataController;
 
     navController.viewControllers = @[self.rootVC];
     
     // Setting up background fetch
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-
+    
     return YES;
 }
 
+- (NSURL*)storeURL
+{
+    NSURL* documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+    return [documentsDirectory URLByAppendingPathComponent:@"GoodOldReader.sqlite"];
+}
+
+- (NSURL*)modelURL
+{
+    return [[NSBundle mainBundle] URLForResource:@"Article" withExtension:@"momd"];
+}
+
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    ApiManager *apiManager = [[ApiManager alloc] init];
-    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
+//    ApiManager *apiManager = [[ApiManager alloc] init];
+//    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
 //    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
 //        self.rootVC.articleArray = unreadArticles;
 //        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];

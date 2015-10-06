@@ -6,10 +6,10 @@
 //  Copyright © 2015 András Somogyi. All rights reserved.
 //
 
-#import "Article.h"
+#import "ASArticle.h"
 
-@interface Article (HTMLRepresentation)
+@interface ASArticle (HTMLRepresentation)
 
-+ (NSString *) HTMLRepresentation:(Article *)article;
++ (NSString *) HTMLRepresentation:(ASArticle *)article;
 
 @end

@@ -12,6 +12,8 @@
 
 @interface ApiManager : NSObject
 
+@property (strong, nonatomic) NSManagedObjectContext * _Nonnull managedObjectContext;
+
 NS_ASSUME_NONNULL_BEGIN
 
 - (void)fetchStreamWithCompletion:(nullable void(^)(FeedTableViewData *viewData))completion withError:(nullable void(^)(NSError *error))errorBlock;
