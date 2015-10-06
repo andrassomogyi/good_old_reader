@@ -30,6 +30,7 @@
 		BB5322381BBEFE84006BC5E4 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322371BBEFE84006BC5E4 /* Operation.m */; };
 		BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */; };
 		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; };
+		BBF97F2C1BC45B44009654BD /* ASArticle+PersistenceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */; settings = {ASSET_TAGS = (); }; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
 		D65C89C31BB3EF9200AD5498 /* ASArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* ASArticle.m */; };
 		D661445F1BC3B03D00EF2625 /* Article.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */; };
@@ -142,6 +143,8 @@
 		BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchUnreadOperation.m; sourceTree = "<group>"; };
 		BB53223C1BBF0C51006BC5E4 /* GetTokenOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetTokenOperation.h; sourceTree = "<group>"; };
 		BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetTokenOperation.m; sourceTree = "<group>"; };
+		BBF97F2A1BC45B44009654BD /* ASArticle+PersistenceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASArticle+PersistenceUtils.h"; sourceTree = "<group>"; };
+		BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASArticle+PersistenceUtils.m"; sourceTree = "<group>"; };
 		BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShortSummary.h"; sourceTree = "<group>"; };
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
 		D65C89C11BB3EF9200AD5498 /* ASArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASArticle.h; sourceTree = "<group>"; };
@@ -423,6 +426,8 @@
 				D69039E01BB55B1E0092625E /* ASArticle+HTMLRepresentation.h */,
 				D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */,
 				D65C89C11BB3EF9200AD5498 /* ASArticle.h */,
+				BBF97F2A1BC45B44009654BD /* ASArticle+PersistenceUtils.h */,
+				BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */,
 				D65C89C21BB3EF9200AD5498 /* ASArticle.m */,
 			);
 			path = Models;
@@ -639,6 +644,7 @@
 				D69039E21BB55B1E0092625E /* ASArticle+HTMLRepresentation.m in Sources */,
 				04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
 				D661445F1BC3B03D00EF2625 /* Article.xcdatamodeld in Sources */,
+				BBF97F2C1BC45B44009654BD /* ASArticle+PersistenceUtils.m in Sources */,
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
 				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
