@@ -31,10 +31,13 @@
 		BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */; };
 		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
-		D65C89C31BB3EF9200AD5498 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* Article.m */; };
+		D65C89C31BB3EF9200AD5498 /* ASArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C89C21BB3EF9200AD5498 /* ASArticle.m */; };
+		D661445F1BC3B03D00EF2625 /* Article.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */; };
+		D66144641BC3B50B00EF2625 /* Article+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = D66144611BC3B50B00EF2625 /* Article+CoreDataProperties.m */; };
+		D66144651BC3B50B00EF2625 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D66144631BC3B50B00EF2625 /* Article.m */; };
 		D66C7A401BC2C21100950B85 /* LogoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */; };
 		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; };
-		D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */; };
+		D69039E21BB55B1E0092625E /* ASArticle+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */; };
 		D69196EE1BBE825D001D49DE /* InjectorSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = D69196ED1BBE825D001D49DE /* InjectorSegue.m */; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D69998421BB1D0E1007352B4 /* Good Old Reader 2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 81195F3A1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App.app */; };
@@ -141,15 +144,20 @@
 		BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetTokenOperation.m; sourceTree = "<group>"; };
 		BE943C641BB07B4500ADB45A /* NSString+ShortSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShortSummary.h"; sourceTree = "<group>"; };
 		BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShortSummary.m"; sourceTree = "<group>"; };
-		D65C89C11BB3EF9200AD5498 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
-		D65C89C21BB3EF9200AD5498 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
+		D65C89C11BB3EF9200AD5498 /* ASArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASArticle.h; sourceTree = "<group>"; };
+		D65C89C21BB3EF9200AD5498 /* ASArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASArticle.m; sourceTree = "<group>"; };
+		D661445E1BC3B03D00EF2625 /* Article.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Article.xcdatamodel; sourceTree = "<group>"; };
+		D66144601BC3B50B00EF2625 /* Article+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+CoreDataProperties.h"; sourceTree = "<group>"; };
+		D66144611BC3B50B00EF2625 /* Article+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+CoreDataProperties.m"; sourceTree = "<group>"; };
+		D66144621BC3B50B00EF2625 /* Article.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Article.h; sourceTree = "<group>"; };
+		D66144631BC3B50B00EF2625 /* Article.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Article.m; sourceTree = "<group>"; };
 		D66C7A3E1BC2C21100950B85 /* LogoutOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutOperation.h; sourceTree = "<group>"; };
 		D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutOperation.m; sourceTree = "<group>"; };
 		D6783C3C1BB9342F00ED5823 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		D6783C3D1BB9342F00ED5823 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
-		D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Article+HTMLRepresentation.h"; sourceTree = "<group>"; };
-		D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Article+HTMLRepresentation.m"; sourceTree = "<group>"; };
+		D69039E01BB55B1E0092625E /* ASArticle+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASArticle+HTMLRepresentation.h"; sourceTree = "<group>"; };
+		D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASArticle+HTMLRepresentation.m"; sourceTree = "<group>"; };
 		D69196E31BBD4C24001D49DE /* PersistenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PersistenceKit.framework; path = "Build/Products/Debug-iphoneos/PersistenceKit.framework"; sourceTree = "<group>"; };
 		D69196EC1BBE825D001D49DE /* InjectorSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InjectorSegue.h; sourceTree = "<group>"; };
 		D69196ED1BBE825D001D49DE /* InjectorSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InjectorSegue.m; sourceTree = "<group>"; };
@@ -300,6 +308,10 @@
 		81E335701A7588A4007AE952 = {
 			isa = PBXGroup;
 			children = (
+				D66144601BC3B50B00EF2625 /* Article+CoreDataProperties.h */,
+				D66144611BC3B50B00EF2625 /* Article+CoreDataProperties.m */,
+				D66144621BC3B50B00EF2625 /* Article.h */,
+				D66144631BC3B50B00EF2625 /* Article.m */,
 				FF9DFCBC598D785ED372776E /* Frameworks */,
 				81E3357B1A7588A4007AE952 /* Good Old Reader 2 */,
 				81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */,
@@ -323,6 +335,7 @@
 		81E3357B1A7588A4007AE952 /* Good Old Reader 2 */ = {
 			isa = PBXGroup;
 			children = (
+				D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */,
 				D6783C3B1BB933F500ED5823 /* Controllers */,
 				D69039D71BB5255B0092625E /* Models */,
 				044D41DE1BB3E77F00662D8A /* Networking */,
@@ -407,10 +420,10 @@
 		D69039D71BB5255B0092625E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D69039E01BB55B1E0092625E /* Article+HTMLRepresentation.h */,
-				D69039E11BB55B1E0092625E /* Article+HTMLRepresentation.m */,
-				D65C89C11BB3EF9200AD5498 /* Article.h */,
-				D65C89C21BB3EF9200AD5498 /* Article.m */,
+				D69039E01BB55B1E0092625E /* ASArticle+HTMLRepresentation.h */,
+				D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */,
+				D65C89C11BB3EF9200AD5498 /* ASArticle.h */,
+				D65C89C21BB3EF9200AD5498 /* ASArticle.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -623,15 +636,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */,
-				D69039E21BB55B1E0092625E /* Article+HTMLRepresentation.m in Sources */,
+				D69039E21BB55B1E0092625E /* ASArticle+HTMLRepresentation.m in Sources */,
 				04D0F8FF1BA6C5C8006C4E48 /* EndpointResolver.m in Sources */,
+				D661445F1BC3B03D00EF2625 /* Article.xcdatamodeld in Sources */,
 				81E335821A7588A4007AE952 /* AppDelegate.m in Sources */,
 				D6B713561BA6CD820055A98B /* ApiManager.m in Sources */,
 				81E3357F1A7588A4007AE952 /* main.m in Sources */,
 				D6FB11C71BC2A8950008BECD /* LoginOperation.m in Sources */,
 				D69DD7931BAC3B4E0097ED48 /* AutoHeightTableViewCell.m in Sources */,
-				D65C89C31BB3EF9200AD5498 /* Article.m in Sources */,
+				D65C89C31BB3EF9200AD5498 /* ASArticle.m in Sources */,
 				BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */,
+				D66144651BC3B50B00EF2625 /* Article.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
 				D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
@@ -643,6 +658,7 @@
 				813273D61AE937A3007297C2 /* SetupViewController.m in Sources */,
 				D6FB11C41BC280B50008BECD /* MarkAsReadOperation.m in Sources */,
 				8181700C1A82C4DD0093BE77 /* DetailViewController.m in Sources */,
+				D66144641BC3B50B00EF2625 /* Article+CoreDataProperties.m in Sources */,
 				BB53222D1BBEEA96006BC5E4 /* FeedTableViewData.m in Sources */,
 				BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */,
 				D66C7A401BC2C21100950B85 /* LogoutOperation.m in Sources */,
@@ -1012,6 +1028,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D661445E1BC3B03D00EF2625 /* Article.xcdatamodel */,
+			);
+			currentVersion = D661445E1BC3B03D00EF2625 /* Article.xcdatamodel */;
+			path = Article.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81E335711A7588A4007AE952 /* Project object */;
 }
