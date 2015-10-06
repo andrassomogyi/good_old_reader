@@ -9,6 +9,7 @@
 #import "DataController.h"
 #import "ApiManager.h"
 #import "FeedTableViewData.h"
+#import "ASArticle+PersistenceUtils.h"
 
 @interface DataController ()
 
@@ -29,12 +30,14 @@
 
 - (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
     // TODO: persistence manager, fetch
-    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:YES]];;
-    NSFetchedResultsController *articleFetchedResultsController = [self.persistenceManager getFetchedResultsController:@"Article" sortDescriptors:sortDescriptors];
-    NSArray *fetchedArticles = [articleFetchedResultsController fetchedObjects];
     NSArray *tempArray = [self.managedObjectContext executeFetchRequest:[NSFetchRequest fetchRequestWithEntityName:@"Article"] error:NULL];
 
-    if (tempArray.count == 0) {
+    if ([tempArray count] > 0) {
+        // we have fetched the items from the store
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:tempArray] title:[NSString stringWithFormat:@"%lu", (unsigned long)[tempArray count]]];
+        completion(viewData);
+        
+    } else {
         // ha nil, akkor fetch from server
         self.apiManager.managedObjectContext = self.managedObjectContext; // TODO
         [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
