@@ -7,6 +7,7 @@
 //
 
 #import "PersistenceManager.h"
+#import <CoreData/CoreData.h>
 
 @implementation PersistenceManager
 
@@ -14,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        _coreDataStack = coreDataStack;
+        self.managedObjectContext = coreDataStack.managedObjectContext;
     }
     return self;
 }
@@ -32,7 +33,7 @@
 - (NSFetchedResultsController*)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
     request.sortDescriptors = sortDescriptors;
-    return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.coreDataStack.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 }
 
 @end

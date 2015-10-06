@@ -9,15 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "PersistenceKit.h"
 
+@class CoreDataStack;
+@class NSFetchedResultsController;
+
 @interface PersistenceManager : NSObject
 
-@property (nonatomic, strong) CoreDataStack *coreDataStack;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack;
 - (void)save:(NSString *)appGroup object:(id)toSave forKey:(NSString *)key;
 - (id)load:(NSString *)key fromGroup:(NSString *)appGroup;
 
-- (NSFetchedResultsController*)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
+- (NSFetchedResultsController *)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
 - (NSArray *)fetchItemsWithEntityName:(NSString *)entity;
 
 @end
