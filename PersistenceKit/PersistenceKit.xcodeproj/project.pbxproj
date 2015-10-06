@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BBC51E171BC454EE00D37C5E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC51E161BC454EE00D37C5E /* CoreData.framework */; };
 		D619C7AE1BABFBD500663896 /* PersistenceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D619C7AD1BABFBD500663896 /* PersistenceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D619C7B41BABFBD500663896 /* PersistenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D619C7A81BABFBD500663896 /* PersistenceKit.framework */; };
 		D619C7BB1BABFBD500663896 /* PersistenceKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D619C7BA1BABFBD500663896 /* PersistenceKitTests.m */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BBC51E161BC454EE00D37C5E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D619C7A81BABFBD500663896 /* PersistenceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PersistenceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D619C7AC1BABFBD500663896 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D619C7AD1BABFBD500663896 /* PersistenceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersistenceKit.h; sourceTree = "<group>"; };
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBC51E171BC454EE00D37C5E /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,9 +61,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BBC51E181BC454F200D37C5E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBC51E161BC454EE00D37C5E /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D619C79E1BABFBD500663896 = {
 			isa = PBXGroup;
 			children = (
+				BBC51E181BC454F200D37C5E /* Frameworks */,
 				D619C7AA1BABFBD500663896 /* PersistenceKit */,
 				D619C7B71BABFBD500663896 /* PersistenceKitTests */,
 				D619C7A91BABFBD500663896 /* Products */,
