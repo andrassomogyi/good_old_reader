@@ -19,6 +19,7 @@
     }
     return self;
 }
+
 - (void)save:(NSString *)appGroup object:(id)toSave forKey:(NSString *)key {
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:appGroup];
     [sharedDefaults setObject:toSave forKey:key];
@@ -36,8 +37,10 @@
     return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 }
 
-- (NSArray *)fetchItemsWithEntityName:(NSString *)entity {
+- (NSArray *)fetchItemsWithEntityName:(NSString *)entity withPredicate:(nullable NSPredicate *)predicate withSortDescriptor:(nullable NSArray *)sortDescriptors {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entity];
+    fetchRequest.predicate = predicate;
+    fetchRequest.sortDescriptors = sortDescriptors;
     NSError *error = nil;
     return [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 }

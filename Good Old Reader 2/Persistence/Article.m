@@ -20,6 +20,7 @@
     managedArticle.summaryContent = article.summaryContent;
     managedArticle.title = article.title;
     managedArticle.articleId = article.articleId;
+    managedArticle.markedAsRead = (NSInteger) NO;
     
     return managedArticle;
 }

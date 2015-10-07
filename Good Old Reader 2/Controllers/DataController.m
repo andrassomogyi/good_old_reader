@@ -10,6 +10,8 @@
 #import "ApiManager.h"
 #import "FeedTableViewData.h"
 #import "ASArticle+PersistenceUtils.h"
+#import "Article.h"
+#import "Article+CoreDataProperties.h"
 
 @interface DataController ()
 
@@ -29,7 +31,8 @@
 }
 
 - (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
-    NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:@"Article"];
+    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
+    NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:sortDescriptors];
 
     if ([persistentArticles count] > 0) {
 
@@ -58,10 +61,22 @@
 
 - (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion {
         [self.apiManager markArticleRead:article withCompletion:^(NSData * _Nonnull response) {
+            [self markAsReadLocally:article];
             completion();
         } withError:^(NSError * _Nonnull error) {
-            //
+            // We can mark as read locally even when no connection is available
+            [self markAsReadLocally:article];
         }];
+}
+
+- (void) markAsReadLocally:(NSString *)article {
+    NSPredicate *articleIdPredicate = [NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", article];
+    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
+    NSArray *persistentArticlesWithArticleId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:articleIdPredicate withSortDescriptor:sortDescriptors];
+    Article *articleToBeMarkedAsRead = persistentArticlesWithArticleId[0];
+    NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+    articleToBeMarkedAsRead.markedAsRead = [NSNumber numberWithBool:YES];
+    NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
 }
 
 - (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion withError:(void(^)(void))errorBlock {

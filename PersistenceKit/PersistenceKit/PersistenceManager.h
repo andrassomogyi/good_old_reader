@@ -21,6 +21,6 @@
 - (id)load:(NSString *)key fromGroup:(NSString *)appGroup;
 
 - (NSFetchedResultsController *)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
-- (NSArray *)fetchItemsWithEntityName:(NSString *)entity;
+- (NSArray *)fetchItemsWithEntityName:(NSString *)entity withPredicate:(nullable NSPredicate *)predicate withSortDescriptor:(nullable NSArray *)sortDescriptors;
 
 @end

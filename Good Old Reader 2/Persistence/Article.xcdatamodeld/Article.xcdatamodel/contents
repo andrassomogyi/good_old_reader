@@ -4,6 +4,7 @@
         <attribute name="articleId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="canonical" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="markedAsRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="originStreamId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="originTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="published" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -11,6 +12,6 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Article" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Article" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>
