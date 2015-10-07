@@ -311,10 +311,6 @@
 		81E335701A7588A4007AE952 = {
 			isa = PBXGroup;
 			children = (
-				D66144601BC3B50B00EF2625 /* Article+CoreDataProperties.h */,
-				D66144611BC3B50B00EF2625 /* Article+CoreDataProperties.m */,
-				D66144621BC3B50B00EF2625 /* Article.h */,
-				D66144631BC3B50B00EF2625 /* Article.m */,
 				FF9DFCBC598D785ED372776E /* Frameworks */,
 				81E3357B1A7588A4007AE952 /* Good Old Reader 2 */,
 				81195F3E1B03E0CA007C22FE /* Good Old Reader 2 WatchKit App */,
@@ -338,10 +334,10 @@
 		81E3357B1A7588A4007AE952 /* Good Old Reader 2 */ = {
 			isa = PBXGroup;
 			children = (
-				D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */,
 				D6783C3B1BB933F500ED5823 /* Controllers */,
 				D69039D71BB5255B0092625E /* Models */,
 				044D41DE1BB3E77F00662D8A /* Networking */,
+				D648C5691BC503FC0046B524 /* Persistence */,
 				044D41DB1BB3E70900662D8A /* Resources */,
 				D69196E81BBE69F4001D49DE /* Segues */,
 				044D41DC1BB3E72300662D8A /* Storyboards & Nibs */,
@@ -399,16 +395,28 @@
 				BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */,
 				BB53223C1BBF0C51006BC5E4 /* GetTokenOperation.h */,
 				BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */,
-				D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */,
-				D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */,
 				D6FB11C51BC2A8950008BECD /* LoginOperation.h */,
 				D6FB11C61BC2A8950008BECD /* LoginOperation.m */,
 				D66C7A3E1BC2C21100950B85 /* LogoutOperation.h */,
 				D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */,
+				D6FB11C21BC280B50008BECD /* MarkAsReadOperation.h */,
+				D6FB11C31BC280B50008BECD /* MarkAsReadOperation.m */,
 				BB5322361BBEFE84006BC5E4 /* Operation.h */,
 				BB5322371BBEFE84006BC5E4 /* Operation.m */,
 			);
 			path = Operations;
+			sourceTree = "<group>";
+		};
+		D648C5691BC503FC0046B524 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				D66144601BC3B50B00EF2625 /* Article+CoreDataProperties.h */,
+				D66144611BC3B50B00EF2625 /* Article+CoreDataProperties.m */,
+				D66144621BC3B50B00EF2625 /* Article.h */,
+				D66144631BC3B50B00EF2625 /* Article.m */,
+				D661445D1BC3B03D00EF2625 /* Article.xcdatamodeld */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		D6783C3B1BB933F500ED5823 /* Controllers */ = {
@@ -425,9 +433,9 @@
 			children = (
 				D69039E01BB55B1E0092625E /* ASArticle+HTMLRepresentation.h */,
 				D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */,
-				D65C89C11BB3EF9200AD5498 /* ASArticle.h */,
 				BBF97F2A1BC45B44009654BD /* ASArticle+PersistenceUtils.h */,
 				BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */,
+				D65C89C11BB3EF9200AD5498 /* ASArticle.h */,
 				D65C89C21BB3EF9200AD5498 /* ASArticle.m */,
 			);
 			path = Models;

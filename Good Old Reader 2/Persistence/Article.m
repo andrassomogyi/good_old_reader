@@ -14,11 +14,12 @@
     Article* managedArticle = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:managedObjectContext];
     managedArticle.author = article.author;
     managedArticle.canonical = article.canonical;
-    managedArticle.origin_streamId = article.origin_streamId;
-    managedArticle.origin_title = article.origin_title;
+    managedArticle.originStreamId = article.originStreamId;
+    managedArticle.originTitle = article.originTitle;
     managedArticle.published = article.published;
-    managedArticle.summary_content = article.summary_content;
+    managedArticle.summaryContent = article.summaryContent;
     managedArticle.title = article.title;
+    managedArticle.articleId = article.articleId;
     
     return managedArticle;
 }

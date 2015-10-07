@@ -142,7 +142,7 @@
     
     // Setting cell content
     cell.cellDetailLabel.text = [article  shortSummary];
-    cell.cellSiteLabel.text = [article origin_title];
+    cell.cellSiteLabel.text = [article originTitle];
     cell.cellPublishedLabel.text = [article datePublished];
 
     // Adding long tap gesture recognizer

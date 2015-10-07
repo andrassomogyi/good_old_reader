@@ -10,14 +10,14 @@
 
 @interface ASArticle : NSObject
 
-@property (copy, nonatomic) NSString *articleId;
+@property (strong, nonatomic) NSString *articleId;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSNumber *published;
 @property (strong, nonatomic) NSString *canonical;
-@property (strong, nonatomic) NSString *summary_content;
+@property (strong, nonatomic) NSString *summaryContent;
 @property (strong, nonatomic) NSString *author;
-@property (strong, nonatomic) NSString *origin_streamId;
-@property (strong, nonatomic) NSString *origin_title;
+@property (strong, nonatomic) NSString *originStreamId;
+@property (strong, nonatomic) NSString *originTitle;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)shortSummary;

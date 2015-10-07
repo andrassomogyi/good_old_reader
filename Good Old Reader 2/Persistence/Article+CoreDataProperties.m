@@ -13,12 +13,13 @@
 
 @implementation Article (CoreDataProperties)
 
+@dynamic articleId;
 @dynamic title;
 @dynamic published;
 @dynamic canonical;
-@dynamic summary_content;
+@dynamic summaryContent;
 @dynamic author;
-@dynamic origin_streamId;
-@dynamic origin_title;
+@dynamic originStreamId;
+@dynamic originTitle;
 
 @end

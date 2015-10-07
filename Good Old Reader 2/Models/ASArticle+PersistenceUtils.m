@@ -15,12 +15,13 @@
     
     ASArticle *article = [[ASArticle alloc] init];
     
+    article.articleId = managedArticle.articleId;
     article.author = managedArticle.author;
     article.canonical = managedArticle.canonical;
-    article.origin_streamId = managedArticle.origin_streamId;
-    article.origin_title = managedArticle.origin_title;
+    article.originStreamId = managedArticle.originStreamId;
+    article.originTitle = managedArticle.originTitle;
     article.published = managedArticle.published;
-    article.summary_content = managedArticle.summary_content;
+    article.summaryContent = managedArticle.summaryContent;
     article.title = managedArticle.title;
     
     return article;

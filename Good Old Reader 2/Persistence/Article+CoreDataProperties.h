@@ -15,13 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Article (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSString *articleId;
 @property (nullable, nonatomic, retain) NSString *title;
 @property (nullable, nonatomic, retain) NSNumber *published;
 @property (nullable, nonatomic, retain) NSString *canonical;
-@property (nullable, nonatomic, retain) NSString *summary_content;
+@property (nullable, nonatomic, retain) NSString *summaryContent;
 @property (nullable, nonatomic, retain) NSString *author;
-@property (nullable, nonatomic, retain) NSString *origin_streamId;
-@property (nullable, nonatomic, retain) NSString *origin_title;
+@property (nullable, nonatomic, retain) NSString *originStreamId;
+@property (nullable, nonatomic, retain) NSString *originTitle;
 
 @end
 

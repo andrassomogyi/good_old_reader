@@ -34,13 +34,13 @@
     }
     
     // Query origin site if exists
-    if (article.origin_title.length > 0) {
-        articleOrigin = article.origin_title;
+    if (article.originTitle.length > 0) {
+        articleOrigin = article.originTitle;
     }
     
     // Query article text if exists
-    if (article.summary_content.length > 0) {
-        articleSummary = article.summary_content;
+    if (article.summaryContent.length > 0) {
+        articleSummary = article.summaryContent;
     }
     
     NSMutableString *preparedArticle = [NSMutableString stringWithString:@"<style type='text/css'>img { max-width: 100%; width: auto; height: auto;}body{font-family:helvetica; font-size:12px;}</style>"];

@@ -36,4 +36,10 @@
     return [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 }
 
+- (NSArray *)fetchItemsWithEntityName:(NSString *)entity {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entity];
+    NSError *error = nil;
+    return [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+}
+
 @end

@@ -18,16 +18,16 @@
         self.title = dictionary[@"title"];
         self.published = dictionary[@"published"];
         self.canonical = dictionary[@"canonical"];
-        self.summary_content = dictionary[@"summary_content"];
+        self.summaryContent = dictionary[@"summaryContent"];
         self.author = dictionary[@"author"];
-        self.origin_streamId = dictionary[@"origin_streamId"];
-        self.origin_title = dictionary[@"origin_title"];
+        self.originStreamId = dictionary[@"originStreamId"];
+        self.originTitle = dictionary[@"originTitle"];
     }
     return self;
 }
 
 - (NSString *)shortSummary {
-    return [NSString shortSummaryFromString:self.summary_content summaryLength:25];
+    return [NSString shortSummaryFromString:self.summaryContent summaryLength:25];
 }
 
 - (NSString *)datePublished {

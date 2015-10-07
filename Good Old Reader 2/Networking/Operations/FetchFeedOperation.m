@@ -73,10 +73,10 @@
                                       @"title" : [item objectForKey:@"title"],
                                       @"published": item[@"published"],
                                       @"canonical": [[[item objectForKey:@"canonical"] objectAtIndex:0] objectForKey:@"href"],
-                                      @"summary_content" : [[item objectForKey:@"summary"] objectForKey:@"content"],
+                                      @"summaryContent" : [[item objectForKey:@"summary"] objectForKey:@"content"],
                                       @"author" : [item objectForKey:@"author"],
-                                      @"origin_streamId" : [[item objectForKey:@"origin"] objectForKey:@"streamId"],
-                                      @"origin_title" : [[item objectForKey:@"origin"] objectForKey:@"title"]};
+                                      @"originStreamId" : [[item objectForKey:@"origin"] objectForKey:@"streamId"],
+                                      @"originTitle" : [[item objectForKey:@"origin"] objectForKey:@"title"]};
         
         ASArticle *article = [[ASArticle alloc] initWithDictionary:articleItem];
         

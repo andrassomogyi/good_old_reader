@@ -29,16 +29,14 @@
 }
 
 - (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
-    // TODO: persistence manager, fetch
-    NSArray *tempArray = [self.managedObjectContext executeFetchRequest:[NSFetchRequest fetchRequestWithEntityName:@"Article"] error:NULL];
+    NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:@"Article"];
 
-    if ([tempArray count] > 0) {
-        // we have fetched the items from the store
-        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:tempArray] title:[NSString stringWithFormat:@"%lu", (unsigned long)[tempArray count]]];
+    if ([persistentArticles count] > 0) {
+
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:persistentArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
         completion(viewData);
         
     } else {
-        // ha nil, akkor fetch from server
         self.apiManager.managedObjectContext = self.managedObjectContext; // TODO
         [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
             NSError *saveError = nil;
@@ -47,7 +45,6 @@
         } withError:^(NSError * _Nonnull error) {
             
         }];
-        // completionben save moc
     }
 }
 
