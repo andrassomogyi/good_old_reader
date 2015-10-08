@@ -34,16 +34,18 @@
     NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:sortDescriptors];
     
     if ([persistentArticles count] == 0 || isManualRefresh) {
-        self.apiManager.managedObjectContext = self.managedObjectContext; // TODO
+        NSLog(@"Manual refresh: %d. Articles stored: %lu", isManualRefresh,[persistentArticles count]);
+        NSBatchDeleteRequest *deleteAll = [[NSBatchDeleteRequest alloc] initWithFetchRequest:[NSFetchRequest fetchRequestWithEntityName:[Article entityName]]];
+        [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
+        self.apiManager.managedObjectContext = self.managedObjectContext;
         [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
             NSError *saveError = nil;
             [self.managedObjectContext save:&saveError];
             completion(viewData);
         } withError:^(NSError * _Nonnull error) {
-            
         }];
     } else {
-        
+        NSLog(@"Showing stored articles");
         FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:persistentArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
         completion(viewData);
     }
@@ -60,10 +62,14 @@
 - (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion {
         [self.apiManager markArticleRead:article withCompletion:^(NSData * _Nonnull response) {
             [self markAsReadLocally:article];
+            NSError *saveError = nil;
+            [self.managedObjectContext save:&saveError];
             completion();
         } withError:^(NSError * _Nonnull error) {
             // We can mark as read locally even when no connection is available
             [self markAsReadLocally:article];
+            NSError *saveError = nil;
+            [self.managedObjectContext save:&saveError];
         }];
 }
 
