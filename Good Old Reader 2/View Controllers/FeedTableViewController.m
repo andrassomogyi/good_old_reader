@@ -33,7 +33,7 @@
     
     // Enable manual pull down refresh
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchNewData) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(manualFetchNewData) forControlEvents:UIControlEventValueChanged];
 
     // Enable setup menu button
     UIBarButtonItem *setupMenuButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(setupMenu)];
@@ -118,7 +118,18 @@
 #pragma mark - Feed handling
 
 - (void)fetchNewData {
-    [self.dataController getUnreadWithCompletion:^(FeedTableViewData *data) {
+    [self.dataController getUnreadWithManualRefresh:NO withCompletion:^(FeedTableViewData *data) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.title = [NSString stringWithFormat:@"%@ unread", data.title];
+            self.articleArray = data.articleArray;
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        });
+    }];
+}
+
+- (void) manualFetchNewData {
+    [self.dataController getUnreadWithManualRefresh:YES withCompletion:^(FeedTableViewData *data) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationItem.title = [NSString stringWithFormat:@"%@ unread", data.title];
             self.articleArray = data.articleArray;

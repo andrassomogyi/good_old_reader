@@ -19,8 +19,7 @@
 
 @implementation DataController
 
-- (instancetype) initWithApiManager:(ApiManager *)apiManager persistenceManager:(PersistenceManager *) persistenceManager
-{
+- (instancetype)initWithApiManager:(ApiManager *)apiManager persistenceManager:(PersistenceManager *) persistenceManager {
     self = [super init];
     if (self) {
         _apiManager = apiManager;
@@ -30,16 +29,11 @@
     return self;
 }
 
-- (void)getUnreadWithCompletion:(void (^)(FeedTableViewData *))completion {
+- (void)getUnreadWithManualRefresh:(BOOL)isManualRefresh withCompletion:(void (^)(FeedTableViewData *)) completion {
     NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
     NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:sortDescriptors];
-
-    if ([persistentArticles count] > 0) {
-
-        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:persistentArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
-        completion(viewData);
-        
-    } else {
+    
+    if ([persistentArticles count] == 0 || isManualRefresh) {
         self.apiManager.managedObjectContext = self.managedObjectContext; // TODO
         [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
             NSError *saveError = nil;
@@ -48,6 +42,10 @@
         } withError:^(NSError * _Nonnull error) {
             
         }];
+    } else {
+        
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:persistentArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
+        completion(viewData);
     }
 }
 
