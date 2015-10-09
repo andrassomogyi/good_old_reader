@@ -98,9 +98,10 @@
 }
 
 #pragma mark POST
-- (void)markArticleRead:(NSString *)articleId withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
+- (void)markArticleRead:(NSArray *)article withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
+    NSString *articleIdString = [article componentsJoinedByString:@"%"];
     NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
-    NSDictionary *postData = @{@"i": articleId,
+    NSDictionary *postData = @{@"i": articleIdString,
                                @"a": @"user/-/state/com.google/read",
                                @"output": @"json"};
     MarkAsReadOperation *markAsReadOperation = [[MarkAsReadOperation alloc] initWithSession:nil url:url postData:postData completion:^(NSData *data) {

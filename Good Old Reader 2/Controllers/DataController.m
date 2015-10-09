@@ -45,8 +45,9 @@
         } withError:^(NSError * _Nonnull error) {
         }];
     } else {
-        NSLog(@"Showing stored articles");
-        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:persistentArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
+        NSLog(@"Showing stored unread articles");
+        NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:sortDescriptors];
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:unreadArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
         completion(viewData);
     }
 }
@@ -59,9 +60,9 @@
         }];
 }
 
-- (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion {
+- (void)markAsRead:(NSArray *)article withCompletion:(void(^)(void))completion {
         [self.apiManager markArticleRead:article withCompletion:^(NSData * _Nonnull response) {
-            NSArray *articleWithId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", article] withSortDescriptor:nil];
+            NSArray *articleWithId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", [article componentsJoinedByString:@"%"]] withSortDescriptor:nil];
             [self markAsReadLocally:article];
             [self.managedObjectContext deleteObject:articleWithId[0]];
             NSError *saveError = nil;
@@ -75,14 +76,16 @@
         }];
 }
 
-- (void) markAsReadLocally:(NSString *)article {
-    NSPredicate *articleIdPredicate = [NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", article];
-    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
-    NSArray *persistentArticlesWithArticleId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:articleIdPredicate withSortDescriptor:sortDescriptors];
-    Article *articleToBeMarkedAsRead = persistentArticlesWithArticleId[0];
-    NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
-    articleToBeMarkedAsRead.markedAsRead = [NSNumber numberWithBool:YES];
-    NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+- (void) markAsReadLocally:(NSArray *)article {
+    for (NSManagedObject *anArticle in article) {
+        NSPredicate *articleIdPredicate = [NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", anArticle];
+        NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
+        NSArray *persistentArticlesWithArticleId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:articleIdPredicate withSortDescriptor:sortDescriptors];
+        Article *articleToBeMarkedAsRead = persistentArticlesWithArticleId[0];
+        NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+        articleToBeMarkedAsRead.markedAsRead = [NSNumber numberWithBool:YES];
+        NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+    }
 }
 
 - (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion withError:(void(^)(void))errorBlock {

@@ -21,7 +21,7 @@
 - (instancetype) initWithApiManager:(ApiManager *)apiManager persistenceManager:(PersistenceManager *) persistenceManager;
 - (void)getUnreadWithManualRefresh:(BOOL)isManualRefresh withCompletion:(void (^)(FeedTableViewData *)) completion;
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(void))errorBlock;
-- (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion;
+- (void)markAsRead:(NSArray *)article withCompletion:(void(^)(void))completion;
 - (void)loginUser:(NSString *)user password:(NSString *)password withCompletion:(void(^)(void))completion withError:(void(^)(void))errorBlock;
 - (void)logoutUserWithCompletion:(void(^)(void))completion;
 

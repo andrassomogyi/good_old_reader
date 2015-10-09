@@ -98,7 +98,7 @@
                                        {
                                            NSInteger tappedCellRow = [self.tableView indexPathForCell:tappedCell].row;
                                            ASArticle *article = self.articleArray[tappedCellRow];
-                                           [self.dataController markAsRead:article.articleId withCompletion:^(void) {
+                                           [self.dataController markAsRead:@[article.articleId] withCompletion:^(void) {
                                                [self fetchNewData];
                                            }];
                                        }];;
