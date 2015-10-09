@@ -61,7 +61,9 @@
 
 - (void)markAsRead:(NSString *)article withCompletion:(void(^)(void))completion {
         [self.apiManager markArticleRead:article withCompletion:^(NSData * _Nonnull response) {
+            NSArray *articleWithId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", article] withSortDescriptor:nil];
             [self markAsReadLocally:article];
+            [self.managedObjectContext deleteObject:articleWithId[0]];
             NSError *saveError = nil;
             [self.managedObjectContext save:&saveError];
             completion();
