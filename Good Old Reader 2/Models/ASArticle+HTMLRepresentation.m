@@ -43,7 +43,7 @@
         articleSummary = article.summaryContent;
     }
     
-    NSMutableString *preparedArticle = [NSMutableString stringWithString:@"<style type='text/css'>img { max-width: 100%; width: auto; height: auto;}body{font-family:helvetica; font-size:12px;}</style>"];
+    NSMutableString *preparedArticle = [NSMutableString stringWithString:@"<style type='text/css'>img { max-width: 100%; width: auto; height: auto;}body{font-family:helvetica; font-size:16px;}</style>"];
     [preparedArticle appendString:@"<h1>"];
     [preparedArticle appendString:articleTitle];
     [preparedArticle appendString:@"</h1>"];
