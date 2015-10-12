@@ -14,6 +14,8 @@
 
 @interface PersistenceManager : NSObject
 
+NS_ASSUME_NONNULL_BEGIN
+
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack;
@@ -22,5 +24,7 @@
 
 - (NSFetchedResultsController *)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
 - (NSArray *)fetchItemsWithEntityName:(NSString *)entity withPredicate:(nullable NSPredicate *)predicate withSortDescriptor:(nullable NSArray *)sortDescriptors;
+
+NS_ASSUME_NONNULL_END
 
 @end
