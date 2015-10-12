@@ -30,18 +30,29 @@
 }
 
 - (void)getUnreadWithManualRefresh:(BOOL)isManualRefresh withCompletion:(void (^)(FeedTableViewData *)) completion {
+    self.apiManager.managedObjectContext = self.managedObjectContext;
     NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
     NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:sortDescriptors];
     
     if ([persistentArticles count] == 0 || isManualRefresh) {
-        NSLog(@"Manual refresh: %d. Articles stored: %lu", isManualRefresh,[persistentArticles count]);
-        NSBatchDeleteRequest *deleteAll = [[NSBatchDeleteRequest alloc] initWithFetchRequest:[NSFetchRequest fetchRequestWithEntityName:[Article entityName]]];
-        [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
-        self.apiManager.managedObjectContext = self.managedObjectContext;
-        [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
-            NSError *saveError = nil;
-            [self.managedObjectContext save:&saveError];
-            completion(viewData);
+        NSArray *readArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == YES"] withSortDescriptor:nil];
+        NSLog(@"%@",readArticles);
+        NSMutableArray *articleIdsArray = [[NSMutableArray alloc] init];
+        for (Article *article in readArticles) {
+            NSLog(@"%@", article);
+            [articleIdsArray addObject:article.articleId];
+        }
+        [self.apiManager markArticleRead:articleIdsArray withCompletion:^(NSData * _Nonnull response) {
+            NSLog(@"Manual refresh: %d. Articles stored: %lu", isManualRefresh,[persistentArticles count]);
+            NSBatchDeleteRequest *deleteAll = [[NSBatchDeleteRequest alloc] initWithFetchRequest:[NSFetchRequest fetchRequestWithEntityName:[Article entityName]]];
+            [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
+            
+            [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
+                NSError *saveError = nil;
+                [self.managedObjectContext save:&saveError];
+                completion(viewData);
+            } withError:^(NSError * _Nonnull error) {
+            }];
         } withError:^(NSError * _Nonnull error) {
         }];
     } else {
@@ -73,6 +84,7 @@
             [self markAsReadLocally:article];
             NSError *saveError = nil;
             [self.managedObjectContext save:&saveError];
+            completion();
         }];
 }
 

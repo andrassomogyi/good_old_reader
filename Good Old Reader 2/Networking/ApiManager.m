@@ -99,7 +99,7 @@
 
 #pragma mark POST
 - (void)markArticleRead:(NSArray *)article withCompletion:(void(^)(NSData *))completion withError:(void(^)(NSError *))errorBlock {
-    NSString *articleIdString = [article componentsJoinedByString:@"%"];
+    NSString *articleIdString = [article componentsJoinedByString:@"&i="];
     NSURL *url = [EndpointResolver URLForEndpoint:MarkAsReadEndpoint];
     NSDictionary *postData = @{@"i": articleIdString,
                                @"a": @"user/-/state/com.google/read",
