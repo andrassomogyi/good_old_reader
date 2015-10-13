@@ -15,6 +15,8 @@
 		D619C7C71BABFCB400663896 /* PersistenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D619C7C51BABFCB400663896 /* PersistenceManager.m */; };
 		D69DD7D31BB0501C0097ED48 /* CoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DD7D11BB0501C0097ED48 /* CoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D69DD7D41BB0501C0097ED48 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D69DD7D21BB0501C0097ED48 /* CoreDataStack.m */; };
+		D6D34C731BCD31AD0012755E /* PersistenceController.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D34C711BCD31AD0012755E /* PersistenceController.h */; settings = {ASSET_TAGS = (); }; };
+		D6D34C741BCD31AD0012755E /* PersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D34C721BCD31AD0012755E /* PersistenceController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,8 @@
 		D619C7C51BABFCB400663896 /* PersistenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistenceManager.m; sourceTree = "<group>"; };
 		D69DD7D11BB0501C0097ED48 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		D69DD7D21BB0501C0097ED48 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		D6D34C711BCD31AD0012755E /* PersistenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistenceController.h; sourceTree = "<group>"; };
+		D6D34C721BCD31AD0012755E /* PersistenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistenceController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 				D619C7C51BABFCB400663896 /* PersistenceManager.m */,
 				D69DD7D11BB0501C0097ED48 /* CoreDataStack.h */,
 				D69DD7D21BB0501C0097ED48 /* CoreDataStack.m */,
+				D6D34C711BCD31AD0012755E /* PersistenceController.h */,
+				D6D34C721BCD31AD0012755E /* PersistenceController.m */,
 				D619C7AB1BABFBD500663896 /* Supporting Files */,
 			);
 			path = PersistenceKit;
@@ -135,6 +141,7 @@
 			files = (
 				D619C7AE1BABFBD500663896 /* PersistenceKit.h in Headers */,
 				D619C7C61BABFCB400663896 /* PersistenceManager.h in Headers */,
+				D6D34C731BCD31AD0012755E /* PersistenceController.h in Headers */,
 				D69DD7D31BB0501C0097ED48 /* CoreDataStack.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D619C7C71BABFCB400663896 /* PersistenceManager.m in Sources */,
+				D6D34C741BCD31AD0012755E /* PersistenceController.m in Sources */,
 				D69DD7D41BB0501C0097ED48 /* CoreDataStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
