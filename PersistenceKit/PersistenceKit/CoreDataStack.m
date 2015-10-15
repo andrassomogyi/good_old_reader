@@ -14,38 +14,81 @@
 @property (nonatomic,strong) NSURL* modelURL;
 @property (nonatomic,strong) NSURL* storeURL;
 
+@property (strong, readwrite) NSManagedObjectContext *managedObjectContext;
+@property (strong) NSManagedObjectContext *privateContext;
+
+@property (copy) InitCallbackBlock initCallback;
+
+- (void)initializeCoreData;
+
 @end
 
 @implementation CoreDataStack
 
-- (id)initWithStoreURL:(NSURL*)storeURL modelURL:(NSURL*)modelURL
-{
-    self = [super init];
-    if (self) {
-        self.storeURL = storeURL;
-        self.modelURL = modelURL;
-        [self setupManagedObjectContext];
-    }
+- (id)initWithStoreURL:(NSURL*)storeURL modelURL:(NSURL*)modelURL withCallback:(InitCallbackBlock)callback {
+    if (!(self = [super init])) return nil;
+    
+    self.storeURL = storeURL;
+    self.modelURL = modelURL;
+    [self setInitCallback:callback];
+    [self initializeCoreData];
+    
     return self;
 }
 
-- (void)setupManagedObjectContext
-{
-    self.managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    self.managedObjectContext.persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
+- (void)initializeCoreData {
+    if ([self managedObjectContext]) return;
     
-    NSError* error;
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Article" withExtension:@"momd"];
+    NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSAssert(mom, @"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
     
-    [self.managedObjectContext.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:nil error:&error];
-    if (error) {
-        NSLog(@"Error: %@", error);
-    }
-    self.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+    NSAssert(coordinator, @"Failed to initialize coordinator");
+    
+    [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
+    
+    [self setPrivateContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType]];
+    [[self privateContext] setPersistentStoreCoordinator:coordinator];
+    [[self managedObjectContext] setParentContext:[self privateContext]];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSPersistentStoreCoordinator *psc = [[self privateContext] persistentStoreCoordinator];
+        NSMutableDictionary *options = [NSMutableDictionary dictionary];
+        options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+        options[NSInferMappingModelAutomaticallyOption] = @YES;
+        options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE"};
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"GoodOldReaderTS.sqlite"];
+        
+        NSError *error = nil;
+        
+        NSAssert([psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error], @"Error initializing PSC: %@\n%@", [error localizedDescription], [error userInfo]);
+        
+        if (![self initCallback]) return;
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self initCallback]();
+        });
+    });
 }
 
-- (NSManagedObjectModel*)managedObjectModel
-{
-    return [[NSManagedObjectModel alloc] initWithContentsOfURL:self.modelURL];
+- (void)save {
+    if (![[self privateContext] hasChanges] && ![[self managedObjectContext] hasChanges]) return;
+    
+    [[self managedObjectContext] performBlockAndWait:^{
+        NSError *error = nil;
+        
+        [[self managedObjectContext] save:&error];
+        
+        [[self privateContext] performBlock:^{
+            NSError *privateError = nil;
+            [[self privateContext] save:&privateError];
+        }];
+    }];
 }
+
 
 @end

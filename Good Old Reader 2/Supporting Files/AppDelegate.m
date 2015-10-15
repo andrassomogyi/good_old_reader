@@ -11,13 +11,12 @@
 #import "DataController.h"
 #import "FeedTableViewController.h"
 #import <PersistenceKit/PersistenceKit.h>
-#import "PersistenceController.h"
 
 
 @interface AppDelegate ()
 
 @property (strong, nonatomic) FeedTableViewController *rootVC;
-@property (strong, readwrite) PersistenceController *persistenceController;
+@property (strong, readwrite) PersistenceManager *persistenceController;
 
 - (void)completeUserInterface;
 
@@ -30,16 +29,13 @@
     NSLog(@"Launched in background %d", UIApplicationStateBackground == application.applicationState);
 
     // Core Data
-    CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL]];
+    CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL] withCallback:^{
+        [self completeUserInterface];
+    }];
     PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
     ApiManager *apiManager = [[ApiManager alloc] init];
     DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
     dataController.managedObjectContext = coreDataStack.managedObjectContext;
-    
-    //     Core Data (thread safe)
-    [self setPersistenceController:[[PersistenceController alloc] initWithCallback:^{
-        [self completeUserInterface];
-    }]];
     
     // Injecting DataController in root viewcontroller
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
@@ -56,20 +52,18 @@
 
 -(void)completeUserInterface {
     // Core Data initialized
-    // TODO: implement this
-    NSLog(@"Thread safe Core Data initialized");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    [[self persistenceController] save];
+    [self.persistenceController save];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[self persistenceController] save];
+    [self.persistenceController save];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [[self persistenceController] save];
+    [self.persistenceController save];
 }
 
 #pragma mark - Core Data helpers

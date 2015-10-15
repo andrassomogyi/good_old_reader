@@ -48,8 +48,7 @@
             [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
             
             [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
-                NSError *saveError = nil;
-                [self.managedObjectContext save:&saveError];
+                [self.persistenceManager save];
                 completion(viewData);
             } withError:^(NSError * _Nonnull error) {
             }];
@@ -76,14 +75,12 @@
             NSArray *articleWithId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", [article componentsJoinedByString:@"%"]] withSortDescriptor:nil];
             [self markAsReadLocally:article];
             [self.managedObjectContext deleteObject:articleWithId[0]];
-            NSError *saveError = nil;
-            [self.managedObjectContext save:&saveError];
+            [self.persistenceManager save];
             completion();
         } withError:^(NSError * _Nonnull error) {
             // We can mark as read locally even when no connection is available
             [self markAsReadLocally:article];
-            NSError *saveError = nil;
-            [self.managedObjectContext save:&saveError];
+            [self.persistenceManager save];
             completion();
         }];
 }

@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class PersistenceController;
+@class PersistenceManager;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, copy) void (^backgroundSessionCompletionHandler)();
-@property (strong, readonly) PersistenceController *persistenceController;
+@property (strong, readonly) PersistenceManager *persistenceController;
 
 @end
 

@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+typedef void (^InitCallbackBlock)(void);
+
 @interface CoreDataStack : NSObject
 
-- (id)initWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;
+@property (strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
+- (id)initWithStoreURL:(NSURL*)storeURL modelURL:(NSURL*)modelURL withCallback:(InitCallbackBlock)callback;
+- (void)save;
 
 @end

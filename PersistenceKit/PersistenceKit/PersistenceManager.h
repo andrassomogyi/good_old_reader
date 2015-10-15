@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSFetchedResultsController *)getFetchedResultsController:(NSString *)entityName sortDescriptors:(NSArray *)sortDescriptors;
 - (NSArray *)fetchItemsWithEntityName:(NSString *)entity withPredicate:(nullable NSPredicate *)predicate withSortDescriptor:(nullable NSArray *)sortDescriptors;
 
+- (void)save;
+
 NS_ASSUME_NONNULL_END
 
 @end

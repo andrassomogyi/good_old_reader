@@ -9,12 +9,19 @@
 #import "PersistenceManager.h"
 #import <CoreData/CoreData.h>
 
+@interface PersistenceManager()
+
+@property (strong, nonatomic) CoreDataStack *coreDataStack;
+
+@end
+
 @implementation PersistenceManager
 
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack
 {
     self = [super init];
     if (self) {
+        self.coreDataStack = coreDataStack;
         self.managedObjectContext = coreDataStack.managedObjectContext;
     }
     return self;
@@ -43,6 +50,10 @@
     fetchRequest.sortDescriptors = sortDescriptors;
     NSError *error = nil;
     return [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+}
+
+- (void)save {
+    [self.coreDataStack save];
 }
 
 @end
