@@ -74,7 +74,9 @@
         [self.apiManager markArticleRead:article withCompletion:^(NSData * _Nonnull response) {
             NSArray *articleWithId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", [article componentsJoinedByString:@"%"]] withSortDescriptor:nil];
             [self markAsReadLocally:article];
-            [self.managedObjectContext deleteObject:articleWithId[0]];
+            if (articleWithId.count > 0) { // If article found, then delete
+                [self.managedObjectContext deleteObject:articleWithId[0]];
+            }
             [self.persistenceManager save];
             completion();
         } withError:^(NSError * _Nonnull error) {
@@ -90,10 +92,14 @@
         NSPredicate *articleIdPredicate = [NSPredicate predicateWithFormat:@"(articleId MATCHES %@)", anArticle];
         NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
         NSArray *persistentArticlesWithArticleId = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:articleIdPredicate withSortDescriptor:sortDescriptors];
-        Article *articleToBeMarkedAsRead = persistentArticlesWithArticleId[0];
-        NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
-        articleToBeMarkedAsRead.markedAsRead = [NSNumber numberWithBool:YES];
-        NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+        if (persistentArticlesWithArticleId.count > 0) { // If article found, then mark as read locally
+            Article *articleToBeMarkedAsRead = persistentArticlesWithArticleId[0];
+            NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+            articleToBeMarkedAsRead.markedAsRead = [NSNumber numberWithBool:YES];
+            NSLog(@"Article: %@ marked as read: %@",articleToBeMarkedAsRead.title, articleToBeMarkedAsRead.markedAsRead);
+        } else {
+            NSLog(@"Article not found! Might be marked as read and deleted before.");
+        }
     }
 }
 
