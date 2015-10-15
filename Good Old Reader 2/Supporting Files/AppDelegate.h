@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class PersistenceController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, copy) void (^backgroundSessionCompletionHandler)();
+@property (strong, readonly) PersistenceController *persistenceController;
 
 @end
 

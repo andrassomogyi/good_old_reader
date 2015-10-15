@@ -35,8 +35,10 @@
     
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Article" withExtension:@"momd"];
     NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSAssert(mom, @"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
 
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+    NSAssert(coordinator, @"Failed to initialize coordinator");
     
     [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
     
@@ -53,12 +55,14 @@
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"GoodOldReader.sqlite"];
+        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"GoodOldReaderTS.sqlite"];
         
         NSError *error = nil;
-        [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
+
+        NSAssert([psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error], @"Error initializing PSC: %@\n%@", [error localizedDescription], [error userInfo]);
+
         if (![self initCallback]) return;
-        
+
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self initCallback]();
         });

@@ -40,6 +40,7 @@
 		D66144651BC3B50B00EF2625 /* Article.m in Sources */ = {isa = PBXBuildFile; fileRef = D66144631BC3B50B00EF2625 /* Article.m */; };
 		D66C7A401BC2C21100950B85 /* LogoutOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */; };
 		D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6783C3D1BB9342F00ED5823 /* DataController.m */; };
+		D679E3B51BCE795000A4F27B /* PersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D679E3B41BCE795000A4F27B /* PersistenceController.m */; settings = {ASSET_TAGS = (); }; };
 		D69039E21BB55B1E0092625E /* ASArticle+HTMLRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */; };
 		D69196EE1BBE825D001D49DE /* InjectorSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = D69196ED1BBE825D001D49DE /* InjectorSegue.m */; };
 		D699983F1BB1D0E1007352B4 /* Good Old Reader 2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 81195F2F1B03E0CA007C22FE /* Good Old Reader 2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -171,6 +172,8 @@
 		D66C7A3F1BC2C21100950B85 /* LogoutOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutOperation.m; sourceTree = "<group>"; };
 		D6783C3C1BB9342F00ED5823 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		D6783C3D1BB9342F00ED5823 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		D679E3B31BCE795000A4F27B /* PersistenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistenceController.h; path = ../../PersistenceKit/PersistenceKit/PersistenceController.h; sourceTree = "<group>"; };
+		D679E3B41BCE795000A4F27B /* PersistenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistenceController.m; path = ../../PersistenceKit/PersistenceKit/PersistenceController.m; sourceTree = "<group>"; };
 		D69039D81BB529B10092625E /* Good Old Reader 2 WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Good Old Reader 2 WatchKit App.entitlements"; sourceTree = "<group>"; };
 		D69039E01BB55B1E0092625E /* ASArticle+HTMLRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASArticle+HTMLRepresentation.h"; sourceTree = "<group>"; };
 		D69039E11BB55B1E0092625E /* ASArticle+HTMLRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASArticle+HTMLRepresentation.m"; sourceTree = "<group>"; };
@@ -436,6 +439,8 @@
 		D6783C3B1BB933F500ED5823 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D679E3B31BCE795000A4F27B /* PersistenceController.h */,
+				D679E3B41BCE795000A4F27B /* PersistenceController.m */,
 				D6783C3C1BB9342F00ED5823 /* DataController.h */,
 				D6783C3D1BB9342F00ED5823 /* DataController.m */,
 			);
@@ -677,6 +682,7 @@
 				BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */,
 				D66144651BC3B50B00EF2625 /* Article.m in Sources */,
 				819AC28B1AA65EF300CB29EC /* LoginViewController.m in Sources */,
+				D679E3B51BCE795000A4F27B /* PersistenceController.m in Sources */,
 				D6783C3E1BB9342F00ED5823 /* DataController.m in Sources */,
 				81E335A41A758903007AE952 /* FeedTableViewController.m in Sources */,
 				BB5322381BBEFE84006BC5E4 /* Operation.m in Sources */,
