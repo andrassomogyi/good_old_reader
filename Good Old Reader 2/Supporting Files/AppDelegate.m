@@ -11,7 +11,7 @@
 #import "DataController.h"
 #import "FeedTableViewController.h"
 #import <PersistenceKit/PersistenceKit.h>
-
+#import "SetupViewController.h"
 
 @interface AppDelegate ()
 
@@ -46,6 +46,10 @@
     
     // Setting up background fetch
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
+    // Shortcut items
+    UIApplicationShortcutItem *shortcut = [[UIApplicationShortcutItem alloc] initWithType:@"SetupType" localizedTitle:@"Setup"];
+    [UIApplication  sharedApplication].shortcutItems = @[shortcut];
     
     return YES;
 }
@@ -90,6 +94,29 @@
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
     self.backgroundSessionCompletionHandler = completionHandler;
+}
+
+-(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    NSLog(@"%@",shortcutItem);
+    
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
+    SetupViewController *setupVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupViewController"];
+    
+    // Core Data
+    CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL] withCallback:^{
+        [self completeUserInterface];
+    }];
+    PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
+    ApiManager *apiManager = [[ApiManager alloc] init];
+    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
+    dataController.managedObjectContext = coreDataStack.managedObjectContext;
+    
+    // Injecting DataController in root viewcontroller
+    self.rootVC.dataController = dataController;
+
+    navController.viewControllers = @[self.rootVC, setupVC];
+    completionHandler(YES);
 }
 
 @end
