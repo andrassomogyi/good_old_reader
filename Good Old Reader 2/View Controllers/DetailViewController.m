@@ -58,7 +58,7 @@ NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
 
 - (void)markAsReadOnServer {
     // Mart article read on server
-    if (self.markAsRead) {
+    if (self.markAsRead && self.articleContainer.articleId) {
         [self.dataController markAsRead:@[self.articleContainer.articleId] withCompletion:^(void){}];
     }
 }

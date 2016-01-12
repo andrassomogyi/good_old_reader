@@ -14,9 +14,10 @@
 #import "DataController.h"
 #import "SetupViewController.h"
 #import "LoginViewController.h"
+#import "DetailViewController.h"
 #import "FeedTableViewData.h"
 
-@interface FeedTableViewController ()
+@interface FeedTableViewController ()  <UIViewControllerPreviewingDelegate>
 @property (nonatomic, copy) NSDictionary *jsonFeed;
 @end
 
@@ -53,6 +54,10 @@
 //    NSLog(@"Application closed with %@ unread articles.", unreadCount);
 //    NSLog(@"Application closed with %@ unread articles. (App group)", [PersistenceManager load:@"unreadCount" fromGroup:@"group.goodOldReader2"]);
     
+    // Checking force touch availability to avoid crash on pre iOS 9
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)] && (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -169,6 +174,26 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell: sender];
         self.selectedArticle = self.articleArray[indexPath.row];
     }
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate methods
+
+-(UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell) {
+        previewingContext.sourceRect = cell.frame;
+        ASArticle *peekArticle = self.articleArray[indexPath.row];
+        DetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+        detailVC.articleContainer = peekArticle;
+        detailVC.dataController = self.dataController;
+        return detailVC;
+    }
+    return nil;
+}
+
+-(void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self showViewController:viewControllerToCommit sender:self];
 }
 
 @end

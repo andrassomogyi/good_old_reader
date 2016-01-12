@@ -162,7 +162,7 @@
         <!--Detail View Controller-->
         <scene sceneID="nNb-rh-Hk0">
             <objects>
-                <viewController id="tpJ-62-A53" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="tpJ-62-A53" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="B2Y-cF-78r"/>
                         <viewControllerLayoutGuide type="bottom" id="OAS-My-4Su"/>
