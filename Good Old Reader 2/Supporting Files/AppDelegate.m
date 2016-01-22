@@ -27,22 +27,8 @@
 #pragma mark - Application lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"Launched in background %d", UIApplicationStateBackground == application.applicationState);
-
-    // Core Data
-    CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL] withCallback:^{
-        [self completeUserInterface];
-    }];
-    PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
-    ApiManager *apiManager = [[ApiManager alloc] init];
-    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
-    dataController.managedObjectContext = coreDataStack.managedObjectContext;
     
-    // Injecting DataController in root viewcontroller
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
-    self.rootVC.dataController = dataController;
-
-    navController.viewControllers = @[self.rootVC];
+    [self initNavigationControllerWithView:nil];
     
     // Setting up background fetch
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -98,25 +84,37 @@
 
 -(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     NSLog(@"%@",shortcutItem);
-    
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
+
     SetupViewController *setupVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupViewController"];
+    [self initNavigationControllerWithView:setupVC];
     
-    // Core Data
+    completionHandler(YES);
+}
+
+-(DataController *)getDataController {
     CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL] withCallback:^{
         [self completeUserInterface];
     }];
+    
     PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
+
     ApiManager *apiManager = [[ApiManager alloc] init];
+    
     DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
     dataController.managedObjectContext = coreDataStack.managedObjectContext;
     
-    // Injecting DataController in root viewcontroller
-    self.rootVC.dataController = dataController;
+    return dataController;
+}
 
-    navController.viewControllers = @[self.rootVC, setupVC];
-    completionHandler(YES);
+-(void)initNavigationControllerWithView:(NSObject * _Nullable)view{
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
+    self.rootVC.dataController = [self getDataController];
+    if ([[view class] isSubclassOfClass:[UIViewController class]]) {
+        navController.viewControllers = @[self.rootVC,view];
+    } else {
+        navController.viewControllers = @[self.rootVC];
+    }
 }
 
 @end
