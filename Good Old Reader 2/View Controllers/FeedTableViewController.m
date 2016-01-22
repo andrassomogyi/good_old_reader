@@ -187,12 +187,15 @@
         DetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailViewController"];
         detailVC.articleContainer = peekArticle;
         detailVC.dataController = self.dataController;
+        detailVC.peeking = YES;
         return detailVC;
     }
     return nil;
 }
 
 -(void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    DetailViewController *detailVC = (DetailViewController *)viewControllerToCommit;
+    detailVC.peeking = NO;
     [self showViewController:viewControllerToCommit sender:self];
 }
 

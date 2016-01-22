@@ -19,5 +19,6 @@ extern NSString * const LEAVE_UNREAD_LABEL;
 
 @property (strong, nonatomic) ASArticle *articleContainer;
 @property (strong, nonatomic) DataController *dataController;
+@property (assign, nonatomic) BOOL peeking;
 
 @end

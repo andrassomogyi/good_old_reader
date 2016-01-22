@@ -58,7 +58,7 @@ NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
 
 - (void)markAsReadOnServer {
     // Mart article read on server
-    if (self.markAsRead && self.articleContainer.articleId) {
+    if (self.markAsRead && self.articleContainer.articleId && !self.peeking) {
         [self.dataController markAsRead:@[self.articleContainer.articleId] withCompletion:^(void){}];
     }
 }
@@ -78,5 +78,4 @@ NSString * const LEAVE_UNREAD_LABEL = @"Leave unread";
     safariVC.delegate = self;
     [self presentViewController:safariVC animated:NO completion:nil];
 }
-
 @end
