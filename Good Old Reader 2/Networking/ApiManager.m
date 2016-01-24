@@ -80,6 +80,27 @@
     
 }
 
+- (void)fetchUnreadCountWithCompletion:(nullable void(^)(FeedTableViewData *titleOnlyViewData))completion withError:(nullable void(^)(NSError *error))errorBlock {
+    FetchUnreadOperation *countOperation = [[FetchUnreadOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadCountEndpoint] completion:^(NSString *count) {
+        
+        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:nil title:count];
+        if (completion) {
+            completion(viewData);
+        }
+        
+    } error:^(NSError *error, NSInteger statusCode) {
+        if (errorBlock) {
+            errorBlock(error);
+        }
+    }];
+    
+    self.operationQueue.suspended = YES;
+    
+    [self.operationQueue addOperation:countOperation];
+    
+    self.operationQueue.suspended = NO;
+}
+
 - (void)getTokenWithCompletion:(void(^)(NSData *token))completion withError:(void(^)(NSError *error))errorBlock {
     
     GetTokenOperation *operation = [[GetTokenOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:GetTokenEndpoint] completion:^(NSData *token) {

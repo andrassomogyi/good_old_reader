@@ -56,9 +56,13 @@
         }];
     } else {
         NSLog(@"Showing stored unread articles");
-        NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:sortDescriptors];
-        FeedTableViewData *viewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:unreadArticles] title:[NSString stringWithFormat:@"%lu", (unsigned long)[persistentArticles count]]];
-        completion(viewData);
+        [self.apiManager fetchUnreadCountWithCompletion:^(FeedTableViewData * _Nonnull titleOnlyViewData) {
+            NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:sortDescriptors];
+            FeedTableViewData *readyToUseViewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:unreadArticles] title:titleOnlyViewData.title];
+            completion(readyToUseViewData);
+        } withError:^(NSError * _Nonnull error) {
+            //
+        }];
     }
 }
 
