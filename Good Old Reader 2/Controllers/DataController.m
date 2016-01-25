@@ -43,7 +43,7 @@
             [articleIdsArray addObject:article.articleId];
         }
         [self.apiManager markArticleRead:articleIdsArray withCompletion:^(NSData * _Nonnull response) {
-            NSLog(@"Manual refresh: %d. Articles stored: %lu", isManualRefresh,[persistentArticles count]);
+            NSLog(@"Manual refresh: %d. Articles stored: %lu", isManualRefresh,(unsigned long)[persistentArticles count]);
             NSBatchDeleteRequest *deleteAll = [[NSBatchDeleteRequest alloc] initWithFetchRequest:[NSFetchRequest fetchRequestWithEntityName:[Article entityName]]];
             [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
             
