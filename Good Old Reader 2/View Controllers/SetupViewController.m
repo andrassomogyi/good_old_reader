@@ -7,7 +7,6 @@
 //
 
 #import "SetupViewController.h"
-#import "EndpointResolver.h"
 #import "DataController.h"
 
 @interface SetupViewController ()

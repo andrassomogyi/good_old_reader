@@ -10,7 +10,6 @@
 #import "ApiManager.h"
 #import "FeedTableViewData.h"
 #import "ASArticle+PersistenceUtils.h"
-#import "Article.h"
 #import "Article+CoreDataProperties.h"
 
 @interface DataController ()

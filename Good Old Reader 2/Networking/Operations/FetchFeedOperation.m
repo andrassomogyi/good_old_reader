@@ -7,8 +7,6 @@
 //
 
 #import "FetchFeedOperation.h"
-#import "ASArticle.h"
-#import <PersistenceKit/CoreDataStack.h>
 #import "Article.h"
 
 

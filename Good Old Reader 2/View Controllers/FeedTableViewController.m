@@ -6,14 +6,9 @@
 //  Copyright (c) 2015. András Somogyi. All rights reserved.
 //
 
-#import <PersistenceKit/PersistenceKit.h>
 #import "FeedTableViewController.h"
-#import "QRreaderViewController.h"
 #import "AutoHeightTableViewCell.h"
 #import "ASArticle.h"
-#import "DataController.h"
-#import "SetupViewController.h"
-#import "LoginViewController.h"
 #import "DetailViewController.h"
 #import "FeedTableViewData.h"
 

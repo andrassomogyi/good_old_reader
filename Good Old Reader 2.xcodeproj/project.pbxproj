@@ -30,7 +30,7 @@
 		BB5322381BBEFE84006BC5E4 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5322371BBEFE84006BC5E4 /* Operation.m */; };
 		BB53223B1BBF06EB006BC5E4 /* FetchUnreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223A1BBF06EB006BC5E4 /* FetchUnreadOperation.m */; };
 		BB53223E1BBF0C51006BC5E4 /* GetTokenOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53223D1BBF0C51006BC5E4 /* GetTokenOperation.m */; };
-		BBF97F2C1BC45B44009654BD /* ASArticle+PersistenceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */; settings = {ASSET_TAGS = (); }; };
+		BBF97F2C1BC45B44009654BD /* ASArticle+PersistenceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF97F2B1BC45B44009654BD /* ASArticle+PersistenceUtils.m */; };
 		BE943C661BB07B4500ADB45A /* NSString+ShortSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE943C651BB07B4500ADB45A /* NSString+ShortSummary.m */; };
 		D6327D9C1BC7BA5B00AFF3F1 /* PersistenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69196E31BBD4C24001D49DE /* PersistenceKit.framework */; };
 		D6327D9D1BC7BA5B00AFF3F1 /* PersistenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D69196E31BBD4C24001D49DE /* PersistenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };

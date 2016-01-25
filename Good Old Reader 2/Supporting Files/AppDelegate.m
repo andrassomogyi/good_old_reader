@@ -8,9 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ApiManager.h"
-#import "DataController.h"
 #import "FeedTableViewController.h"
-#import <PersistenceKit/PersistenceKit.h>
 #import "SetupViewController.h"
 
 @interface AppDelegate ()

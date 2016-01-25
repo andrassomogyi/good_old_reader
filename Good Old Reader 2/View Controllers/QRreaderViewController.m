@@ -8,7 +8,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "QRreaderViewController.h"
-#import "EndpointResolver.h"
 #import "DataController.h"
 
 @interface QRreaderViewController ()<AVCaptureMetadataOutputObjectsDelegate>

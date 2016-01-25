@@ -8,7 +8,6 @@
 
 #import "MarkAsReadOperation.h"
 #import "NSString+UrlEncoding.h"
-#import "AppDelegate.h"
 
 @interface MarkAsReadOperation ()
 

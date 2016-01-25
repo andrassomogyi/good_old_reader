@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "EndpointResolver.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *loginMessageLabel;

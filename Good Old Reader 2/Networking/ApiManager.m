@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ApiManager.h"
 #import "EndpointResolver.h"
-#import "NSString+UrlEncoding.h"
-#import <PersistenceKit/PersistenceKit.h>
-#import "ASArticle.h"
-#import "AppDelegate.h"
 #import "FetchFeedOperation.h"
 #import "FetchUnreadOperation.h"
 #import "FeedTableViewData.h"
