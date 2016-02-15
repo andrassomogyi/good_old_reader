@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) FeedTableViewController *rootVC;
 @property (strong, readwrite) PersistenceManager *persistenceController;
+@property (strong, nonatomic) DataController *applicationDataController;
 
 - (void)completeUserInterface;
 
@@ -26,7 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"Launched in background %d", UIApplicationStateBackground == application.applicationState);
     
-    [self initNavigationControllerWithView:nil];
+    self.applicationDataController = [self getDataController];
     
     // Setting up background fetch
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -36,10 +37,6 @@
     [UIApplication  sharedApplication].shortcutItems = @[shortcut];
     
     return YES;
-}
-
--(void)completeUserInterface {
-    // Core Data initialized
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -68,12 +65,12 @@
 #pragma mark - Other application delegate methods
 
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    ApiManager *apiManager = [[ApiManager alloc] init];
-//    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
-//    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
-//        self.rootVC.articleArray = unreadArticles;
-//        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];
-//    }];
+    //    ApiManager *apiManager = [[ApiManager alloc] init];
+    //    DataController *dataController = [[DataController alloc] initWithApiManager:apiManager];
+    //    [dataController getUnreadWithCompletion:^(NSArray *unreadArticles) {
+    //        self.rootVC.articleArray = unreadArticles;
+    //        [self.rootVC  updateFeedFromBackgroundFetch:completionHandler];
+    //    }];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
@@ -82,7 +79,7 @@
 
 -(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
     NSLog(@"%@",shortcutItem);
-
+    
     SetupViewController *setupVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SetupViewController"];
     [self initNavigationControllerWithView:setupVC];
     
@@ -91,11 +88,11 @@
 
 -(DataController *)getDataController {
     CoreDataStack *coreDataStack = [[CoreDataStack alloc] initWithStoreURL:[self storeURL] modelURL:[self modelURL] withCallback:^{
-        [self completeUserInterface];
+        [self initNavigationControllerWithView:nil];
     }];
     
     PersistenceManager *persistenceManager = [[PersistenceManager alloc] initWithCoreDataStack:coreDataStack];
-
+    
     ApiManager *apiManager = [[ApiManager alloc] init];
     
     DataController *dataController = [[DataController alloc] initWithApiManager:apiManager persistenceManager:persistenceManager];
@@ -105,9 +102,10 @@
 }
 
 -(void)initNavigationControllerWithView:(NSObject * _Nullable)view{
+    // Core Data initilzied
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     self.rootVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"FeedTableViewController"];
-    self.rootVC.dataController = [self getDataController];
+    self.rootVC.dataController = self.applicationDataController;
     if ([[view class] isSubclassOfClass:[UIViewController class]]) {
         navController.viewControllers = @[self.rootVC,view];
     } else {
