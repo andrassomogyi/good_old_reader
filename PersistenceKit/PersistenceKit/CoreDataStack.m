@@ -27,6 +27,7 @@
 
 - (id)initWithStoreURL:(NSURL*)storeURL modelURL:(NSURL*)modelURL withCallback:(InitCallbackBlock)callback {
     if (!(self = [super init])) return nil;
+    NSLog(@"Initialized with store url: %@.",storeURL);
     
     self.storeURL = storeURL;
     self.modelURL = modelURL;

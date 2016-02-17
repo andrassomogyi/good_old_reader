@@ -17,8 +17,6 @@
 @property (strong, readwrite) PersistenceManager *persistenceController;
 @property (strong, nonatomic) DataController *applicationDataController;
 
-- (void)completeUserInterface;
-
 @end
 
 @implementation AppDelegate
