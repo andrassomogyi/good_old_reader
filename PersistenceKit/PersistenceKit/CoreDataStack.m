@@ -27,6 +27,7 @@
 
 - (id)initWithStoreURL:(NSURL*)storeURL modelURL:(NSURL*)modelURL withCallback:(InitCallbackBlock)callback {
     if (!(self = [super init])) return nil;
+    NSLog(@"Initialized with store url: %@.",storeURL);
     
     self.storeURL = storeURL;
     self.modelURL = modelURL;
@@ -59,13 +60,10 @@
         options[NSInferMappingModelAutomaticallyOption] = @YES;
         options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE"};
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"GoodOldReaderTS.sqlite"];
-        
         NSError *error = nil;
         
-        NSAssert([psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error], @"Error initializing PSC: %@\n%@", [error localizedDescription], [error userInfo]);
+//        NSAssert([psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:options error:&error], @"Error initializing PSC: %@\n%@", [error localizedDescription], [error userInfo]);
+        [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:options error:&error];
         
         if (![self initCallback]) return;
         
