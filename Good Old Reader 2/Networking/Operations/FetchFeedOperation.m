@@ -44,7 +44,8 @@
         
         if (!error && self.completionHandler && (httpStatusCode == 200 || httpStatusCode == 204)) {
             
-            self.completionHandler([self parseData:data]);
+            [self parseData:data];
+            self.completionHandler();
             
         } else if (self.errorHandler) {
             
@@ -55,14 +56,12 @@
     [task resume];
 }
 
-- (NSArray *)parseData:(NSData *)data {
+-(void)parseData:(NSData *)data {
     
     NSError *jsonError;
     NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
     
     dataDictionary = dataDictionary[@"items"];
-    
-    NSMutableArray *articles = [[NSMutableArray alloc] init];
     
     for (NSDictionary *item in dataDictionary) {
         
@@ -79,12 +78,9 @@
         ASArticle *article = [[ASArticle alloc] initWithDictionary:articleItem];
         
         if (article) {
-            [articles addObject:article];
             [Article insertArticle:article inManagedObjectContext:self.managedObjectContext];
         }
     }
-    
-    return articles;
 }
 
 @end
