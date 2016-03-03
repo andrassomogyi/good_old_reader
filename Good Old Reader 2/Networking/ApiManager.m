@@ -43,8 +43,7 @@
     
     __block NSArray *feedItems = [[NSArray alloc] init];
     
-    FetchFeedOperation *feedOperation = [[FetchFeedOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadEndpoint] completion:^(NSArray *items) {
-        feedItems = items;
+    FetchFeedOperation *feedOperation = [[FetchFeedOperation alloc] initWithSession:nil url:[EndpointResolver URLForEndpoint:UnreadEndpoint] completion:^() {
     } error:^(NSError *error, NSInteger statusCode) {
         if (errorBlock) {
             errorBlock(error);

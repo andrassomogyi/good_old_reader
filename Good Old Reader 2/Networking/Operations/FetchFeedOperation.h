@@ -9,7 +9,7 @@
 #import "Operation.h"
 #import <PersistenceKit/PersistenceKit.h>
 
-typedef void(^feedCompletionBlock)(NSArray *items);
+typedef void(^feedCompletionBlock)();
 typedef void(^feedErrorBlock)(NSError *error, NSInteger statusCode);
 
 @interface FetchFeedOperation : Operation

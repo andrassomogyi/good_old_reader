@@ -14,6 +14,8 @@
 
 @interface DataController ()
 
+@property (nonatomic,strong) NSSortDescriptor *sortByPublishDate;
+
 @end
 
 @implementation DataController
@@ -24,14 +26,15 @@
         _apiManager = apiManager;
         _apiManager.managedObjectContext = _managedObjectContext;
         _persistenceManager = persistenceManager;
+        _sortByPublishDate = [NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO];
     }
     return self;
 }
 
 - (void)getUnreadWithManualRefresh:(BOOL)isManualRefresh withCompletion:(void (^)(FeedTableViewData *)) completion {
     self.apiManager.managedObjectContext = self.managedObjectContext;
-    NSArray *sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"published" ascending:NO]];
-    NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:sortDescriptors];
+    
+    NSArray *persistentArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:nil withSortDescriptor:@[self.sortByPublishDate]];
     
     if ([persistentArticles count] == 0 || isManualRefresh) {
         NSArray *readArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == YES"] withSortDescriptor:nil];
@@ -46,23 +49,28 @@
             NSBatchDeleteRequest *deleteAll = [[NSBatchDeleteRequest alloc] initWithFetchRequest:[NSFetchRequest fetchRequestWithEntityName:[Article entityName]]];
             [self.managedObjectContext.persistentStoreCoordinator executeRequest:deleteAll withContext:self.managedObjectContext error:nil];
             
-            [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull viewData) {
-                [self.persistenceManager save];
-                completion(viewData);
-            } withError:^(NSError * _Nonnull error) {
-            }];
+            [self startFetchAndLoadPersistentArticles:completion];
+
         } withError:^(NSError * _Nonnull error) {
         }];
     } else {
         NSLog(@"Showing stored unread articles");
         [self.apiManager fetchUnreadCountWithCompletion:^(FeedTableViewData * _Nonnull titleOnlyViewData) {
-            NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:sortDescriptors];
+            NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:@[self.sortByPublishDate]];
             FeedTableViewData *readyToUseViewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:unreadArticles] title:titleOnlyViewData.title];
             completion(readyToUseViewData);
         } withError:^(NSError * _Nonnull error) {
-            //
-        }];
-    }
+        }];    }
+}
+
+-(void)startFetchAndLoadPersistentArticles:(void (^)(FeedTableViewData *)) completion {
+    [self.apiManager fetchStreamWithCompletion:^(FeedTableViewData * _Nonnull titleOnlyViewData) {
+        [self.persistenceManager save];
+        NSArray *unreadArticles = [self.persistenceManager fetchItemsWithEntityName:[Article entityName] withPredicate:[NSPredicate predicateWithFormat:@"markedAsRead == NO"] withSortDescriptor:@[self.sortByPublishDate]];
+        FeedTableViewData *readyToUseViewData = [[FeedTableViewData alloc] initWithArticles:[ASArticle modelRepresentationForItems:unreadArticles] title:titleOnlyViewData.title];
+        completion(readyToUseViewData);
+    } withError:^(NSError * _Nonnull error) {
+    }];
 }
 
 - (void)getTokenWithCompletion:(void(^)(NSData *))completion withError:(void(^)(void))errorBlock {
